@@ -14,6 +14,7 @@ module.exports = {
     ts: path.resolve('./src/ts/**/*.ts')
   },
   dest: {
+    css: path.resolve('./dist/assets/css'),
     fonts: path.resolve('./dist/assets/fonts'),
     images: path.resolve('./dist/assets/img'),
     js: path.resolve('./dist/assets/js')

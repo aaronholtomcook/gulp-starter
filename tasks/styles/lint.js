@@ -11,7 +11,7 @@ var config = {
 
 function task () {
   return gulp
-    .src(paths.client.src.sass)
+    .src(paths.src.sass)
     .pipe(sasslint(config.sasslint))
     .pipe(sasslint.format('checkstyle', function (results) {
       mkdirp(paths.reports.sass, function () {

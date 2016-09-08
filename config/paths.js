@@ -7,6 +7,7 @@ module.exports = {
   package: path.resolve('./package.json'),
   src: {
     fonts: path.resolve('./src/fonts/**/*.+(eot|woff2|woff|ttf|svg)'),
+    html: path.resolve('./src/html/pages/**/*.html'),
     icons: path.resolve('./src/icons/**/*.svg'),
     images: path.resolve('./src/img/**/*.+(gif|jpg|jpeg|png)'),
     js: path.resolve('./src/js/**/*.js'),

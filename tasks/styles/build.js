@@ -19,10 +19,10 @@ function task () {
   return gulp
     .src(paths.src.sass)
     .pipe(gulpIf(process.env.NODE_ENV === 'development', sourcemaps.init())) // Output sourcemaps for development
-      .pipe(sass(config.sass))
-      .pipe(autoprefixer(config.autoprefixer))
-      .pipe(gulpIf(process.env.NODE_ENV === 'production', nano(config.nano))) // Minify for production
-      .on('error', errorHandler)
+    .pipe(sass(config.sass))
+    .pipe(autoprefixer(config.autoprefixer))
+    .pipe(gulpIf(process.env.NODE_ENV === 'production', nano(config.nano))) // Minify for production
+    .on('error', errorHandler)
     .pipe(gulpIf(process.env.NODE_ENV === 'development', sourcemaps.write()))
     .pipe(gulp.dest(paths.dest.css))
     .pipe(browsersync.stream());

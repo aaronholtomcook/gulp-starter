@@ -10,6 +10,7 @@ module.exports = {
     icons: path.resolve('./src/icons/**/*.svg'),
     images: path.resolve('./src/img/**/*.+(gif|jpg|jpeg|png)'),
     js: path.resolve('./src/js/**/*.js'),
+    jsEntry: path.resolve('./src/js/app.js'),
     sass: path.resolve('./src/scss/**/*.+(scss|sass)'),
     ts: path.resolve('./src/ts/**/*.ts')
   },

@@ -17,7 +17,7 @@ function task () {
   });
 
   return b.bundle()
-    .pipe(source(paths.src.jsEntry))
+    .pipe(source('bundle.js'))
     .pipe(buffer())
     .pipe(gulpIf(process.env.NODE_ENV === 'development', sourcemaps.init()))
     .pipe(gulpIf(process.env.NODE_ENV === 'production', uglify()))

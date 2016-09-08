@@ -1,21 +1,19 @@
-var gulp = require('gulp');
-var paths = require('../../config/paths');
-var eslint = require('gulp-eslint');
-
-var config = {
-  eslint: require('../../linting/.eslintrc')
-};
+var gulp = require('gulp'),
+  eslint = require('gulp-eslint'),
+  fs = require('fs'),
+  mkdirp = require('mkdirp'),
+  paths = require('../../config/paths');
 
 function task () {
-  return gulp.src([paths.src.js].concat(paths.server.lint))
-    .pipe(eslint(config.eslint))
+  return gulp.src(paths.src.js)
+    .pipe(eslint(paths.lint.js))
     .pipe(eslint.format())
     .pipe(eslint.format('checkstyle', function (output) {
       mkdirp(paths.reports.js, function() {
-        fs.writeFileSync(paths.reports.js, output);
+        fs.writeFileSync(paths.reports.jsXml, output);
       });
     }));
 }
 
-gulp.task('lint-js', task);
+gulp.task('js:lint', task);
 module.exports = task;

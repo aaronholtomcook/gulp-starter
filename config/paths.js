@@ -22,7 +22,8 @@ module.exports = {
     js: path.resolve('./dist/assets/js')
   },
   reports: {
-    js: path.resolve('./reports/js/checkstyle.xml'),
+    js: path.resolve('./reports/js/'),
+    jsXml: path.resolve('./reports/js/checkstyle.xml'),
     sass: path.resolve('./reports/sass/checkstyle.xml'),
     ts: path.resolve('./reports/ts/checkstyle.xml')
   },

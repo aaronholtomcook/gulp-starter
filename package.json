@@ -39,6 +39,7 @@
     "mkdirp": "^0.5.1",
     "path": "^0.12.7",
     "require-dir": "^0.3.0",
+    "tsify": "^1.0.6",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   }

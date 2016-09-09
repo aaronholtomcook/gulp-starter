@@ -3,6 +3,7 @@
 var gulp = require('gulp');
 var watch = require('gulp-watch');
 var paths = require('../../config/paths');
+var settings = require('../../config/settings');
 
 function task () {
   watch(paths.src.icons, function () {
@@ -13,9 +14,15 @@ function task () {
     gulp.start('images');
   });
 
-  watch(paths.src.js.scripts, function () {
-    gulp.start('js');
-  });
+  if (settings.scripting === 'ts') {
+    watch(paths.src.ts.scripts, function () {
+      gulp.start('ts');
+    });
+  } else {
+    watch(paths.src.js.scripts, function () {
+      gulp.start('js');
+    });
+  }
 
   watch(paths.src.sass, function () {
     gulp.start('scss');

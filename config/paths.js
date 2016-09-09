@@ -21,7 +21,10 @@ var defaults = {
       pages: path.resolve('./src/html/pages/**/*.html'),
       root: path.resolve('./src/html')
     },
-    ts: path.resolve('./src/ts/**/*.ts')
+    ts: {
+      entry: path.resolve('./src/ts/index.ts'),
+      scripts: path.resolve('./src/ts/**/*.ts')
+    }
   },
   dest: {
     base: path.resolve('./dist'),

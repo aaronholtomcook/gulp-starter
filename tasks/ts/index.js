@@ -7,6 +7,7 @@ var uglify = require('gulp-uglify');
 var babel = require('babelify');
 var browsersync = require('browser-sync');
 var browserify = require('browserify');
+var tsify = require('tsify');
 var buffer = require('vinyl-buffer');
 var source = require('vinyl-source-stream');
 var errorHandler = require('../../utilities/errorHandler');
@@ -16,16 +17,11 @@ var config = {
   browserify: require('../../config/browserify')
 };
 
-// TODO: ngInject
+// TODO: Angular 2 integration
 function task () {
-  var builder = browserify(config.browserify);
-
-  // ES6
-  if (settings.scripting === 'es6') {
-    builder = builder.transform(babel);
-  }
-
-  return builder
+  return browserify(config.browserify)
+    .plugin(tsify)
+    .transform(babel)
     .bundle()
     .on('error', errorHandler)
     .pipe(source('app.js'))
@@ -37,6 +33,6 @@ function task () {
     .on('end', browsersync.reload);
 }
 
-gulp.task('js', task);
+gulp.task('ts', task);
 
 module.exports = task;

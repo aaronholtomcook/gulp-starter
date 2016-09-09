@@ -6,7 +6,6 @@ var config = require(path.resolve('./gulp.config.js')).paths;
 
 var defaults = {
   node_modules: path.resolve('./node_modules'),
-  package: path.resolve('./package.json'),
   src: {
     fonts: path.resolve('./src/fonts/**/*.+(eot|woff2|woff|ttf|svg)'),
     icons: path.resolve('./src/icons/**/*.svg'),
@@ -21,7 +20,10 @@ var defaults = {
       pages: path.resolve('./src/html/pages/**/*.html'),
       root: path.resolve('./src/html')
     },
-    ts: path.resolve('./src/ts/**/*.ts')
+    ts: {
+      entry: path.resolve('./src/ts/index.ts'),
+      scripts: path.resolve('./src/ts/**/*.ts')
+    }
   },
   dest: {
     base: path.resolve('./dist'),

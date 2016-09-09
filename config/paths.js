@@ -7,11 +7,15 @@ module.exports = {
   package: path.resolve('./package.json'),
   src: {
     fonts: path.resolve('./src/fonts/**/*.+(eot|woff2|woff|ttf|svg)'),
-    html: path.resolve('./src/html/pages/**/*.html'),
     icons: path.resolve('./src/icons/**/*.svg'),
     images: path.resolve('./src/img/**/*.+(gif|jpg|jpeg|png)'),
     js: path.resolve('./src/js/**/*.js'),
     sass: path.resolve('./src/scss/**/*.+(scss|sass)'),
+    templates: {
+      data: path.resolve('./src/html/data/global.json'),
+      pages: path.resolve('./src/html/pages/**/*.html'),
+      root: path.resolve('./src/html')
+    },
     ts: path.resolve('./src/ts/**/*.ts')
   },
   dest: {

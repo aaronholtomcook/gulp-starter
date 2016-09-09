@@ -14,6 +14,7 @@ function task () {
   return gulp
     .src(paths.src.icons)
     .pipe(iconfontcss(config.iconfontcss))
+    .on('error', errorHandler)
     .pipe(iconfont(config.iconfont))
     .on('error', errorHandler)
     .pipe(gulp.dest(paths.dest.fonts));

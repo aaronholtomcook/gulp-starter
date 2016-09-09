@@ -17,9 +17,10 @@ function task () {
   return gulp
     .src(paths.src.templates.pages)
     .pipe(data(JSON.parse(fs.readFileSync(paths.src.templates.data, 'utf8'))))
-    .pipe(nunjucks(config.nunjucks))
-    .pipe(gulpIf(process.env.NODE_ENV === 'production', htmlmin())) // Minify html for production
     .on('error', errorHandler)
+    .pipe(nunjucks(config.nunjucks))
+    .on('error', errorHandler)
+    .pipe(gulpIf(process.env.NODE_ENV === 'production', htmlmin())) // Minify html for production
     .pipe(gulp.dest(paths.dest.base))
     .on('end', browsersync.reload);
 }

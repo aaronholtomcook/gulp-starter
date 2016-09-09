@@ -4,25 +4,34 @@ var gulp = require('gulp');
 var gulpIf = require('gulp-if');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
+var babel = require('babelify');
 var browsersync = require('browser-sync');
 var browserify = require('browserify');
 var buffer = require('vinyl-buffer');
 var source = require('vinyl-source-stream');
 var errorHandler = require('../../utilities/errorHandler');
 var paths = require('../../config/paths');
+var settings = require('../../config/settings');
 var config = {
   browserify: require('../../config/browserify')
 };
 
 // TODO: ngInject
 function task () {
-  return browserify(config.browserify)
+  var builder = browserify(config.browserify);
+
+  // ES6
+  if (settings.scripting === 'es6' || settings.scripting === 'ts') {
+    builder = builder.transform(babel);
+  }
+
+  return builder
     .bundle()
+    .on('error', errorHandler)
     .pipe(source('app.js'))
     .pipe(buffer())
     .pipe(gulpIf(process.env.NODE_ENV === 'development', sourcemaps.init())) // Output sourcemaps for development
     .pipe(gulpIf(process.env.NODE_ENV === 'production', uglify())) // Minify for production
-    .on('error', errorHandler)
     .pipe(gulpIf(process.env.NODE_ENV === 'development', sourcemaps.write()))
     .pipe(gulp.dest(paths.dest.js))
     .on('end', browsersync.reload);

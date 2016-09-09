@@ -9,6 +9,7 @@ var config = {
   sasslint: require('../../config/sasslint')
 };
 
+// TODO: Output checkstyle reports
 function task () {
   return gulp
     .src(paths.src.sass)
@@ -16,6 +17,6 @@ function task () {
     .pipe(sasslint.format());
 }
 
-gulp.task('styles:lint', task);
+gulp.task('scss:lint', task);
 
 module.exports = task;

@@ -28,6 +28,6 @@ function task () {
     .pipe(browsersync.stream());
 }
 
-gulp.task('styles', task);
+gulp.task('scss', task);
 
 module.exports = task;

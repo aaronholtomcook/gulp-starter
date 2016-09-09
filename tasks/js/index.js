@@ -4,6 +4,7 @@ var gulp = require('gulp');
 var gulpIf = require('gulp-if');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
+var browsersync = require('browser-sync');
 var browserify = require('browserify');
 var buffer = require('vinyl-buffer');
 var source = require('vinyl-source-stream');
@@ -23,7 +24,8 @@ function task () {
     .pipe(gulpIf(process.env.NODE_ENV === 'production', uglify())) // Minify for production
     .on('error', errorHandler)
     .pipe(gulpIf(process.env.NODE_ENV === 'development', sourcemaps.write()))
-    .pipe(gulp.dest(paths.dest.js));
+    .pipe(gulp.dest(paths.dest.js))
+    .on('end', browsersync.reload);
 }
 
 gulp.task('js', task);

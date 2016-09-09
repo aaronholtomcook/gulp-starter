@@ -8,7 +8,7 @@ function task (cb) {
   sequence(
     'clean',
     ['images', 'icons', 'templates'],
-    ['scss:lint', settings.scripting === 'ts' ? 'ts' : 'js' + ':lint'],
+    ['scss:lint', settings.scripting === 'ts' ? 'ts:lint' : 'js:lint'],
     ['scss', '' + settings.scripting === 'ts' ? 'ts' : 'js' + ''],
     'watch',
     'server',

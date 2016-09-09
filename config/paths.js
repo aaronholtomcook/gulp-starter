@@ -1,8 +1,10 @@
 'use strict';
 
 var path = require('path');
+var _ = require('lodash');
+var config = require(path.resolve('./gulp.config.js')).paths;
 
-module.exports = {
+var defaults = {
   node_modules: path.resolve('./node_modules'),
   package: path.resolve('./package.json'),
   src: {
@@ -39,3 +41,5 @@ module.exports = {
     ts: path.resolve(__dirname, '../linting/tslint.json')
   }
 };
+
+module.exports = _.defaultsDeep(config, defaults);

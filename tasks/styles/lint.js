@@ -13,11 +13,7 @@ function task () {
   return gulp
     .src(paths.src.sass)
     .pipe(sasslint(config.sasslint))
-    .pipe(sasslint.format('checkstyle', function (results) {
-      mkdirp(paths.reports.sass, function () {
-        fs.writeFileSync(paths.reports.sass, results);
-      });
-    }));
+    .pipe(sasslint.format());
 }
 
 gulp.task('styles:lint', task);

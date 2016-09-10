@@ -8,7 +8,8 @@ var defaults = {
   angular1: false,
   angular2: false,
   scripting: 'js', // Set as "js" for JavaScript, "es6" for ES6 and "ts" for TypeScript
-  templates: true
+  templates: true,
+  uncss: false
 };
 
 module.exports = _.defaultsDeep(config, defaults);

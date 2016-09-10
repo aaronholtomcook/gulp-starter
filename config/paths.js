@@ -7,6 +7,7 @@ var config = require(path.resolve('./gulp.config.js')).paths;
 var defaults = {
   node_modules: path.resolve('./node_modules'),
   src: {
+    copy: path.resolve('./src/copy/**/*'),
     fonts: path.resolve('./src/fonts/**/*.+(eot|woff2|woff|ttf|svg)'),
     icons: path.resolve('./src/icons/**/*.svg'),
     images: path.resolve('./src/img/**/*.+(gif|jpg|jpeg|png)'),

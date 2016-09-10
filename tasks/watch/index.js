@@ -6,6 +6,10 @@ var paths = require('../../config/paths');
 var settings = require('../../config/settings');
 
 function task () {
+  watch(paths.src.copy, function () {
+    gulp.start('copy');
+  });
+
   watch(paths.src.icons, function () {
     gulp.start('icons');
   });

@@ -7,12 +7,12 @@ var paths = require('../../config/paths');
 
 function task () {
   return gulp
-    .src(paths.src.copy)
-    .pipe(changed(paths.dest.base))
-    .pipe(gulp.dest(paths.dest.base))
-    .pipe(browsersync.stream());
+    .src(paths.src.fonts)
+    .pipe(changed(paths.dest.fonts))
+    .pipe(gulp.dest(paths.dest.fonts))
+    .on('end', browsersync.reload);
 }
 
-gulp.task('copy', task);
+gulp.task('fonts', task);
 
 module.exports = task;

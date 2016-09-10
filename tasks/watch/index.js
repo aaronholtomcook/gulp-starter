@@ -10,6 +10,10 @@ function task () {
     gulp.start('copy');
   });
 
+  watch(paths.src.fonts, function () {
+    gulp.start('fonts');
+  });
+
   watch(paths.src.icons, function () {
     gulp.start('icons');
   });

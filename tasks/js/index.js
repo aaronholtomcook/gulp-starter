@@ -7,6 +7,7 @@ var uglify = require('gulp-uglify');
 var babel = require('babelify');
 var browsersync = require('browser-sync');
 var browserify = require('browserify');
+var rollupify = require('rollupify');
 var buffer = require('vinyl-buffer');
 var source = require('vinyl-source-stream');
 var errorHandler = require('../../utilities/errorHandler');
@@ -26,7 +27,9 @@ function task () {
 
   // ES6
   if (settings.scripting === 'es6') {
-    builder = builder.transform(babel, config.babel);
+    builder = builder
+      .transform(rollupify)
+      .transform(babel, config.babel);
   }
 
   return builder

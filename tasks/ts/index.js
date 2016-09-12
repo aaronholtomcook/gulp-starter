@@ -8,6 +8,7 @@ var babel = require('babelify');
 var browsersync = require('browser-sync');
 var browserify = require('browserify');
 var tsify = require('tsify');
+var rollupify = require('rollupify');
 var buffer = require('vinyl-buffer');
 var source = require('vinyl-source-stream');
 var errorHandler = require('../../utilities/errorHandler');
@@ -25,6 +26,7 @@ var config = {
 function task () {
   return browserify(config.browserify)
     .plugin(tsify)
+    .transform(rollupify)
     .transform(babel, config.babel)
     .bundle()
     .on('error', errorHandler)

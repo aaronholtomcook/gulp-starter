@@ -4,6 +4,7 @@ var gulp = require('gulp');
 var gulpIf = require('gulp-if');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
+var ngAnnotate = require('gulp-ng-annotate');
 var babel = require('babelify');
 var browsersync = require('browser-sync');
 var browserify = require('browserify');
@@ -20,7 +21,7 @@ var config = {
   uglify: require('../../config/uglify')
 };
 
-// TODO: ngInject + all the other bells and whistles that come with Angular 1
+// TODO: Angular template cache
 // TODO: Watchify?
 function task () {
   var builder = browserify(config.browserify);
@@ -38,6 +39,7 @@ function task () {
     .pipe(source('app.js'))
     .pipe(buffer())
     .pipe(gulpIf(process.env.NODE_ENV === 'development', sourcemaps.init(config.sourcemaps))) // Output sourcemaps for development
+    .pipe(gulpIf(settings.angular1, ngAnnotate()))
     .pipe(gulpIf(process.env.NODE_ENV === 'production', uglify(config.uglify))) // Minify for production
     .pipe(gulpIf(process.env.NODE_ENV === 'development', sourcemaps.write()))
     .pipe(gulp.dest(paths.dest.js))

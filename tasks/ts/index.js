@@ -19,6 +19,7 @@ var config = {
 };
 
 // TODO: Angular 2 integration
+// TODO: Tree shaking
 function task () {
   return browserify(config.browserify)
     .plugin(tsify)

@@ -13,8 +13,10 @@ var errorHandler = require('../../utilities/errorHandler');
 var paths = require('../../config/paths');
 var settings = require('../../config/settings');
 var config = {
+  babel: require('../../config/babel'),
   browserify: require('../../config/browserify'),
-  sourcemaps: require('../../config/sourcemaps')
+  sourcemaps: require('../../config/sourcemaps'),
+  uglify: require('../../config/uglify')
 };
 
 // TODO: ngInject + all the other bells and whistles that come with Angular 1
@@ -24,7 +26,7 @@ function task () {
 
   // ES6
   if (settings.scripting === 'es6') {
-    builder = builder.transform(babel);
+    builder = builder.transform(babel, config.babel);
   }
 
   return builder
@@ -33,7 +35,7 @@ function task () {
     .pipe(source('app.js'))
     .pipe(buffer())
     .pipe(gulpIf(process.env.NODE_ENV === 'development', sourcemaps.init(config.sourcemaps))) // Output sourcemaps for development
-    .pipe(gulpIf(process.env.NODE_ENV === 'production', uglify())) // Minify for production
+    .pipe(gulpIf(process.env.NODE_ENV === 'production', uglify(config.uglify))) // Minify for production
     .pipe(gulpIf(process.env.NODE_ENV === 'development', sourcemaps.write()))
     .pipe(gulp.dest(paths.dest.js))
     .on('end', browsersync.reload);

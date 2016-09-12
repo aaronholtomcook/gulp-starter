@@ -8,6 +8,10 @@ var defaults = {
   node_modules: path.resolve('./node_modules'),
   src: {
     copy: path.resolve('./src/copy/**/*'),
+    favicons: {
+      icon: path.resolve('./src/favicons/favicon.+(gif|jpg|jpeg|png)'),
+      output: path.resolve('./src/html/partials/favicons.html')
+    },
     fonts: path.resolve('./src/fonts/**/*.+(eot|woff2|woff|ttf|svg)'),
     icons: path.resolve('./src/icons/**/*.svg'),
     images: path.resolve('./src/img/**/*.+(gif|jpg|jpeg|png)'),
@@ -29,6 +33,7 @@ var defaults = {
   dest: {
     base: path.resolve('./dist'),
     css: path.resolve('./dist/assets/css'),
+    favicons: path.resolve('./dist/assets/favicons'),
     fonts: path.resolve('./dist/assets/fonts'),
     images: path.resolve('./dist/assets/img'),
     js: path.resolve('./dist/assets/js')

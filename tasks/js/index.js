@@ -13,10 +13,12 @@ var errorHandler = require('../../utilities/errorHandler');
 var paths = require('../../config/paths');
 var settings = require('../../config/settings');
 var config = {
-  browserify: require('../../config/browserify')
+  browserify: require('../../config/browserify'),
+  sourcemaps: require('../../config/sourcemaps')
 };
 
-// TODO: ngInject
+// TODO: ngInject + all the other bells and whistles that come with Angular 1
+// TODO: Tree shaking
 function task () {
   var builder = browserify(config.browserify);
 
@@ -30,7 +32,7 @@ function task () {
     .on('error', errorHandler)
     .pipe(source('app.js'))
     .pipe(buffer())
-    .pipe(gulpIf(process.env.NODE_ENV === 'development', sourcemaps.init())) // Output sourcemaps for development
+    .pipe(gulpIf(process.env.NODE_ENV === 'development', sourcemaps.init(config.sourcemaps))) // Output sourcemaps for development
     .pipe(gulpIf(process.env.NODE_ENV === 'production', uglify())) // Minify for production
     .pipe(gulpIf(process.env.NODE_ENV === 'development', sourcemaps.write()))
     .pipe(gulp.dest(paths.dest.js))

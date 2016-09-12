@@ -21,7 +21,7 @@ var config = {
 };
 
 // TODO: ngInject + all the other bells and whistles that come with Angular 1
-// TODO: Tree shaking
+// TODO: Watchify?
 function task () {
   var builder = browserify(config.browserify);
 

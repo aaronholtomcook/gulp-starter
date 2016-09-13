@@ -9,6 +9,7 @@ var babel = require('babelify');
 var browsersync = require('browser-sync');
 var browserify = require('browserify');
 var rollupify = require('rollupify');
+var ngHtml2Js = require('browserify-ng-html2js');
 var buffer = require('vinyl-buffer');
 var source = require('vinyl-source-stream');
 var errorHandler = require('../../utilities/errorHandler');
@@ -21,10 +22,14 @@ var config = {
   uglify: require('../../config/uglify')
 };
 
-// TODO: Angular template cache
 // TODO: Watchify?
 function task () {
   var builder = browserify(config.browserify);
+
+  // Angular template cache
+  if (settings.angular1) {
+    builder = builder.transform(ngHtml2Js());
+  }
 
   // ES6
   if (settings.scripting === 'es6') {

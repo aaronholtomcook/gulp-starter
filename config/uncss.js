@@ -15,6 +15,7 @@ module.exports = {
     /\.collaps/,
     /\.carousel-inner/,
     /\.open/,
-    /\.in/
+    /\.in/,
+    /\.js/
   ]
 };

@@ -7,10 +7,10 @@ var settings = require('../../config/settings');
 function task (cb) {
   sequence(
     'clean',
-    'templates',
     ['copy', 'favicons', 'fonts', 'icons', 'images'],
+    'templates',
     ['scss:lint', settings.scripting === 'ts' ? 'ts:lint' : 'js:lint'],
-    ['scss', '' + settings.scripting === 'ts' ? 'ts' : 'js' + ''],
+    ['scss', settings.scripting === 'ts' ? 'ts' : 'js'],
     cb
   );
 }

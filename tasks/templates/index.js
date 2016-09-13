@@ -9,7 +9,9 @@ var browsersync = require('browser-sync');
 var fs = require('fs');
 var paths = require('../../config/paths');
 var errorHandler = require('../../utilities/errorHandler');
+var settings = require('../../config/settings');
 var config = {
+  htmlmin: require('../../config/htmlmin'),
   nunjucks: require('../../config/nunjucks')
 };
 
@@ -20,7 +22,7 @@ function task () {
     .on('error', errorHandler)
     .pipe(nunjucks(config.nunjucks))
     .on('error', errorHandler)
-    .pipe(gulpIf(process.env.NODE_ENV === 'production', htmlmin())) // Minify html for production
+    .pipe(gulpIf(process.env.NODE_ENV === 'production' && settings.htmlmin, htmlmin(config.htmlmin))) // Minify html for production if enabled
     .pipe(gulp.dest(paths.dest.base))
     .on('end', browsersync.reload);
 }

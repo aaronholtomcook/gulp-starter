@@ -18,6 +18,7 @@ var config = {
   babel: require('../../config/babel'),
   browserify: require('../../config/browserify'),
   sourcemaps: require('../../config/sourcemaps'),
+  tsify: require('../../config/tsify'),
   uglify: require('../../config/uglify')
 };
 
@@ -25,7 +26,7 @@ var config = {
 // TODO: Watchify?
 function task () {
   return browserify(config.browserify)
-    .plugin(tsify)
+    .plugin(tsify, config.tsify)
     .transform(rollupify)
     .transform(babel, config.babel)
     .bundle()

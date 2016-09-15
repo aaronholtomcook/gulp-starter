@@ -7,8 +7,8 @@ var paths = require('../../config/paths');
 function task () {
   return gulp
     .src(paths.src.server.dir)
-    .pipe(changed(paths.dest.server))
-    .pipe(gulp.dest(paths.dest.server));
+    .pipe(changed(paths.dest.server.root))
+    .pipe(gulp.dest(paths.dest.server.root));
 }
 
 gulp.task('express', task);

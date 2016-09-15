@@ -45,7 +45,10 @@ var defaults = {
     fonts: path.resolve('./dist/client/assets/fonts'),
     images: path.resolve('./dist/client/assets/img'),
     js: path.resolve('./dist/client/assets/js'),
-    server: path.resolve('./dist/server')
+    server: {
+      entry: path.resolve('./dist/server/index.js'),
+      root: path.resolve('./dist/server')
+    }
   },
   reports: {
     js: path.resolve('./reports/js/checkstyle.xml'),

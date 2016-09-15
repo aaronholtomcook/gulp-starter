@@ -8,6 +8,7 @@ var defaults = {
   angular1: false,
   angular2: false,
   htmlmin: false,
+  proxy: 'localhost:3005',
   scripting: 'js', // Set as "js" for JavaScript, "es6" for ES6 and "ts" for TypeScript
   templates: true,
   uncss: false

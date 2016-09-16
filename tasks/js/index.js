@@ -6,6 +6,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 var ngAnnotate = require('gulp-ng-annotate');
 var babel = require('babelify');
+var envify = require('envify/custom');
 var browsersync = require('browser-sync');
 var browserify = require('browserify');
 var rollupify = require('rollupify');
@@ -18,6 +19,7 @@ var settings = require('../../config/settings');
 var config = {
   babel: require('../../config/babel'),
   browserify: require('../../config/browserify'),
+  envify: require('../../config/envify'),
   sourcemaps: require('../../config/sourcemaps'),
   uglify: require('../../config/uglify')
 };
@@ -37,6 +39,9 @@ function task () {
       .transform(rollupify)
       .transform(babel, config.babel);
   }
+
+  // Process node environment values in your scripts
+  builder = builder.transform(envify(config.envify));
 
   return builder
     .bundle()

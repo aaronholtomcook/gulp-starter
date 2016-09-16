@@ -9,6 +9,7 @@ var browsersync = require('browser-sync');
 var browserify = require('browserify');
 var tsify = require('tsify');
 var rollupify = require('rollupify');
+var envify = require('envify/custom');
 var buffer = require('vinyl-buffer');
 var source = require('vinyl-source-stream');
 var inlineNg2Template = require('./inlineNg2Template');
@@ -18,18 +19,19 @@ var settings = require('../../config/settings');
 var config = {
   babel: require('../../config/babel'),
   browserify: require('../../config/browserify'),
+  envify: require('../../config/envify'),
   sourcemaps: require('../../config/sourcemaps'),
   tsify: require('../../config/tsify'),
   uglify: require('../../config/uglify')
 };
 
-// TODO: Angular 2 integration
 // TODO: Watchify?
 function task () {
   var builder = browserify(config.browserify)
     .plugin(tsify, config.tsify)
     .transform(rollupify)
-    .transform(babel, config.babel);
+    .transform(babel, config.babel)
+    .transform(envify(config.envify));
 
   if (settings.angular2) {
     builder = builder.transform(inlineNg2Template);

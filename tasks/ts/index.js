@@ -11,6 +11,7 @@ var tsify = require('tsify');
 var rollupify = require('rollupify');
 var buffer = require('vinyl-buffer');
 var source = require('vinyl-source-stream');
+var inlineNg2Template = require('./inlineNg2Template');
 var errorHandler = require('../../utilities/errorHandler');
 var paths = require('../../config/paths');
 var settings = require('../../config/settings');
@@ -25,10 +26,16 @@ var config = {
 // TODO: Angular 2 integration
 // TODO: Watchify?
 function task () {
-  return browserify(config.browserify)
+  var builder = browserify(config.browserify)
     .plugin(tsify, config.tsify)
     .transform(rollupify)
-    .transform(babel, config.babel)
+    .transform(babel, config.babel);
+
+  if (settings.angular2) {
+    builder = builder.transform(inlineNg2Template);
+  }
+
+  return builder
     .bundle()
     .on('error', errorHandler)
     .pipe(source('app.js'))

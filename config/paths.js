@@ -29,7 +29,10 @@ var defaults = {
       root: path.resolve('./src/html')
     },
     ts: {
-      entry: path.resolve('./src/ts/index.ts'),
+      entry: [
+        path.resolve('./src/ts/index.ts'),
+        path.resolve('./typings/index.d.ts')
+      ],
       scripts: path.resolve('./src/ts/**/*.ts')
     }
   },

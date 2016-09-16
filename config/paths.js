@@ -35,10 +35,10 @@ var defaults = {
     },
     ts: {
       entry: [
-        path.resolve('./src/ts/index.ts'),
+        path.resolve('./src/client/ts/index.ts'),
         path.resolve('./typings/index.d.ts')
       ],
-      scripts: path.resolve('./src/ts/**/*.ts')
+      scripts: path.resolve('./src/client/ts/**/*.ts')
     }
   },
   dest: {

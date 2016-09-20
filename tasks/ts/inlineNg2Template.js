@@ -6,6 +6,7 @@ var config = {
   inlineNg2Template: require('../../config/inlineNg2Template')
 };
 
+// TODO: Minify template strings
 module.exports = function (file) {
   return through(function (buf, enc, next) {
     var ctx = this;

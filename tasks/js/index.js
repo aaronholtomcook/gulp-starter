@@ -8,7 +8,7 @@ var ngAnnotate = require('gulp-ng-annotate');
 var babel = require('babelify');
 var envify = require('envify/custom');
 var browsersync = require('browser-sync');
-var browserify = require('browserify');
+var persistify = require('persistify');
 var rollupify = require('rollupify');
 var ngHtml2Js = require('browserify-ng-html2js');
 var buffer = require('vinyl-buffer');
@@ -19,14 +19,14 @@ var settings = require('../../config/settings');
 var config = {
   babel: require('../../config/babel'),
   browserify: require('../../config/browserify'),
+  persistify: require('../../config/persistify'),
   envify: require('../../config/envify'),
   sourcemaps: require('../../config/sourcemaps'),
   uglify: require('../../config/uglify')
 };
 
-// TODO: Watchify?
 function task () {
-  var builder = browserify(config.browserify);
+  var builder = persistify(config.browserify, config.persistify);
 
   // Angular template cache
   if (settings.angular1) {

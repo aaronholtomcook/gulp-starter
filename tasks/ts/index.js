@@ -6,12 +6,13 @@ var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 var babel = require('babelify');
 var browsersync = require('browser-sync');
-var browserify = require('browserify');
+var persistify = require('persistify');
 var tsify = require('tsify');
 var rollupify = require('rollupify');
 var envify = require('envify/custom');
 var buffer = require('vinyl-buffer');
 var source = require('vinyl-source-stream');
+var _ = require('lodash');
 var inlineNg2Template = require('./inlineNg2Template');
 var errorHandler = require('../../utilities/errorHandler');
 var paths = require('../../config/paths');
@@ -19,15 +20,15 @@ var settings = require('../../config/settings');
 var config = {
   babel: require('../../config/babel'),
   browserify: require('../../config/browserify'),
+  persistify: require('../../config/persistify'),
   envify: require('../../config/envify'),
   sourcemaps: require('../../config/sourcemaps'),
   tsify: require('../../config/tsify'),
   uglify: require('../../config/uglify')
 };
 
-// TODO: Watchify?
 function task () {
-  var builder = browserify(config.browserify)
+  var builder = persistify(config.browserify, config.persistify)
     .plugin(tsify, config.tsify)
     .transform(rollupify)
     .transform(babel, config.babel)

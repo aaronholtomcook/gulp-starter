@@ -5,7 +5,10 @@ var del = require('del');
 var paths = require('../../config/paths');
 
 function task (cb) {
-  del(paths.dest.base).then(function () {
+  del([
+    paths.dest.base,
+    paths.cache
+  ]).then(function () {
     cb();
   });
 }

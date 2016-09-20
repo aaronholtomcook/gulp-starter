@@ -27,11 +27,11 @@ function task () {
   });
 
   if (settings.scripting === 'ts') {
-    watch(paths.src.ts.scripts, function () {
+    watch(paths.src.ts.watch, function () {
       gulp.start('ts');
     });
   } else {
-    watch(paths.src.js.scripts, function () {
+    watch(paths.src.js.watch, function () {
       gulp.start('js');
     });
   }

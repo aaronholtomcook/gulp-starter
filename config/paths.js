@@ -5,7 +5,6 @@ var _ = require('lodash');
 var config = require(path.resolve('./gulp.config.js')).paths;
 
 var defaults = {
-  cache: path.resolve('./.build-cache'),
   src: {
     copy: path.resolve('./src/copy/**/*'),
     favicons: {
@@ -31,10 +30,7 @@ var defaults = {
       root: path.resolve('./src/html')
     },
     ts: {
-      entry: [
-        path.resolve('./src/ts/index.ts'),
-        path.resolve('./typings/index.d.ts')
-      ],
+      entry: path.resolve('./src/ts/index.ts'),
       scripts: path.resolve('./src/ts/**/*.ts'),
       watch: path.resolve('./src/ts/**/*')
     }

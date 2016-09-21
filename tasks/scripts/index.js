@@ -15,8 +15,6 @@ var config = {
 // TODO: ES6 + tree shaking
 // TODO: Error handling
 // TODO: Watch based on task not env
-// TODO: Env
-// TODO: Use webpack uglify
 // TODO: Use actual package once merge request is accepted (https://github.com/shama/webpack-stream/pull/126)
 function task (cb) {
   var flag = true;

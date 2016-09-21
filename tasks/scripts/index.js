@@ -11,8 +11,8 @@ var config = {
   webpack: require('../../config/webpack')
 };
 
-// TODO: ng-annotate
-// TODO: ES6 + tree shaking
+// TODO: Angular 1 templates
+// TODO: Tree shaking
 // TODO: Error handling
 // TODO: Watch based on task not env
 // TODO: Use actual package once merge request is accepted (https://github.com/shama/webpack-stream/pull/126)

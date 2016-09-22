@@ -5,12 +5,11 @@ var sequence = require('gulp-sequence');
 var settings = require('../../config/settings');
 
 function task (cb) {
-// , settings.scripting === 'ts' ? 'ts:lint' : 'js:lint'
   sequence(
     'clean',
     ['copy', 'favicons', 'fonts', 'icons', 'images'],
     'templates',
-    ['scss:lint'],
+    ['scss:lint', settings.scripting === 'ts' ? 'scripts:tslint' : 'scripts:eslint'],
     ['scss', 'scripts'],
     cb
   );

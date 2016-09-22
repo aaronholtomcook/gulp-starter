@@ -1,12 +1,15 @@
 'use strict';
 
 var webpack = require('webpack');
+var path = require('path');
 var paths = require('./paths');
 var settings = require('./settings');
+var scripting = settings.scripting === 'ts' ? 'ts' : 'js';
 
 var config = {
+  entry: paths.src[scripting].entry,
   output: {
-    filename: 'app.js'
+    filename: '[name].js'
   },
   resolve: {
     extensions: ['', '.js', '.ts']
@@ -22,6 +25,20 @@ var config = {
     })
   ]
 };
+
+// Grab entry point names and determine if we need to dedupe
+var entry = [];
+
+for (var name in paths.src[scripting].entry) {
+  entry.push(name);
+}
+
+// Dedupe if multiple entry points are being used
+if (entry.length > 1) {
+  config.plugins.push(new webpack.optimize.CommonsChunkPlugin({
+    name: entry
+  }));
+}
 
 // Scripting specific options
 if (settings.scripting === 'ts') {
@@ -51,7 +68,7 @@ if (settings.angular1) {
   });
   config.module.loaders.push({
     test: /\.html$/,
-    loader: 'ngtemplate?relativeTo=' + paths.src[settings.scripting === 'ts' ? 'ts' : 'js'].watch.replace('/**/*', '') + '/!html'
+    loader: 'ngtemplate?relativeTo=' + paths.src[scripting].watch.replace('/**/*', '') + '/!html'
   });
 } else if (settings.angular2) {
   // Template loader for angular 2

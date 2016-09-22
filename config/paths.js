@@ -15,7 +15,9 @@ var defaults = {
     icons: path.resolve('./src/icons/**/*.svg'),
     images: path.resolve('./src/img/**/*.+(gif|jpg|jpeg|png)'),
     js: {
-      entry: path.resolve('./src/js/index.js'),
+      entry: {
+        app: path.resolve('./src/js/index.js')
+      },
       scripts: path.resolve('./src/js/**/*.js'),
       watch: path.resolve('./src/js/**/*')
     },
@@ -30,7 +32,9 @@ var defaults = {
       root: path.resolve('./src/html')
     },
     ts: {
-      entry: path.resolve('./src/ts/index.ts'),
+      entry: {
+        app: path.resolve('./src/ts/index.ts')
+      },
       scripts: path.resolve('./src/ts/**/*.ts'),
       watch: path.resolve('./src/ts/**/*')
     }

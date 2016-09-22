@@ -16,6 +16,6 @@ function task () {
     .pipe(reporter(config.tslint.reporter));
 }
 
-gulp.task('ts:lint', task);
+gulp.task('scripts:tslint', task);
 
 module.exports = task;

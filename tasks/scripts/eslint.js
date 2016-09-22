@@ -18,6 +18,6 @@ function task () {
     }));
 }
 
-gulp.task('js:lint', task);
+gulp.task('scripts:eslint', task);
 
 module.exports = task;

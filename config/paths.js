@@ -5,7 +5,6 @@ var _ = require('lodash');
 var config = require(path.resolve('./gulp.config.js')).paths;
 
 var defaults = {
-  cache: path.resolve('./.build-cache'),
   src: {
     copy: path.resolve('./src/client/copy/**/*'),
     favicons: {
@@ -16,7 +15,9 @@ var defaults = {
     icons: path.resolve('./src/client/icons/**/*.svg'),
     images: path.resolve('./src/client/img/**/*.+(gif|jpg|jpeg|png)'),
     js: {
-      entry: path.resolve('./src/client/js/index.js'),
+      entry: {
+        app: path.resolve('./src/client/js/index.js')
+      },
       scripts: path.resolve('./src/client/js/**/*.js'),
       watch: path.resolve('./src/client/js/**/*')
     },
@@ -36,10 +37,9 @@ var defaults = {
       root: path.resolve('./src/client/html')
     },
     ts: {
-      entry: [
-        path.resolve('./src/client/ts/index.ts'),
-        path.resolve('./typings/index.d.ts')
-      ],
+      entry: {
+        app: path.resolve('./src/client/ts/index.ts')
+      },
       scripts: path.resolve('./src/client/ts/**/*.ts'),
       watch: path.resolve('./src/client/ts/**/*')
     }

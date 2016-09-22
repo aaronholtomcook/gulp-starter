@@ -9,8 +9,8 @@ function task (cb) {
     'clean',
     ['copy', 'express', 'favicons', 'fonts', 'icons', 'images'],
     'templates',
-    ['scss:lint', settings.scripting === 'ts' ? 'ts:lint' : 'js:lint'],
-    ['scss', settings.scripting === 'ts' ? 'ts' : 'js'],
+    ['scss:lint', settings.scripting === 'ts' ? 'scripts:tslint' : 'scripts:eslint'],
+    ['scss', 'scripts'],
     cb
   );
 }

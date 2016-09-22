@@ -15,8 +15,11 @@ var defaults = {
     icons: path.resolve('./src/icons/**/*.svg'),
     images: path.resolve('./src/img/**/*.+(gif|jpg|jpeg|png)'),
     js: {
-      entry: path.resolve('./src/js/index.js'),
-      scripts: path.resolve('./src/js/**/*.js')
+      entry: {
+        app: path.resolve('./src/js/index.js')
+      },
+      scripts: path.resolve('./src/js/**/*.js'),
+      watch: path.resolve('./src/js/**/*')
     },
     packages: {
       bower_components: path.resolve('./bower_components'),
@@ -29,8 +32,11 @@ var defaults = {
       root: path.resolve('./src/html')
     },
     ts: {
-      entry: path.resolve('./src/ts/index.ts'),
-      scripts: path.resolve('./src/ts/**/*.ts')
+      entry: {
+        app: path.resolve('./src/ts/index.ts')
+      },
+      scripts: path.resolve('./src/ts/**/*.ts'),
+      watch: path.resolve('./src/ts/**/*')
     }
   },
   dest: {

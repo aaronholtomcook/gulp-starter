@@ -11,7 +11,6 @@ var config = {
   webpack: require('../../config/webpack')
 };
 
-// TODO: Angular 1 templates
 // TODO: Tree shaking
 // TODO: Error handling
 // TODO: Watch based on task not env

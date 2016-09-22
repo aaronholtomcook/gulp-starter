@@ -1,7 +1,7 @@
 'use strict';
 
 var webpack = require('webpack');
-var NgAnnotatePlugin = require('ng-annotate-webpack-plugin');
+var paths = require('./paths');
 var settings = require('./settings');
 
 var config = {
@@ -12,10 +12,7 @@ var config = {
     extensions: ['', '.js', '.ts']
   },
   module: {
-    loaders: [{
-      test: /\.html$/,
-      loader: 'html'
-    }]
+    loaders: []
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -26,16 +23,15 @@ var config = {
   ]
 };
 
-// Typescript loader
+// Scripting specific options
 if (settings.scripting === 'ts') {
+  // Typescript loader
   config.module.loaders.push({
     test: /\.ts$/,
     loaders: ['ts-loader', settings.angular2 ? 'angular2-template-loader' : null] // Use angular2-template-loader for angular 2 inline templates
   });
-}
-
-// Babel loader for ES6
-if (settings.scripting === 'es6') {
+} else if (settings.scripting === 'es6') {
+  // Babel loader for ES6
   config.module.loaders.push({
     test: /\.js$/,
     exclude: /(node_modules|bower_components)/,
@@ -46,14 +42,26 @@ if (settings.scripting === 'es6') {
   });
 }
 
-// ng-annotate + template loader for angular 1
+// Angular specific options
 if (settings.angular1) {
-  config.plugins.push(new NgAnnotatePlugin());
-  // config.module.loaders.push({
-  //
-  // });
+  // ng-annotate + template loader for angular 1
+  config.module.loaders.push({
+    test: /\.js$/,
+    loader: 'ng-annotate'
+  });
+  config.module.loaders.push({
+    test: /\.html$/,
+    loader: 'ngtemplate?relativeTo=' + paths.src[settings.scripting === 'ts' ? 'ts' : 'js'].watch.replace('/**/*', '') + '/!html'
+  });
+} else if (settings.angular2) {
+  // Template loader for angular 2
+  config.module.loaders.push({
+    test: /\.html$/,
+    loader: 'html'
+  });
 }
 
+// Environment options
 if (process.env.NODE_ENV === 'development') {
   // Watch and add sourcemaps whilst developing
   config.watch = true;

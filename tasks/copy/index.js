@@ -7,7 +7,9 @@ var paths = require('../../config/paths');
 
 function task () {
   return gulp
-    .src(paths.src.copy)
+    .src(paths.src.copy, {
+      dot: true
+    })
     .pipe(changed(paths.dest.base))
     .pipe(gulp.dest(paths.dest.base))
     .pipe(browsersync.stream());

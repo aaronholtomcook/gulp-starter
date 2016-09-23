@@ -6,7 +6,7 @@ var config = require(path.resolve('./gulp.config.js')).paths;
 
 var defaults = {
   src: {
-    copy: path.resolve('./src/copy/**/*'),
+    copy: path.resolve('./src/copy/**/*.*'),
     favicons: {
       icon: path.resolve('./src/favicons/favicon.+(gif|jpg|jpeg|png)'),
       output: path.resolve('./src/html/partials/favicons.html')

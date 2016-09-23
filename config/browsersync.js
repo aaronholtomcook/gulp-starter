@@ -1,5 +1,6 @@
 'use strict';
 
+var history = require('connect-history-api-fallback');
 var paths = require('./paths');
 var settings = require('./settings');
 
@@ -12,7 +13,8 @@ if (settings.proxy) {
 } else {
   config = {
     server: {
-      baseDir: paths.dest.base
+      baseDir: paths.dest.base,
+      middleware: [settings.angular1 || settings.angular2 ? history() : null]
     }
   };
 }
@@ -20,5 +22,5 @@ if (settings.proxy) {
 config.notify = false;
 config.open = false;
 
-// TODO: HTML5 mode for static mode
 module.exports = config;
+

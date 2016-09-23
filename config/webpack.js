@@ -76,6 +76,9 @@ if (settings.angular1) {
     test: /\.html$/,
     loader: 'html'
   });
+  config.htmlLoader = {
+    minimize: true
+  };
 }
 
 // Environment options

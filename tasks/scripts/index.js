@@ -4,6 +4,7 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var webpack = require('webpack-stream');
 var browsersync = require('browser-sync');
+var notifier = require('node-notifier');
 var errorHandler = require('../../utilities/errorHandler');
 var paths = require('../../config/paths');
 var config = {
@@ -11,7 +12,6 @@ var config = {
 };
 
 // TODO: Tree shaking
-// TODO: Error handling
 // TODO: Watch based on task not env
 // TODO: Use actual package once merge request is accepted (https://github.com/shama/webpack-stream/pull/126)
 function task (cb) {
@@ -19,7 +19,16 @@ function task (cb) {
 
   return webpack(config.webpack, null, function (err, stats) {
     if (stats.compilation.errors.length > 0) {
+      // Output error to console
       gutil.log('[Webpack: Error]', stats.compilation.errors);
+
+      // Send error notification
+      notifier.notify({
+        title: '[Webpack: Error]',
+        message: stats.compilation.errors[0].message,
+        sound: true,
+        type: 'error'
+      });
 
       if (flag) {
         flag = false;

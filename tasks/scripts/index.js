@@ -17,7 +17,7 @@ function task (cb) {
   var flag = true;
 
   return webpack(config.webpack, null, function (err, stats) {
-    if (stats.compilation.errors.length > 0) {
+    if (err || stats.compilation.errors.length > 0) {
       // Output error to console
       gutil.log('[Webpack: Error]', stats.compilation.errors);
 

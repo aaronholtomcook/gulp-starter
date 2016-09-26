@@ -13,7 +13,7 @@ function task () {
     .src(paths.src.favicons.icon)
     .pipe(favicons(config.favicons))
     .on('error', errorHandler)
-    .pipe(gulp.dest(paths.dest.favicons))
+    .pipe(gulp.dest(paths.dest.favicons));
 }
 
 gulp.task('favicons', task);

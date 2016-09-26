@@ -3,7 +3,6 @@
 var gulp = require('gulp');
 var watch = require('gulp-watch');
 var paths = require('../../config/paths');
-var settings = require('../../config/settings');
 
 function task () {
   watch(paths.src.copy, function () {

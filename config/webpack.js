@@ -1,7 +1,6 @@
 'use strict';
 
 var webpack = require('webpack');
-var path = require('path');
 var paths = require('./paths');
 var settings = require('./settings');
 var scripting = settings.scripting === 'ts' ? 'ts' : 'js';
@@ -30,7 +29,9 @@ var config = {
 var entry = [];
 
 for (var name in paths.src[scripting].entry) {
-  entry.push(name);
+  if (paths.src[scripting].entry.hasOwnProperty(name)) {
+    entry.push(name);
+  }
 }
 
 // Dedupe if multiple entry points are being used

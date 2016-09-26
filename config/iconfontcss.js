@@ -1,5 +1,4 @@
 var path = require('path');
-var paths = require('./paths');
 
 module.exports = {
   fontName: 'icons',

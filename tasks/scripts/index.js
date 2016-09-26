@@ -5,7 +5,6 @@ var gutil = require('gulp-util');
 var webpack = require('webpack-stream');
 var browsersync = require('browser-sync');
 var notifier = require('node-notifier');
-var errorHandler = require('../../utilities/errorHandler');
 var paths = require('../../config/paths');
 var config = {
   webpack: require('../../config/webpack')

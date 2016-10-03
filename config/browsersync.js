@@ -10,5 +10,6 @@ module.exports = {
     middleware: [settings.angular1 || settings.angular2 ? history() : null]
   },
   notify: false,
-  open: false
+  open: false,
+  port: 3000
 };

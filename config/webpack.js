@@ -4,14 +4,12 @@ var webpack = require('webpack');
 var paths = require('./paths');
 var settings = require('./settings');
 var scripting = settings.scripting === 'ts' ? 'ts' : 'js';
+var root = paths.src[scripting].watch.replace('/**/*', '');
 
 var config = {
-  entry: paths.src[scripting].entry,
-  output: {
-    filename: '[name].js'
-  },
   resolve: {
-    extensions: ['', '.js', '.ts']
+    extensions: ['', '.js', '.ts'],
+    root: root
   },
   module: {
     loaders: []
@@ -25,20 +23,47 @@ var config = {
   ]
 };
 
-// Grab entry point names and determine if we need to dedupe
-var entry = [];
+if (process.env.NODE_ENV === 'test') {
+  // Overwrite tconfig to write sourcemaps for Istanbul to read
+  config.ts = {
+    compilerOptions: {
+      sourceMap: false,
+      inlineSourceMap: true
+    }
+  };
 
-for (var name in paths.src[scripting].entry) {
-  if (paths.src[scripting].entry.hasOwnProperty(name)) {
-    entry.push(name);
+  //
+  config.module.postLoaders = [{
+    test: /\.(js|ts)$/,
+    loader: 'istanbul-instrumenter-loader',
+    include: root,
+    exclude: [
+      /\.(e2e-spec|spec)\.ts$/,
+      /node_modules/
+    ]
+  }];
+} else {
+  // Set entry point and output if we're not testing
+  config.entry = paths.src[scripting].entry;
+  config.output = {
+    filename: '[name].js'
+  };
+
+  // Grab entry point names and determine if we need to dedupe
+  var entry = [];
+
+  for (var name in paths.src[scripting].entry) {
+    if (paths.src[scripting].entry.hasOwnProperty(name)) {
+      entry.push(name);
+    }
   }
-}
 
-// Dedupe if multiple entry points are being used
-if (entry.length > 1) {
-  config.plugins.push(new webpack.optimize.CommonsChunkPlugin({
-    name: entry
-  }));
+  // Dedupe if multiple entry points are being used
+  if (entry.length > 1) {
+    config.plugins.push(new webpack.optimize.CommonsChunkPlugin({
+      name: entry
+    }));
+  }
 }
 
 // Scripting specific options
@@ -46,7 +71,10 @@ if (settings.scripting === 'ts') {
   // Typescript loader
   config.module.loaders.push({
     test: /\.ts$/,
-    loaders: ['ts-loader', settings.angular2 ? 'angular2-template-loader' : null] // Use angular2-template-loader for angular 2 inline templates
+    loaders: ['ts-loader', settings.angular2 ? 'angular2-template-loader' : null], // Use angular2-template-loader for angular 2 inline templates
+    exclude: [
+      /\.e2e-spec\.ts$/
+    ]
   });
 } else if (settings.scripting === 'es6') {
   // Babel loader for ES6
@@ -69,7 +97,7 @@ if (settings.angular1) {
   });
   config.module.loaders.push({
     test: /\.html$/,
-    loader: 'ngtemplate?relativeTo=' + paths.src[scripting].watch.replace('/**/*', '') + '/!html'
+    loader: 'ngtemplate?relativeTo=' + root + '/!html'
   });
 } else if (settings.angular2) {
   // Template loader for angular 2
@@ -86,6 +114,9 @@ if (settings.angular1) {
 if (process.env.NODE_ENV === 'development') {
   // Watch and add sourcemaps whilst developing
   config.watch = true;
+  config.devtool = 'inline-source-map';
+} else if (process.env.NODE_ENV === 'test') {
+  // Configure for testing
   config.devtool = 'inline-source-map';
 } else {
   // Uglify for production builds

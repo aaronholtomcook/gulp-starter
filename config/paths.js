@@ -5,6 +5,10 @@ var _ = require('lodash');
 var config = require(path.resolve('./gulp.config.js')).paths;
 
 var defaults = {
+  config: {
+    karma: path.resolve('./karma.conf.js'),
+    protractor: path.resolve('./protractor.conf.js')
+  },
   src: {
     copy: path.resolve('./src/copy/**/*.*'),
     favicons: {
@@ -18,7 +22,9 @@ var defaults = {
       entry: {
         app: path.resolve('./src/js/index.js')
       },
+      e2e: path.resolve('./src/js/**/*.e2e-spec.js'),
       scripts: path.resolve('./src/js/**/*.js'),
+      unit: path.resolve('./src/js/**/*.spec.js'),
       watch: path.resolve('./src/js/**/*')
     },
     packages: {
@@ -35,7 +41,9 @@ var defaults = {
       entry: {
         app: path.resolve('./src/ts/index.ts')
       },
+      e2e: path.resolve('./src/ts/**/*.e2e-spec.ts'),
       scripts: path.resolve('./src/ts/**/*.ts'),
+      unit: path.resolve('./src/ts/**/*.spec.ts'),
       watch: path.resolve('./src/ts/**/*')
     }
   },

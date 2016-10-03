@@ -9,7 +9,6 @@ var defaults = {
   angular2: false,
   htmlmin: false,
   scripting: 'js', // Set as "js" for JavaScript, "es6" for ES6 and "ts" for TypeScript
-  templates: true,
   uncss: false
 };
 

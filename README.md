@@ -49,7 +49,7 @@ Set this to `true` if you want to minify html on production builds.
 Type: `string`
 Default: `js`
 
-Tells leighton plug what you will be using for clientside scripting. By default it is regular JavaScript, however, you can change it to `es6` or `ts` to use ES6 or TypeScript. This setting must be set to `ts` if you plan to use Angular 2.
+Tells gulp-starter what you will be using for clientside scripting. By default it is regular JavaScript, however, you can change it to `es6` or `ts` to use ES6 or TypeScript. This setting must be set to `ts` if you plan to use Angular 2.
 
 #### uncss
 Type: `boolean`
@@ -60,7 +60,7 @@ Setting this to `true` will run UnCSS against your pages and remove any unused s
 ### Paths
 The default paths might not be fully suited to your particular project, so you can update them to whatever you wish. The default paths are as follows;
 
-```json
+```javascript
 config: {
   karma: './karma.conf.js',
   protractor: './protractor.conf.js'
@@ -169,7 +169,7 @@ Runs tslint against TypeScript code. Only runs if `scripting` is set to `ts`
 Compiles Sass into usable CSS
 
 #### scss:lint
-Lints SCSS using `scss-lint`, which has a Ruby dependency. Awaiting fix for `sass-lint` reporting before switching over to that as that runs using Node.
+Lints SCSS using `sass-lint`.
 
 ### server
 Runs `BrowserSync` development server.

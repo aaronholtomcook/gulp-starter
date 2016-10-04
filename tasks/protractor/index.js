@@ -13,7 +13,7 @@ var scripting = settings.scripting === 'ts' ? 'ts' : 'js';
 function task () {
   return gulp
     .src(paths.src[scripting].e2e)
-    .pipe(protractor(config.protractor.local))
+    .pipe(protractor(config.protractor))
     .on('error', function (e) {
       throw e;
     })

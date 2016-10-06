@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === 'test') {
     }
   };
 
-  //
+  // Make sure output plays nice with Istan
   config.module.postLoaders = [{
     test: /\.(js|ts)$/,
     loader: 'istanbul-instrumenter-loader',

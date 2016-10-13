@@ -105,9 +105,10 @@ if (settings.angular1) {
     test: /\.html$/,
     loader: 'html'
   });
-  config.htmlLoader = {
-    minimize: true
-  };
+  // TODO: Find solution for camelcase ngTags
+  // config.htmlLoader = {
+  //   minimize: true
+  // };
 }
 
 // Environment options

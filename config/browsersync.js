@@ -15,7 +15,8 @@ if (settings.proxy) {
   for (var endpoint in settings.proxy) {
     if (settings.proxy.hasOwnProperty(endpoint)) {
       middleware.push(proxy(endpoint, {
-        target: settings.proxy[endpoint]
+        target: settings.proxy[endpoint],
+        secure: false
       }));
     }
   }

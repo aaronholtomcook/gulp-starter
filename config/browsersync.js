@@ -8,9 +8,7 @@ var settings = require('./settings');
 var middleware = [];
 
 if (settings.angular1 || settings.angular2) {
-  middleware.push(history({
-    disableDotRule: true
-  }));
+  middleware.push(history());
 }
 
 if (settings.proxy) {

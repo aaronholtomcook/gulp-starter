@@ -8,7 +8,12 @@ var settings = require('./settings');
 var middleware = [];
 
 if (settings.angular1 || settings.angular2) {
-  middleware.push(history());
+  middleware.push(history({
+    rewrites: [{
+      from: /^(?!\/assets\/)/i,
+      to: '/index.html'
+    }]
+  }));
 }
 
 if (settings.proxy) {

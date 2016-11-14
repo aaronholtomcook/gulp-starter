@@ -1,6 +1,7 @@
 'use strict';
 
 var gulp = require('gulp');
+var fs = require('fs');
 var sasslint = require('gulp-sass-lint');
 var paths = require('../../config/paths');
 var config = {

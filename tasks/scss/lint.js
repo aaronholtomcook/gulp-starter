@@ -7,12 +7,16 @@ var config = {
   sasslint: require('../../config/sasslint')
 };
 
-// TODO: Output checkstyle reports
 function task () {
+  var file = fs.createWriteStream(paths.reports.sass);
+
   return gulp
     .src(paths.src.sass)
     .pipe(sasslint(config.sasslint))
-    .pipe(sasslint.format());
+    .pipe(sasslint.format(file))
+    .on('finish', function () {
+      file.end();
+    });
 }
 
 gulp.task('scss:lint', task);

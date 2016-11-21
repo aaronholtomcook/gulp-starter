@@ -107,7 +107,8 @@ if (settings.angular1) {
   });
   config.htmlLoader = {
     caseSensitive: true,
-    minimize: true
+    minimize: true,
+    removeAttributeQuotes: false
   };
 }
 

@@ -4,7 +4,7 @@ var paths = require('./paths');
 
 module.exports = {
   options: {
-    configFile: paths.lint.sass,
-    formatter: 'checkstyle'
-  }
+    formatter: process.env.NODE_ENV === 'development' ? 'checkstyle' : 'stylish'
+  },
+  configFile: paths.lint.sass
 };

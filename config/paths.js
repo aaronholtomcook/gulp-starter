@@ -62,7 +62,7 @@ var defaults = {
   },
   lint: {
     js: path.resolve(__dirname, '../linting/.eslintrc'),
-    sass: path.resolve(__dirname, '../linting/.scss-lint.yml'),
+    sass: path.resolve(__dirname, '../linting/.sass-lint.yml'),
     ts: path.resolve(__dirname, '../linting/tslint.json')
   }
 };

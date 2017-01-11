@@ -15,7 +15,7 @@ function task (cb) {
   if (process.env.NODE_ENV === 'production') {
     return mkdirp(path.dirname(paths.reports.sass), function () {
       var file = stream.Writable();
-      var data;
+      var data = '';
 
       file._write = function (chunk, encoding, next) {
         data = data + chunk;

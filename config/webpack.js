@@ -1,15 +1,110 @@
 'use strict';
 
 var webpack = require('webpack');
+var path = require('path');
 var paths = require('./paths');
 var settings = require('./settings');
 var scripting = settings.scripting === 'ts' ? 'ts' : 'js';
 var root = paths.src[scripting].watch.replace('/**/*', '');
 
-var config = {
+function includeClientPackages(packages, localModule) {
+  return function(context, request, cb) {
+    if (localModule instanceof RegExp && localModule.test(request)) {
+      return cb();
+    }
+
+    if (packages instanceof RegExp && packages.test(request)) {
+      return cb();
+    }
+
+    if (Array.isArray(packages) && packages.indexOf(request) !== -1) {
+      return cb();
+    }
+
+    if (!path.isAbsolute(request) && request.charAt(0) !== '.') {
+      return cb(null, 'commonjs ' + request);
+    }
+
+    return cb();
+  };
+}
+
+var server = {
+  target: 'node',
   resolve: {
-    extensions: ['', '.js', '.ts'],
-    root: root
+    extensions: ['.js', '.ts'],
+    modules: [
+      paths.src.packages.node_modules
+    ]
+  },
+  module: {
+    loaders: [{
+      test: /\.html$/,
+      loader: 'html-loader'
+    }]
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      }
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      mangle: {
+        keep_fnames: true
+      },
+      comments: false
+    }),
+    new webpack.NoErrorsPlugin()
+  ],
+  watch: process.env.NODE_ENV === 'development',
+  entry: paths.src.server[scripting],
+  output: {
+    filename: 'www',
+    libraryTarget: 'commonjs2'
+  },
+  node: {
+    global: true,
+    crypto: true,
+    __dirname: false,
+    __filename: false,
+    process: true,
+    Buffer: true
+  },
+  externals: includeClientPackages(
+    /@angularclass|@angular|angular2-|ng2-|ng-|@ng-|angular-|@ngrx|ngrx-|@angular2|ionic|@ionic|-angular2|-ng2|-ng/
+  )
+};
+
+// Scripting specific options
+if (settings.scripting === 'ts') {
+  // Typescript loader
+  server.module.loaders.push({
+    test: /\.ts$/,
+    loaders: ['ts-loader', 'angular2-template-loader'],
+    exclude: [
+      /\.e2e-spec\.ts$/
+    ]
+  });
+} else if (settings.scripting === 'es6') {
+  // Babel loader for ES6
+  server.module.loaders.push({
+    test: /\.js$/,
+    exclude: /(node_modules|bower_components)/,
+    loader: 'babel',
+    query: {
+      presets: ['es2015']
+    }
+  });
+}
+
+var client = {
+  target: 'web',
+  resolve: {
+    extensions: ['.js', '.ts'],
+    modules: [
+      paths.src.packages.node_modules
+    ]
   },
   module: {
     loaders: []
@@ -25,15 +120,15 @@ var config = {
 
 if (process.env.NODE_ENV === 'test') {
   // Overwrite tconfig to write sourcemaps for Istanbul to read
-  config.ts = {
+  client.ts = {
     compilerOptions: {
       sourceMap: false,
       inlineSourceMap: true
     }
   };
 
-  // Make sure output plays nice with Istan
-  config.module.postLoaders = [{
+  // Make sure output plays nice with Istanbul
+  client.module.postLoaders = [{
     test: /\.(js|ts)$/,
     loader: 'istanbul-instrumenter-loader',
     include: root,
@@ -44,8 +139,8 @@ if (process.env.NODE_ENV === 'test') {
   }];
 } else {
   // Set entry point and output if we're not testing
-  config.entry = paths.src[scripting].entry;
-  config.output = {
+  client.entry = paths.src[scripting].entry;
+  client.output = {
     filename: '[name].js'
   };
 
@@ -60,7 +155,7 @@ if (process.env.NODE_ENV === 'test') {
 
   // Dedupe if multiple entry points are being used
   if (entry.length > 1) {
-    config.plugins.push(new webpack.optimize.CommonsChunkPlugin({
+    client.plugins.push(new webpack.optimize.CommonsChunkPlugin({
       name: entry
     }));
   }
@@ -69,7 +164,7 @@ if (process.env.NODE_ENV === 'test') {
 // Scripting specific options
 if (settings.scripting === 'ts') {
   // Typescript loader
-  config.module.loaders.push({
+  client.module.loaders.push({
     test: /\.ts$/,
     loaders: ['ts-loader', settings.angular2 ? 'angular2-template-loader' : null], // Use angular2-template-loader for angular 2 inline templates
     exclude: [
@@ -78,7 +173,7 @@ if (settings.scripting === 'ts') {
   });
 } else if (settings.scripting === 'es6') {
   // Babel loader for ES6
-  config.module.loaders.push({
+  client.module.loaders.push({
     test: /\.js$/,
     exclude: /(node_modules|bower_components)/,
     loader: 'babel',
@@ -91,38 +186,38 @@ if (settings.scripting === 'ts') {
 // Angular specific options
 if (settings.angular1) {
   // ng-annotate + template loader for angular 1
-  config.module.loaders.push({
+  client.module.loaders.push({
     test: /\.js$/,
     loader: 'ng-annotate'
   });
-  config.module.loaders.push({
+  client.module.loaders.push({
     test: /\.html$/,
     loader: 'ngtemplate?relativeTo=' + root + '/!html'
   });
 } else if (settings.angular2) {
   // Template loader for angular 2
-  config.module.loaders.push({
+  client.module.loaders.push({
     test: /\.html$/,
-    loader: 'html'
+    loader: 'html-loader',
+    options: {
+      caseSensitive: true,
+      minimize: true,
+      removeAttributeQuotes: false
+    }
   });
-  config.htmlLoader = {
-    caseSensitive: true,
-    minimize: true,
-    removeAttributeQuotes: false
-  };
 }
 
 // Environment options
 if (process.env.NODE_ENV === 'development') {
   // Watch and add sourcemaps whilst developing
-  config.watch = true;
-  config.devtool = 'inline-source-map';
+  client.watch = true;
+  client.devtool = 'inline-source-map';
 } else if (process.env.NODE_ENV === 'test') {
   // Configure for testing
-  config.devtool = 'inline-source-map';
+  client.devtool = 'inline-source-map';
 } else {
   // Uglify for production builds
-  config.plugins.push(new webpack.optimize.UglifyJsPlugin({
+  client.plugins.push(new webpack.optimize.UglifyJsPlugin({
     mangle: {
       keep_fnames: true
     },
@@ -130,7 +225,8 @@ if (process.env.NODE_ENV === 'development') {
   }));
 
   // No errors
-  config.plugins.push(new webpack.NoErrorsPlugin());
+  client.plugins.push(new webpack.NoErrorsPlugin());
 }
 
-module.exports = config;
+exports.client = client;
+exports.server = server;

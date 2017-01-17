@@ -45,6 +45,10 @@ var defaults = {
       scripts: path.resolve('./src/ts/**/*.ts'),
       unit: path.resolve('./src/ts/**/*.spec.ts'),
       watch: path.resolve('./src/ts/**/*')
+    },
+    server: {
+      js: path.resolve('./src/bin/www.js'),
+      ts: path.resolve('./src/bin/www.ts')
     }
   },
   dest: {
@@ -53,7 +57,8 @@ var defaults = {
     favicons: path.resolve('./dist/assets/favicons'),
     fonts: path.resolve('./dist/assets/fonts'),
     images: path.resolve('./dist/assets/img'),
-    js: path.resolve('./dist/assets/js')
+    js: path.resolve('./dist/assets/js'),
+    server: path.resolve('./dist/bin')
   },
   reports: {
     js: path.resolve('./reports/js/checkstyle.xml'),

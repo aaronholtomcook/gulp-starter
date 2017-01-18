@@ -7,7 +7,7 @@ var webpackStream = require('webpack-stream');
 var notifier = require('node-notifier');
 var paths = require('../../config/paths');
 var config = {
-  webpack: require('../../config/webpack')
+  webpack: require('../../config/webpack').server
 };
 
 // TODO: Tree shaking
@@ -16,7 +16,7 @@ var config = {
 function task (cb) {
   var flag = true;
 
-  return webpackStream(config.webpack.server, webpack, function (err, stats) {
+  return webpackStream(config.webpack, webpack, function (err, stats) {
     if (err || stats.compilation.errors.length > 0) {
       // Output error to console
       gutil.log('[Webpack: Error]', stats.compilation.errors);

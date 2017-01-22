@@ -2,7 +2,8 @@
 
 var gulp = require('gulp');
 var gutil = require('gulp-util');
-var webpack = require('webpack-stream');
+var webpack = require('webpack');
+var webpackStream = require('webpack-stream');
 var browsersync = require('browser-sync');
 var notifier = require('node-notifier');
 var paths = require('../../config/paths');
@@ -16,7 +17,7 @@ var config = {
 function task (cb) {
   var flag = true;
 
-  return webpack(config.webpack, null, function (err, stats) {
+  return webpackStream(config.webpack, webpack, function (err, stats) {
     if (err || stats.compilation.errors.length > 0) {
       // Output error to console
       gutil.log('[Webpack: Error]', stats.compilation.errors);

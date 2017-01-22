@@ -32,13 +32,13 @@ if (process.env.NODE_ENV === 'test') {
     }
   };
 
-  // Make sure output plays nice with Istan
+  // Make sure output plays nice with Istanbul
   config.module.postLoaders = [{
     test: /\.(js|ts)$/,
     loader: 'istanbul-instrumenter-loader',
     include: root,
     exclude: [
-      /\.(e2e-spec|spec)\.ts$/,
+      /\.(e2e-spec|spec|mock)\.ts$/,
       /node_modules/
     ]
   }];

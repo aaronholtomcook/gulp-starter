@@ -71,7 +71,7 @@ if (settings.scripting === 'ts') {
   // Typescript loader
   config.module.loaders.push({
     test: /\.ts$/,
-    loaders: settings.angular2 ? ['awesome-typescript-loader', 'angular2-template-loader'] : ['awesome-typescript-loader'], // Use angular2-template-loader for angular 2 inline templates
+    loaders: settings.angular2 ? ['awesome-typescript-loader', 'angular2-template-loader', 'angular2-router-loader'] : ['awesome-typescript-loader'], // Use angular2-template-loader for angular 2 inline templates
     exclude: [
       /\.e2e-spec\.ts$/
     ]

@@ -24,14 +24,6 @@ var config = {
 };
 
 if (process.env.NODE_ENV === 'test') {
-  // Overwrite tconfig to write sourcemaps for Istanbul to read
-  config.ts = {
-    compilerOptions: {
-      sourceMap: false,
-      inlineSourceMap: true
-    }
-  };
-
   // Make sure output plays nice with Istanbul
   config.module.postLoaders = [{
     test: /\.(js|ts)$/,
@@ -68,10 +60,18 @@ if (process.env.NODE_ENV === 'test') {
 
 // Scripting specific options
 if (settings.scripting === 'ts') {
+  var atLoaderOpts;
+
+  if (process.env.NODE_ENV === 'test') {
+    atLoaderOpts = 'awesome-typescript-loader?sourceMap=false,inlineSourceMap=true';
+  } else {
+    atLoaderOpts = 'awesome-typescript-loader';
+  }
+
   // Typescript loader
   config.module.loaders.push({
     test: /\.ts$/,
-    loaders: settings.angular2 ? ['awesome-typescript-loader', 'angular2-template-loader', 'angular2-router-loader'] : ['awesome-typescript-loader'], // Use angular2-template-loader for angular 2 inline templates
+    loaders: settings.angular2 ? [atLoaderOpts, 'angular2-template-loader', 'angular2-router-loader'] : [atLoaderOpts], // Use angular2-template-loader for angular 2 inline templates
     exclude: [
       /\.e2e-spec\.ts$/
     ]

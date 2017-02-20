@@ -3,6 +3,7 @@
 var webpack = require('webpack');
 var paths = require('./paths');
 var settings = require('./settings');
+var AotPlugin = require('@ngtools/webpack').AotPlugin;
 var scripting = settings.scripting === 'ts' ? 'ts' : 'js';
 var root = paths.src[scripting].watch.replace('/**/*', '');
 
@@ -67,6 +68,7 @@ if (process.env.NODE_ENV === 'test') {
 // Scripting specific options
 if (settings.scripting === 'ts') {
   var atLoaderOpts;
+  var ng2Loaders;
 
   if (process.env.NODE_ENV === 'test') {
     atLoaderOpts = 'awesome-typescript-loader?sourceMap=false,inlineSourceMap=true';
@@ -74,10 +76,24 @@ if (settings.scripting === 'ts') {
     atLoaderOpts = 'awesome-typescript-loader';
   }
 
+  if (process.env.NODE_ENV === 'production') {
+    // Angular2 AOT compiling
+    ng2Loaders = ['@ngtools/webpack'];
+
+    config.plugins.push(
+      new AotPlugin({
+        tsConfigPath: paths.config.ts,
+        entryModule: '/src/ts/app#AppModule'
+      })
+    );
+  } else {
+    ng2Loaders = [atLoaderOpts, 'angular2-template-loader', 'angular2-router-loader'];
+  }
+
   // Typescript loader
   config.module.rules.push({
     test: /\.ts$/,
-    loaders: settings.angular2 ? [atLoaderOpts, 'angular2-template-loader', 'angular2-router-loader'] : [atLoaderOpts], // Use angular2-template-loader for angular 2 inline templates
+    loaders: settings.angular2 ? ng2Loaders : [atLoaderOpts], // Use angular2-template-loader for angular 2 inline templates
     exclude: [
       /\.e2e-spec\.ts$/
     ]

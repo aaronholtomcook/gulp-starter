@@ -7,7 +7,8 @@ var config = require(path.resolve('./gulp.config.js')).paths;
 var defaults = {
   config: {
     karma: path.resolve('./karma.conf.js'),
-    protractor: path.resolve('./protractor.conf.js')
+    protractor: path.resolve('./protractor.conf.js'),
+    ts: path.resolve('./tsconfig.json')
   },
   src: {
     copy: path.resolve('./src/copy/**/*.*'),

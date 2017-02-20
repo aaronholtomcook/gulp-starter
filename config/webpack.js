@@ -1,6 +1,7 @@
 'use strict';
 
 var webpack = require('webpack');
+var path = require('path');
 var paths = require('./paths');
 var settings = require('./settings');
 var AotPlugin = require('@ngtools/webpack').AotPlugin;
@@ -22,7 +23,13 @@ var config = {
       'process.env': {
         'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
       }
-    })
+    }),
+    new webpack.ContextReplacementPlugin(
+      // The (\\|\/) piece accounts for path separators in *nix and Windows
+      /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+      root, // location of your src
+      {}
+    )
   ],
   module: {
     rules: []
@@ -78,16 +85,16 @@ if (settings.scripting === 'ts') {
 
   if (process.env.NODE_ENV === 'production') {
     // Angular2 AOT compiling
-    ng2Loaders = ['@ngtools/webpack'];
+    ng2Loaders = ['@ngtools/webpack', 'angular-router-loader?aot=true'];
 
     config.plugins.push(
       new AotPlugin({
         tsConfigPath: paths.config.ts,
-        entryModule: '/src/ts/app#AppModule'
+        entryModule: path.resolve(root, 'app/app.module#AppModule'),
       })
     );
   } else {
-    ng2Loaders = [atLoaderOpts, 'angular2-template-loader', 'angular2-router-loader'];
+    ng2Loaders = [atLoaderOpts, 'angular2-template-loader', 'angular-router-loader'];
   }
 
   // Typescript loader

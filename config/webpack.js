@@ -8,11 +8,13 @@ var root = paths.src[scripting].watch.replace('/**/*', '');
 
 var config = {
   resolve: {
-    extensions: ['', '.js', '.ts'],
-    root: root
-  },
-  module: {
-    loaders: []
+    extensions: [
+      '.js',
+      '.ts'
+    ],
+    modules: [
+      'node_modules'
+    ]
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -20,12 +22,16 @@ var config = {
         'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
       }
     })
-  ]
+  ],
+  module: {
+    rules: []
+  }
 };
 
 if (process.env.NODE_ENV === 'test') {
   // Make sure output plays nice with Istanbul
-  config.module.postLoaders = [{
+  config.module.rules = [{
+    enforce: 'post',
     test: /\.(js|ts)$/,
     loader: 'istanbul-instrumenter-loader',
     include: root,
@@ -69,7 +75,7 @@ if (settings.scripting === 'ts') {
   }
 
   // Typescript loader
-  config.module.loaders.push({
+  config.module.rules.push({
     test: /\.ts$/,
     loaders: settings.angular2 ? [atLoaderOpts, 'angular2-template-loader', 'angular2-router-loader'] : [atLoaderOpts], // Use angular2-template-loader for angular 2 inline templates
     exclude: [
@@ -78,10 +84,10 @@ if (settings.scripting === 'ts') {
   });
 } else if (settings.scripting === 'es6') {
   // Babel loader for ES6
-  config.module.loaders.push({
+  config.module.rules.push({
     test: /\.js$/,
     exclude: /(node_modules|bower_components)/,
-    loader: 'babel',
+    loader: 'babel-loader',
     query: {
       presets: ['es2015']
     }
@@ -91,25 +97,25 @@ if (settings.scripting === 'ts') {
 // Angular specific options
 if (settings.angular1) {
   // ng-annotate + template loader for angular 1
-  config.module.loaders.push({
+  config.module.rules.push({
     test: /\.js$/,
-    loader: 'ng-annotate'
+    loader: 'ng-annotate-loader'
   });
-  config.module.loaders.push({
+  config.module.rules.push({
     test: /\.html$/,
-    loader: 'ngtemplate?relativeTo=' + root + '/!html'
+    loader: 'ngtemplate-loader?relativeTo=' + root + '/!html'
   });
 } else if (settings.angular2) {
   // Template loader for angular 2
-  config.module.loaders.push({
+  config.module.rules.push({
     test: /\.html$/,
-    loader: 'html'
+    loader: 'html-loader',
+    query: {
+      caseSensitive: true,
+      minimize: true,
+      removeAttributeQuotes: false
+    }
   });
-  config.htmlLoader = {
-    caseSensitive: true,
-    minimize: true,
-    removeAttributeQuotes: false
-  };
 }
 
 // Environment options

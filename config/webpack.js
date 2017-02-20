@@ -159,7 +159,7 @@ if (process.env.NODE_ENV === 'development') {
   }));
 
   // No errors
-  config.plugins.push(new webpack.NoErrorsPlugin());
+  config.plugins.push(new webpack.NoEmitOnErrorsPlugin());
 }
 
 module.exports = config;

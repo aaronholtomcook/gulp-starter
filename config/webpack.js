@@ -23,13 +23,12 @@ var config = {
       'process.env': {
         'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
       }
-    }),
-    new webpack.ContextReplacementPlugin(
-      // The (\\|\/) piece accounts for path separators in *nix and Windows
-      /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
-      root, // location of your src
-      {}
-    )
+    })
+    // new webpack.ContextReplacementPlugin(
+    //   // The (\\|\/) piece accounts for path separators in *nix and Windows
+    //   /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+    //   root
+    // )
   ],
   module: {
     rules: []
@@ -52,7 +51,8 @@ if (process.env.NODE_ENV === 'test') {
   // Set entry point and output if we're not testing
   config.entry = paths.src[scripting].entry;
   config.output = {
-    filename: '[name].js'
+    filename: '[name].js',
+    publicPath: path.join(paths.dest.js.replace(paths.dest.base, ''), '/')
   };
 
   // Grab entry point names and determine if we need to dedupe
@@ -85,12 +85,11 @@ if (settings.scripting === 'ts') {
 
   if (process.env.NODE_ENV === 'production') {
     // Angular2 AOT compiling
-    ng2Loaders = ['@ngtools/webpack', 'angular-router-loader?aot=true'];
+    ng2Loaders = ['@ngtools/webpack'];
 
     config.plugins.push(
       new AotPlugin({
-        tsConfigPath: paths.config.ts,
-        entryModule: path.resolve(root, 'app/app.module#AppModule'),
+        tsConfigPath: paths.config.ts
       })
     );
   } else {

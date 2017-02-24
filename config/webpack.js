@@ -1,5 +1,6 @@
 'use strict';
 
+var path = require('path');
 var webpack = require('webpack');
 var paths = require('./paths');
 var settings = require('./settings');
@@ -90,7 +91,7 @@ if (settings.scripting === 'ts') {
   config.module.rules.push({
     test: /\.js$/,
     exclude: /(node_modules|bower_components)/,
-    loader: 'babel',
+    loader: 'babel-loader',
     query: {
       presets: ['es2015']
     }
@@ -102,23 +103,23 @@ if (settings.angular1) {
   // ng-annotate + template loader for angular 1
   config.module.rules.push({
     test: /\.js$/,
-    loader: 'ng-annotate'
+    loader: 'ng-annotate-loader'
   });
   config.module.rules.push({
     test: /\.html$/,
-    loader: 'ngtemplate?relativeTo=' + root + '/!html'
+    loader: 'ngtemplate-loader?relativeTo=' + root + '/!html'
   });
 } else if (settings.angular2) {
   // Template loader for angular 2
   config.module.rules.push({
     test: /\.html$/,
-    loader: 'html'
+    loader: 'html-loader',
+    query: {
+      caseSensitive: true,
+      minimize: true,
+      removeAttributeQuotes: false
+    }
   });
-  config.htmlLoader = {
-    caseSensitive: true,
-    minimize: true,
-    removeAttributeQuotes: false
-  };
 }
 
 // Environment options
@@ -147,7 +148,7 @@ if (process.env.NODE_ENV === 'development') {
   }));
 
   // No errors
-  config.plugins.push(new webpack.NoErrorsPlugin());
+  config.plugins.push(new webpack.NoEmitOnErrorsPlugin());
 }
 
 module.exports = config;

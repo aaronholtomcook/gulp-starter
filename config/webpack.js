@@ -8,11 +8,17 @@ var root = paths.src[scripting].watch.replace('/**/*', '');
 
 var config = {
   resolve: {
-    extensions: ['', '.js', '.ts'],
-    root: root
+    extensions: [
+      '.js',
+      '.ts'
+    ],
+    modules: [
+      paths.src.packages.node_modules,
+      paths.src.packages.bower_components
+    ]
   },
   module: {
-    loaders: []
+    rules: []
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -25,12 +31,14 @@ var config = {
 
 if (process.env.NODE_ENV === 'test') {
   // Make sure output plays nice with Istanbul
-  config.module.postLoaders = [{
+  config.module.rules = [{
+    enforce: 'post',
     test: /\.(js|ts)$/,
     loader: 'istanbul-instrumenter-loader',
     include: root,
     exclude: [
       /\.(e2e-spec|spec|mock)\.ts$/,
+      /bower_components/,
       /node_modules/
     ]
   }];
@@ -38,7 +46,8 @@ if (process.env.NODE_ENV === 'test') {
   // Set entry point and output if we're not testing
   config.entry = paths.src[scripting].entry;
   config.output = {
-    filename: '[name].js'
+    filename: '[name].js',
+    publicPath: path.join(paths.dest.js.replace(paths.dest.base, ''), '/')
   };
 
   // Grab entry point names and determine if we need to dedupe
@@ -63,22 +72,22 @@ if (settings.scripting === 'ts') {
   var atLoaderOpts;
 
   if (process.env.NODE_ENV === 'test') {
-    atLoaderOpts = 'awesome-typescript-loader?sourceMap=false,inlineSourceMap=true';
+    atLoaderOpts = 'awesome-typescript-loader?sourceMap=false,inlineSourceMap=true,module=commonjs';
   } else {
     atLoaderOpts = 'awesome-typescript-loader';
   }
 
   // Typescript loader
-  config.module.loaders.push({
+  config.module.rules.push({
     test: /\.ts$/,
-    loaders: settings.angular2 ? [atLoaderOpts, 'angular2-template-loader', 'angular2-router-loader'] : [atLoaderOpts], // Use angular2-template-loader for angular 2 inline templates
+    loaders: settings.angular2 ? [atLoaderOpts, 'angular2-template-loader', 'angular2-router-loader'] : [atLoaderOpts],
     exclude: [
       /\.e2e-spec\.ts$/
     ]
   });
 } else if (settings.scripting === 'es6') {
   // Babel loader for ES6
-  config.module.loaders.push({
+  config.module.rules.push({
     test: /\.js$/,
     exclude: /(node_modules|bower_components)/,
     loader: 'babel',
@@ -91,17 +100,17 @@ if (settings.scripting === 'ts') {
 // Angular specific options
 if (settings.angular1) {
   // ng-annotate + template loader for angular 1
-  config.module.loaders.push({
+  config.module.rules.push({
     test: /\.js$/,
     loader: 'ng-annotate'
   });
-  config.module.loaders.push({
+  config.module.rules.push({
     test: /\.html$/,
     loader: 'ngtemplate?relativeTo=' + root + '/!html'
   });
 } else if (settings.angular2) {
   // Template loader for angular 2
-  config.module.loaders.push({
+  config.module.rules.push({
     test: /\.html$/,
     loader: 'html'
   });
@@ -120,6 +129,14 @@ if (process.env.NODE_ENV === 'development') {
 } else if (process.env.NODE_ENV === 'test') {
   // Configure for testing
   config.devtool = 'inline-source-map';
+
+  config.plugins.push(
+    new webpack.ContextReplacementPlugin(
+      // The (\\|\/) piece accounts for path separators in *nix and Windows
+      /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+      root
+    )
+  );
 } else {
   // Uglify for production builds
   config.plugins.push(new webpack.optimize.UglifyJsPlugin({

@@ -24,11 +24,6 @@ var config = {
         'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
       }
     })
-    // new webpack.ContextReplacementPlugin(
-    //   // The (\\|\/) piece accounts for path separators in *nix and Windows
-    //   /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
-    //   root
-    // )
   ],
   module: {
     rules: []
@@ -78,7 +73,7 @@ if (settings.scripting === 'ts') {
   var ng2Loaders;
 
   if (process.env.NODE_ENV === 'test') {
-    atLoaderOpts = 'awesome-typescript-loader?sourceMap=false,inlineSourceMap=true';
+    atLoaderOpts = 'awesome-typescript-loader?sourceMap=false,inlineSourceMap=true,module=commonjs';
   } else {
     atLoaderOpts = 'awesome-typescript-loader';
   }
@@ -148,6 +143,14 @@ if (process.env.NODE_ENV === 'development') {
 } else if (process.env.NODE_ENV === 'test') {
   // Configure for testing
   config.devtool = 'inline-source-map';
+
+  config.plugins.push(
+    new webpack.ContextReplacementPlugin(
+      // The (\\|\/) piece accounts for path separators in *nix and Windows
+      /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+      root
+    )
+  );
 } else {
   // Uglify for production builds
   config.plugins.push(new webpack.optimize.UglifyJsPlugin({

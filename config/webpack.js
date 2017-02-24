@@ -1,5 +1,6 @@
 'use strict';
 
+var path = require('path');
 var webpack = require('webpack');
 var paths = require('./paths');
 var settings = require('./settings');
@@ -31,6 +32,7 @@ if (process.env.NODE_ENV === 'test') {
     include: root,
     exclude: [
       /\.(e2e-spec|spec|mock)\.ts$/,
+      /bower_components/,
       /node_modules/
     ]
   }];
@@ -38,7 +40,8 @@ if (process.env.NODE_ENV === 'test') {
   // Set entry point and output if we're not testing
   config.entry = paths.src[scripting].entry;
   config.output = {
-    filename: '[name].js'
+    filename: '[name].js',
+    publicPath: path.join(paths.dest.js.replace(paths.dest.base, ''), '/')
   };
 
   // Grab entry point names and determine if we need to dedupe
@@ -71,7 +74,7 @@ if (settings.scripting === 'ts') {
   // Typescript loader
   config.module.loaders.push({
     test: /\.ts$/,
-    loaders: settings.angular2 ? [atLoaderOpts, 'angular2-template-loader', 'angular2-router-loader'] : [atLoaderOpts], // Use angular2-template-loader for angular 2 inline templates
+    loaders: settings.angular2 ? [atLoaderOpts, 'angular2-template-loader', 'angular-router-loader'] : [atLoaderOpts], // Use angular2-template-loader for angular 2 inline templates
     exclude: [
       /\.e2e-spec\.ts$/
     ]
@@ -81,7 +84,7 @@ if (settings.scripting === 'ts') {
   config.module.loaders.push({
     test: /\.js$/,
     exclude: /(node_modules|bower_components)/,
-    loader: 'babel',
+    loader: 'babel-loader',
     query: {
       presets: ['es2015']
     }
@@ -93,17 +96,17 @@ if (settings.angular1) {
   // ng-annotate + template loader for angular 1
   config.module.loaders.push({
     test: /\.js$/,
-    loader: 'ng-annotate'
+    loader: 'ng-annotate-loader'
   });
   config.module.loaders.push({
     test: /\.html$/,
-    loader: 'ngtemplate?relativeTo=' + root + '/!html'
+    loader: 'ngtemplate-loader?relativeTo=' + root + '/!html'
   });
 } else if (settings.angular2) {
   // Template loader for angular 2
   config.module.loaders.push({
     test: /\.html$/,
-    loader: 'html'
+    loader: 'html-loader'
   });
   config.htmlLoader = {
     caseSensitive: true,

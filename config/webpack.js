@@ -81,7 +81,7 @@ if (settings.scripting === 'ts') {
   // Typescript loader
   config.module.rules.push({
     test: /\.ts$/,
-    loaders: settings.angular2 ? [atLoaderOpts, 'angular2-template-loader', 'angular2-router-loader'] : [atLoaderOpts],
+    loaders: settings.angular2 ? [atLoaderOpts, 'angular2-template-loader', 'angular-router-loader'] : [atLoaderOpts],
     exclude: [
       /\.e2e-spec\.ts$/
     ]

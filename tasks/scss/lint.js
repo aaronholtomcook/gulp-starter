@@ -5,6 +5,7 @@ var path = require('path');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
 var sasslint = require('gulp-sass-lint');
+var gulpIf = require('gulp-if');
 var stream = require('stream');
 var paths = require('../../config/paths');
 var config = {
@@ -27,6 +28,7 @@ function task (cb) {
         .src(paths.src.sass)
         .pipe(sasslint(config.sasslint))
         .pipe(sasslint.format(file))
+        .pipe(gulpIf(process.env.NODE_ENV === 'production', sasslint.failOnError()))
         .on('finish', function () {
           data = data.replace(/\<\?xml version\=\"\d\.\d\" encoding\=\"utf\-8\"\?\>\<checkstyle version\=\"\d\.\d\"\>/g, '');
           data = data.replace(/\<\/checkstyle\>/g, '');

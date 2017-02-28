@@ -17,7 +17,7 @@ function task (cb) {
     'templates',
     ['scss:lint', settings.scripting === 'ts' ? 'scripts:tslint' : 'scripts:eslint'],
     ['scss', 'scripts'],
-    doRev,
+    doRev(),
     cb
   );
 }

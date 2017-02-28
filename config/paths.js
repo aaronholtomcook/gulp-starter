@@ -49,6 +49,7 @@ var defaults = {
     }
   },
   dest: {
+    assets: path.resolve('./dist/assets'),
     base: path.resolve('./dist'),
     css: path.resolve('./dist/assets/css'),
     favicons: path.resolve('./dist/assets/favicons'),

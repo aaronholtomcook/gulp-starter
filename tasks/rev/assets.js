@@ -3,6 +3,7 @@
 var gulp = require('gulp');
 var rev = require('gulp-rev');
 var revNapkin = require('gulp-rev-napkin');
+var path = require('path');
 var paths = require('../../config/paths');
 var config = {
   rev: require('../../config/rev'),
@@ -12,14 +13,16 @@ var config = {
 function task () {
   return gulp
     .src([
-      paths.dest.fonts,
-      paths.dest.images
-    ])
+      path.join(paths.dest.fonts, '/**/*'),
+      path.join(paths.dest.images, '/**/*')
+    ], {
+      base: paths.dest.assets
+    })
     .pipe(rev())
-    .pipe(gulp.dest(paths.dest.base))
+    .pipe(gulp.dest(paths.dest.assets))
     .pipe(revNapkin(config.revNapkin))
     .pipe(rev.manifest(paths.src.templates.manifest, config.rev))
-    .pipe(gulp.dest(paths.dest.base));
+    .pipe(gulp.dest(''));
 }
 
 gulp.task('rev:assets', task);

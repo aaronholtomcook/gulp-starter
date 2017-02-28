@@ -12,9 +12,9 @@ var config = {
 
 function task () {
   return gulp
-    .src(path.join(paths.dest.css, '/**/*'))
+    .src(path.join(paths.dest.base, '/**/*.css'))
     .pipe(rev())
-    .pipe(gulp.dest(paths.dest.css))
+    .pipe(gulp.dest(paths.dest.base))
     .pipe(revNapkin(config.revNapkin))
     .pipe(rev.manifest(paths.src.templates.manifest, config.rev))
     .pipe(gulp.dest(''));

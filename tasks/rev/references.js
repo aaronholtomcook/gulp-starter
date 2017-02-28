@@ -2,6 +2,8 @@
 
 var gulp = require('gulp');
 var revReplace = require('gulp-rev-replace');
+var path = require('path');
+var errorHandler = require('../../utilities/errorHandler');
 var paths = require('../../config/paths');
 var config = {
   revReplace: require('../../config/revReplace')
@@ -9,9 +11,10 @@ var config = {
 
 function task () {
   return gulp
-    .src(paths.dest.css)
+    .src(path.join(paths.dest.assets, '/**/*.{css,js}'))
     .pipe(revReplace(config.revReplace))
-    .pipe(gulp.dest(paths.dest.css));
+    .on('error', errorHandler)
+    .pipe(gulp.dest(paths.dest.assets));
 }
 
 gulp.task('rev:references', task);

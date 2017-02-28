@@ -34,6 +34,7 @@ var defaults = {
     sass: path.resolve('./src/scss/**/*.+(scss|sass)'),
     templates: {
       data: path.resolve('./src/html/data/global.json'),
+      manifest: path.resolve('./src/html/data/rev-manifest.json'),
       pages: path.resolve('./src/html/pages/**/*.html'),
       root: path.resolve('./src/html')
     },

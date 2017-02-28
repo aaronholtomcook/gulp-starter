@@ -40,7 +40,7 @@ if (process.env.NODE_ENV === 'test') {
   // Set entry point and output if we're not testing
   config.entry = paths.src[scripting].entry;
   config.output = {
-    filename: '[name].js',
+    filename: process.env.NODE_ENV === 'production' ? '[name]-[hash].js' : '[name].js',
     publicPath: path.join(paths.dest.js.replace(paths.dest.base, ''), '/')
   };
 

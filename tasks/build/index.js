@@ -4,6 +4,12 @@ var gulp = require('gulp');
 var sequence = require('gulp-sequence');
 var settings = require('../../config/settings');
 
+function doRev () {
+  if (process.env.NODE_ENV === 'production') {
+    return 'rev';
+  }
+}
+
 function task (cb) {
   sequence(
     'clean',
@@ -11,6 +17,7 @@ function task (cb) {
     'templates',
     ['scss:lint', settings.scripting === 'ts' ? 'scripts:tslint' : 'scripts:eslint'],
     ['scss', 'scripts'],
+    doRev,
     cb
   );
 }

@@ -2,7 +2,6 @@
 
 var gulp = require('gulp');
 var revReplace = require('gulp-rev-replace');
-var path = require('path');
 var paths = require('../../config/paths');
 var config = {
   revReplace: require('../../config/revReplace')
@@ -10,9 +9,9 @@ var config = {
 
 function task () {
   return gulp
-    .src(path.join(paths.dest.base, '/**/*.{css, js}'))
+    .src(paths.dest.css)
     .pipe(revReplace(config.revReplace))
-    .pipe(gulp.dest(paths.dest.base));
+    .pipe(gulp.dest(paths.dest.css));
 }
 
 gulp.task('rev:references', task);

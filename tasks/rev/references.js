@@ -8,7 +8,7 @@ var paths = require('../../config/paths');
 
 function task () {
   return gulp
-    .src(path.join(paths.dest.assets, '/**/*.{css,js}'))
+    .src(path.join(paths.dest.assets, '/**/*.css'))
     .pipe(revReplace({
       manifest: gulp.src(paths.src.templates.manifest)
     }))

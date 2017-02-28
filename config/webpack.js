@@ -4,8 +4,10 @@ var path = require('path');
 var webpack = require('webpack');
 var paths = require('./paths');
 var settings = require('./settings');
+var WebpackManifest = require('../utilities/webpackManifest');
 var scripting = settings.scripting === 'ts' ? 'ts' : 'js';
 var root = paths.src[scripting].watch.replace('/**/*', '');
+var publicPath = path.join(paths.dest.js.replace(paths.dest.base, ''), '/');
 
 var config = {
   resolve: {
@@ -41,7 +43,7 @@ if (process.env.NODE_ENV === 'test') {
   config.entry = paths.src[scripting].entry;
   config.output = {
     filename: process.env.NODE_ENV === 'production' ? '[name]-[hash].js' : '[name].js',
-    publicPath: path.join(paths.dest.js.replace(paths.dest.base, ''), '/')
+    publicPath: publicPath
   };
 
   // Grab entry point names and determine if we need to dedupe
@@ -124,6 +126,11 @@ if (process.env.NODE_ENV === 'development') {
   // Configure for testing
   config.devtool = 'inline-source-map';
 } else {
+  // Add to rev manifest
+  config.plugins.push(
+    new WebpackManifest(publicPath, paths.dest.base)
+  );
+
   // Uglify for production builds
   config.plugins.push(new webpack.optimize.UglifyJsPlugin({
     mangle: {

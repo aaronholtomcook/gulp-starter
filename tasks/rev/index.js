@@ -6,6 +6,7 @@ var sequence = require('gulp-sequence');
 function task (cb) {
   sequence(
     'rev:assets',
+    'rev:references',
     cb
   );
 }

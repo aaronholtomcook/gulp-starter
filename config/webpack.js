@@ -2,7 +2,6 @@
 
 var path = require('path');
 var webpack = require('webpack');
-var ManifestPlugin = require('webpack-manifest-plugin');
 var paths = require('./paths');
 var settings = require('./settings');
 var WebpackManifest = require('../utilities/webpackManifest');
@@ -128,12 +127,14 @@ if (process.env.NODE_ENV === 'development') {
   config.devtool = 'inline-source-map';
 } else {
   // Replace references from the rev manifest
-  config.plugins.push(
-    new ManifestPlugin({
-      fileName: paths.src.templates.manifest
-    })
-  );
-  
+  config.module.loaders.push({
+    test: /\.(js|ts)$/,
+    loader: 'rev-replace',
+    query: {
+      manifestPath: paths.src.templates.manifest
+    }
+  });
+
   // Add to rev manifest
   config.plugins.push(
     new WebpackManifest({

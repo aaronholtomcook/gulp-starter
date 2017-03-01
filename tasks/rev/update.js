@@ -13,17 +13,17 @@ var config = {
 
 function task () {
   var css = gulp
-    .src(path.join(paths.dest.base, '/**/*.css'))
+    .src(path.join(paths.dest.css, '/**/*'))
     .pipe(rev())
-    .pipe(gulp.dest(paths.dest.base))
+    .pipe(gulp.dest(paths.dest.css))
     .pipe(revNapkin(config.revNapkin))
     .pipe(rev.manifest(paths.src.templates.manifest, config.rev))
     .pipe(gulp.dest(''));
 
   var favicon = gulp
-    .src(path.join(paths.dest.favicons, '/**/*.{json, webapp, xml}'))
+    .src(path.join(paths.dest.favicons, '/**/*.{json,webapp,xml}'))
     .pipe(rev())
-    .pipe(gulp.dest(paths.dest.base))
+    .pipe(gulp.dest(paths.dest.favicons))
     .pipe(revNapkin(config.revNapkin))
     .pipe(rev.manifest(paths.src.templates.manifest, config.rev))
     .pipe(gulp.dest(''));
@@ -31,6 +31,6 @@ function task () {
   return merge(css, favicon);
 }
 
-gulp.task('rev:css', task);
+gulp.task('rev:update', task);
 
 module.exports = task;

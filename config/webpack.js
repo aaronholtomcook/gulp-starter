@@ -7,7 +7,7 @@ var settings = require('./settings');
 var WebpackManifest = require('../utilities/webpackManifest');
 var scripting = settings.scripting === 'ts' ? 'ts' : 'js';
 var root = paths.src[scripting].watch.replace('/**/*', '');
-var publicPath = path.join(paths.dest.js.replace(paths.dest.base, ''), '/');
+var publicPath = paths.dest.js.replace(paths.dest.base + '/', '');
 
 var config = {
   resolve: {
@@ -43,7 +43,7 @@ if (process.env.NODE_ENV === 'test') {
   config.entry = paths.src[scripting].entry;
   config.output = {
     filename: process.env.NODE_ENV === 'production' ? '[name]-[hash].js' : '[name].js',
-    publicPath: publicPath
+    publicPath: path.join(publicPath, '/')
   };
 
   // Grab entry point names and determine if we need to dedupe

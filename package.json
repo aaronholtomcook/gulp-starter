@@ -75,6 +75,7 @@
     "tslint": "^3.15.1",
     "typescript": "^2.0.3",
     "webpack": "^1.13.2",
+    "webpack-manifest-plugin": "^1.1.0",
     "webpack-stream": "jeroennoten/webpack-stream#patch-1"
   },
   "devDependencies": {

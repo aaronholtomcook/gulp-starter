@@ -8,7 +8,6 @@ function task (cb) {
     'rev:assets',
     'rev:references',
     'rev:update',
-    'rev:html',
     cb
   );
 }

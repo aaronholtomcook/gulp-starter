@@ -34,6 +34,7 @@ var defaults = {
     sass: path.resolve('./src/scss/**/*.+(scss|sass)'),
     templates: {
       data: path.resolve('./src/html/data/global.json'),
+      manifest: path.resolve('./src/html/data/rev-manifest.json'),
       pages: path.resolve('./src/html/pages/**/*.html'),
       root: path.resolve('./src/html')
     },
@@ -48,6 +49,7 @@ var defaults = {
     }
   },
   dest: {
+    assets: path.resolve('./dist/assets'),
     base: path.resolve('./dist'),
     css: path.resolve('./dist/assets/css'),
     favicons: path.resolve('./dist/assets/favicons'),

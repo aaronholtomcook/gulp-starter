@@ -10,7 +10,10 @@ function task (cb) {
     ['copy', 'favicons', 'fonts', 'icons', 'images'],
     'templates',
     ['scss:lint', settings.scripting === 'ts' ? 'scripts:tslint' : 'scripts:eslint'],
-    ['scss', 'scripts'],
+    'scss',
+    process.env.NODE_ENV === 'production' ? 'rev' : false,
+    'scripts',
+    process.env.NODE_ENV === 'production' ? 'rev:html' : false,
     cb
   );
 }

@@ -7,7 +7,7 @@ function task (cb) {
   sequence(
     'rev:assets',
     'rev:references',
-    'rev:css',
+    'rev:update',
     'rev:html',
     cb
   );

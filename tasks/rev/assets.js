@@ -13,6 +13,7 @@ var config = {
 function task () {
   return gulp
     .src([
+      path.join(paths.dest.favicons, '/**/*.{gif,ico,jpeg,jpg,png}'),
       path.join(paths.dest.fonts, '/**/*'),
       path.join(paths.dest.images, '/**/*')
     ], {

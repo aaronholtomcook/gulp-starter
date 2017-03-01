@@ -128,7 +128,9 @@ if (process.env.NODE_ENV === 'development') {
 } else {
   // Add to rev manifest
   config.plugins.push(
-    new WebpackManifest(publicPath, paths.dest.base)
+    new WebpackManifest({
+      publicPath: publicPath
+    })
   );
 
   // Uglify for production builds

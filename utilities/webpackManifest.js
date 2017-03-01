@@ -4,25 +4,29 @@ var paths = require('../config/paths');
 var path = require('path');
 var fs = require('fs');
 
-module.exports = function (publicPath, destination) {
-  return function () {
-    this.plugin('done', function (stats) {
-      var statsJson = stats.toJson();
-      var chunks = statsJson.assetsByChunkName;
-      var manifest = {};
+function WebpackManifest (opts) {
+  this.opts = opts;
+}
 
-      for (var key in chunks) {
-        if (chunks.hasOwnProperty(key)) {
-          var originalFilename = key + '.js';
+WebpackManifest.prototype.apply = function (compiler) {
+  var opts = this.opts;
 
-          manifest[path.join(publicPath, originalFilename)] = path.join(publicPath, chunks[key]);
-        }
+  compiler.plugin('done', function (stats) {
+    var statsJson = stats.toJson();
+    var chunks = statsJson.assetsByChunkName;
+    var manifest = {};
+
+    for (var key in chunks) {
+      if (chunks.hasOwnProperty(key)) {
+        manifest[path.join(opts.publicPath, key + '.js')] = path.join(opts.publicPath, chunks[key]);
       }
+    }
 
-      fs.writeFileSync(
-        path.join(process.cwd(), destination, paths.src.templates.manifest),
-        JSON.stringify(manifest)
-      );
-    });
-  };
+    fs.writeFileSync(
+      paths.src.templates.manifest,
+      JSON.stringify(manifest)
+    );
+  });
 };
+
+module.exports = WebpackManifest;

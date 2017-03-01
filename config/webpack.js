@@ -76,7 +76,7 @@ if (settings.scripting === 'ts') {
     exclude.push(/\.e2e-spec\.ts$/);
   } else {
     atLoaderOpts = 'awesome-typescript-loader';
-    exclude.push(/\.(e2e-spec|spec|mock)\.ts$/);
+    exclude.push(/\.(e2e-spec|spec)\.ts$/);
   }
 
   // Typescript loader

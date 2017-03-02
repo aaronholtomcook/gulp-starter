@@ -4,8 +4,10 @@ var path = require('path');
 var webpack = require('webpack');
 var paths = require('./paths');
 var settings = require('./settings');
+var WebpackManifest = require('../utilities/webpackManifest');
 var scripting = settings.scripting === 'ts' ? 'ts' : 'js';
 var root = paths.src[scripting].watch.replace('/**/*', '');
+var publicPath = paths.dest.js.replace(paths.dest.base + '/', '');
 
 var config = {
   resolve: {
@@ -47,8 +49,8 @@ if (process.env.NODE_ENV === 'test') {
   // Set entry point and output if we're not testing
   config.entry = paths.src[scripting].entry;
   config.output = {
-    filename: '[name].js',
-    publicPath: path.join(paths.dest.js.replace(paths.dest.base, ''), '/')
+    filename: process.env.NODE_ENV === 'production' ? '[name]-[hash].js' : '[name].js',
+    publicPath: path.join(publicPath, '/')
   };
 
   // Grab entry point names and determine if we need to dedupe
@@ -71,20 +73,24 @@ if (process.env.NODE_ENV === 'test') {
 // Scripting specific options
 if (settings.scripting === 'ts') {
   var atLoaderOpts;
+  var exclude = [
+    /bower_components/,
+    /node_modules/
+  ];
 
   if (process.env.NODE_ENV === 'test') {
     atLoaderOpts = 'awesome-typescript-loader?sourceMap=false,inlineSourceMap=true,module=commonjs';
+    exclude.push(/\.e2e-spec\.ts$/);
   } else {
     atLoaderOpts = 'awesome-typescript-loader';
+    exclude.push(/\.(e2e-spec|spec)\.ts$/);
   }
 
   // Typescript loader
   config.module.rules.push({
     test: /\.ts$/,
     loaders: settings.angular2 ? [atLoaderOpts, 'angular2-template-loader', 'angular-router-loader'] : [atLoaderOpts],
-    exclude: [
-      /\.e2e-spec\.ts$/
-    ]
+    exclude: exclude
   });
 } else if (settings.scripting === 'es6') {
   // Babel loader for ES6
@@ -139,6 +145,26 @@ if (process.env.NODE_ENV === 'development') {
     )
   );
 } else {
+  // Replace references from the rev manifest
+  config.module.rules.push({
+    test: /\.html$/,
+    exclude: [
+      /bower_components/,
+      /node_modules/
+    ],
+    loader: 'rev-replace-loader',
+    query: {
+      manifestPath: paths.src.templates.manifest
+    }
+  });
+
+  // Add to rev manifest
+  config.plugins.push(
+    new WebpackManifest({
+      publicPath: publicPath
+    })
+  );
+
   // Uglify for production builds
   config.plugins.push(new webpack.optimize.UglifyJsPlugin({
     mangle: {

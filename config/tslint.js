@@ -8,7 +8,7 @@ module.exports = {
   },
   report: {
     summarizeFailureOutput: true,
-    emitError: false
+    emitError: process.env.NODE_ENV === 'production'
   },
   reporter: {
     sort: true,

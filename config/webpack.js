@@ -2,6 +2,11 @@
 
 var path = require('path');
 var webpack = require('webpack');
+
+var nodeResolve = require('rollup-plugin-node-resolve');
+var commonjs = require('rollup-plugin-commonjs');
+var uglify = require('rollup-plugin-uglify');
+
 var paths = require('./paths');
 var settings = require('./settings');
 var WebpackManifest = require('../utilities/webpackManifest');
@@ -86,6 +91,38 @@ if (settings.scripting === 'ts') {
     exclude.push(/\.(e2e-spec|spec)\.ts$/);
   }
 
+  if (settings.angular2) {
+    config.plugins.push(
+      new webpack.ContextReplacementPlugin(
+        // The (\\|\/) piece accounts for path separators in *nix and Windows
+        /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+        root
+      )
+    );
+
+    // Roll up
+    if (process.env.NODE_ENV !== 'test') {
+      config.module.rules.push({
+        test: /\.ts/,
+        loader: 'rollup-webpack-loader',
+        query: {
+          rollup: {
+            plugins: [
+              nodeResolve({
+                jsnext: true,
+                module: true
+              }),
+              commonjs({
+                include: 'node_modules/rxjs/**'
+              }),
+              uglify()
+            ]
+          }
+        }
+      });
+    }
+  }
+
   // Typescript loader
   config.module.rules.push({
     test: /\.ts$/,
@@ -136,27 +173,20 @@ if (process.env.NODE_ENV === 'development') {
 } else if (process.env.NODE_ENV === 'test') {
   // Configure for testing
   config.devtool = 'inline-source-map';
-
-  config.plugins.push(
-    new webpack.ContextReplacementPlugin(
-      // The (\\|\/) piece accounts for path separators in *nix and Windows
-      /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
-      root
-    )
-  );
 } else {
   // Replace references from the rev manifest
-  config.module.rules.push({
-    test: /\.html$/,
-    exclude: [
-      /bower_components/,
-      /node_modules/
-    ],
-    loader: 'rev-replace-loader',
-    query: {
-      manifestPath: paths.src.templates.manifest
-    }
-  });
+  // TODO: Wait for update or fork the code and fix it myself
+  // config.module.rules.push({
+  //   test: /\.html$/,
+  //   exclude: [
+  //     /bower_components/,
+  //     /node_modules/
+  //   ],
+  //   loader: 'rev-replace-loader',
+  //   query: {
+  //     manifestPath: paths.src.templates.manifest
+  //   }
+  // });
 
   // Add to rev manifest
   config.plugins.push(

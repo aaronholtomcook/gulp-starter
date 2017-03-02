@@ -148,18 +148,18 @@ if (process.env.NODE_ENV === 'development') {
   config.devtool = 'inline-source-map';
 } else {
   // Replace references from the rev manifest
-  // TODO: Wait for update or fork the code and fix it myself
-  // config.module.rules.push({
-  //   test: /\.html$/,
-  //   exclude: [
-  //     /bower_components/,
-  //     /node_modules/
-  //   ],
-  //   loader: 'rev-replace-loader',
-  //   query: {
-  //     manifestPath: paths.src.templates.manifest
-  //   }
-  // });
+  // TODO: revert to actual package after https://github.com/vigetlabs/rev-replace-loader/pull/3 is accepted
+  config.module.rules.push({
+    test: /\.html$/,
+    exclude: [
+      /bower_components/,
+      /node_modules/
+    ],
+    loader: 'rev-replace-loader',
+    query: {
+      manifestPath: paths.src.templates.manifest
+    }
+  });
 
   // Add to rev manifest
   config.plugins.push(

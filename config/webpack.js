@@ -2,11 +2,6 @@
 
 var path = require('path');
 var webpack = require('webpack');
-
-var nodeResolve = require('rollup-plugin-node-resolve');
-var commonjs = require('rollup-plugin-commonjs');
-var uglify = require('rollup-plugin-uglify');
-
 var paths = require('./paths');
 var settings = require('./settings');
 var WebpackManifest = require('../utilities/webpackManifest');

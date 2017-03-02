@@ -13,6 +13,7 @@ function task (cb) {
     'scss',
     process.env.NODE_ENV === 'production' ? 'rev' : false,
     'scripts',
+    'scripts:rollup',
     process.env.NODE_ENV === 'production' ? 'rev:html' : false,
     cb
   );

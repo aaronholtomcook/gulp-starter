@@ -39,7 +39,7 @@
     "gulp-protractor": "^3.0.0",
     "gulp-rev": "^7.1.2",
     "gulp-rev-napkin": "^0.1.0",
-    "gulp-rev-replace": "artisin/rev-replace-loader#pr-%232",
+    "gulp-rev-replace": "artisin/rev-replace-loader#pr-#2",
     "gulp-sass": "^2.3.2",
     "gulp-sass-lint": "^1.3.2",
     "gulp-sequence": "^0.4.6",

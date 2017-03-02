@@ -99,28 +99,6 @@ if (settings.scripting === 'ts') {
         root
       )
     );
-
-    // Roll up
-    if (process.env.NODE_ENV !== 'test') {
-      config.module.rules.push({
-        test: /\.ts/,
-        loader: 'rollup-webpack-loader',
-        query: {
-          rollup: {
-            plugins: [
-              nodeResolve({
-                jsnext: true,
-                module: true
-              }),
-              commonjs({
-                include: 'node_modules/rxjs/**'
-              }),
-              uglify()
-            ]
-          }
-        }
-      });
-    }
   }
 
   // Typescript loader

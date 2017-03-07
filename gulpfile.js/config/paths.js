@@ -1,3 +1,5 @@
+'use strict';
+
 const {join, resolve} = require('path');
 const settings = require('./settings');
 const config = require('../utilities/config');
@@ -44,8 +46,9 @@ const defaults = {
     icons: src('icons/**/*.svg'),
     images: src('img/**/*.{gif|jpg|jpeg|png|svg}'),
     packages: {
-      node_modules: resolve('./node_modules')
+      npm: resolve('./node_modules')
     },
+    sass: src('scss/**/*.{scss|sass}'),
     scripts: {
       entry: {
         app: src(`${settings.scripting}/index.${settings.scripting}`)
@@ -57,7 +60,6 @@ const defaults = {
       },
       watch: src(`${settings.scripting}/**/*`)
     },
-    sass: src('scss/**/*.{scss|sass}'),
     templates: {
       data: src('html/data/global.json'),
       pages: src('html/pages/**/*.html'),

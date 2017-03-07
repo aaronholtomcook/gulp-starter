@@ -1,9 +1,11 @@
+'use strict';
+
 const config = require('../utilities/config');
 
 const defaults = {
   collapseWhitespace: true,
-  removeOptionalTags: true,
   removeComments: true,
+  removeOptionalTags: true,
   removeScriptTypeAttributes: true,
   removeStyleLinkTypeAttributes: true,
   sortAttributes: true,

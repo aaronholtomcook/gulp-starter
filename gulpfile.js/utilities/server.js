@@ -1,3 +1,7 @@
+/* eslint-disable no-console */
+
+'use strict';
+
 const express = require('express');
 const liveReload = require('connect-livereload');
 const paths = require('../config/paths');
@@ -9,6 +13,6 @@ app
   .use(liveReload())
   .use('/', express.static(paths.dest.base))
   .set('port', settings.port)
-  .listen(port, () => console.log(`Started on port ${settings.port}`));
+  .listen(settings.port, () => console.log(`Started on port ${settings.port}`));
 
 module.exports = app;

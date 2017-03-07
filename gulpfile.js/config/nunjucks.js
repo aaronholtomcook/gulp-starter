@@ -1,11 +1,13 @@
+'use strict';
+
 const paths = require('./paths');
 const config = require('../utilities/config');
 
 const defaults = {
-  path: paths.src.templates.root,
   envOptions: {
     watch: false
-  }
+  },
+  path: paths.src.templates.root
 };
 
 module.exports = config(defaults, 'nunjucks');

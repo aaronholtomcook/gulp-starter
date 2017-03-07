@@ -1,0 +1,60 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": "eslint:all",
+  "rules": {
+    "dot-location": [
+      "error",
+      "property"
+    ],
+    "func-names": "off",
+    "indent": [
+      "error",
+      2
+    ],
+    "max-len": [
+      "error",
+      140
+    ],
+    "multiline-ternary": [
+      "error",
+      "never"
+    ],
+    "newline-per-chained-call": [
+      "error",
+      {
+        "ignoreChainWithDepth": 1
+      }
+    ],
+    "no-process-env": "off",
+    "no-prototype-builtins": "off",
+    "no-sync": "off",
+    "no-ternary": "off",
+    "object-curly-newline": [
+      "error",
+      {
+        "ObjectExpression": "always",
+        "ObjectPattern": "never"
+      }
+    ],
+    "one-var": [
+      "error",
+      "never"
+    ],
+    "padded-blocks": [
+      "error",
+      "never"
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "quote-props": [
+      "error",
+      "as-needed"
+    ]
+  }
+}

@@ -1,3 +1,5 @@
+'use strict';
+
 const paths = require('./paths');
 const config = require('../utilities/config');
 

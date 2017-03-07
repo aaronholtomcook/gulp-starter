@@ -1,3 +1,5 @@
+'use strict';
+
 const paths = require('./paths');
 const config = require('../utilities/config');
 
@@ -6,12 +8,12 @@ const defaults = {
     configuration: paths.lint.ts
   },
   report: {
-    summarizeFailureOutput: true,
-    emitError: process.env.NODE_ENV === 'production'
+    emitError: process.env.NODE_ENV === 'production',
+    summarizeFailureOutput: true
   },
   reporter: {
-    sort: true,
-    filename: paths.reports.ts
+    filename: paths.reports.ts,
+    sort: true
   }
 };
 

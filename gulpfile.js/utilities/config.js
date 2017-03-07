@@ -1,3 +1,5 @@
+'use strict';
+
 const {defaultsDeep} = require('lodash');
 const {resolve} = require('path');
 const settings = require(resolve('./gulp.config'));

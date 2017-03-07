@@ -73,3 +73,7 @@ $RECYCLE.BIN/
 # Node
 node_modules/
 npm-debug.log
+
+# TODO: Remove once development is complete
+dist/
+src/

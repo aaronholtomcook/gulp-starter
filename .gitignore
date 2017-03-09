@@ -77,3 +77,4 @@ npm-debug.log
 # TODO: Remove once development is complete
 dist/
 src/
+gulp.config.js

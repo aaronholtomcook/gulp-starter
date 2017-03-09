@@ -11,6 +11,7 @@
       "property"
     ],
     "func-names": "off",
+    "global-require": "off",
     "indent": [
       "error",
       2

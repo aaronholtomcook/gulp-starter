@@ -4,10 +4,10 @@ const {join, resolve} = require('path');
 const settings = require('./settings');
 const config = require('../utilities/config');
 
-const dist = (path) => join(resolve('./dist', path));
-const reports = (path) => join(resolve('./reports', path));
-const src = (path) => join(resolve('./src', path));
-const temp = (path) => join(resolve('./temp', path));
+const dist = (path = '') => join(resolve('./dist', path));
+const reports = (path = '') => join(resolve('./reports', path));
+const src = (path = '') => join(resolve('./src', path));
+const temp = (path = '') => join(resolve('./temp', path));
 
 const defaults = {
   config: {
@@ -15,9 +15,9 @@ const defaults = {
     protractor: resolve('./protractor.conf.js'),
     webpack: resolve('./webpack.config.js')
   },
-  dist: {
+  dest: {
     assets: dist('assets'),
-    base: dist(null),
+    base: dist(),
     css: dist('assets/css'),
     favicons: dist('assets/favicons'),
     fonts: dist('assets/fonts'),
@@ -66,7 +66,7 @@ const defaults = {
       root: src('html')
     }
   },
-  temp: temp(null)
+  temp: temp()
 };
 
 module.exports = config(defaults, 'paths');

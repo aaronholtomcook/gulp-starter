@@ -10,9 +10,8 @@ const config = {
   revNapkin: require('../../config/revNapkin')
 };
 
-gulp.task('copy:revision', () => gulp.src(
-  join(paths.dest.base, '**/*'),
-  {
+gulp.task('copy:revision', () => gulp
+  .src(join(paths.dest.base, '**/*'), {
     base: paths.dest.base
   })
   .pipe(rev())

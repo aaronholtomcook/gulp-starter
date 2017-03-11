@@ -10,9 +10,8 @@ const config = {
   revNapkin: require('../../config/revNapkin')
 };
 
-gulp.task('fonts:revision', () => gulp.src(
-  join(paths.dest.fonts, '**/*'),
-  {
+gulp.task('fonts:revision', () => gulp
+  .src(join(paths.dest.fonts, '**/*'), {
     base: paths.dest.base
   })
   .pipe(rev())

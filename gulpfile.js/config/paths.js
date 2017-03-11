@@ -30,7 +30,7 @@ const defaults = {
     ts: resolve('./tslint.json')
   },
   manifests: {
-    revision: temp('rev-manifest.json'),
+    revision: temp('rev-manifest.json')
   },
   reports: {
     js: reports('js/checkstyle.xml'),

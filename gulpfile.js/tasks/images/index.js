@@ -7,7 +7,8 @@ const livereload = require('gulp-livereload');
 const paths = require('../../config/paths');
 const errorHandler = require('../../utilities/errorHandler');
 
-gulp.task('images', () => gulp.src(paths.src.images)
+gulp.task('images', () => gulp
+  .src(paths.src.images)
   .pipe(changed(paths.dest.images))
   .pipe(imagemin())
   .on('error', errorHandler)

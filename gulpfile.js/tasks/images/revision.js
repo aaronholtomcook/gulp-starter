@@ -10,9 +10,8 @@ const config = {
   revNapkin: require('../../config/revNapkin')
 };
 
-gulp.task('images:revision', () => gulp.src(
-  join(paths.dest.images, '**/*'),
-  {
+gulp.task('images:revision', () => gulp
+  .src(join(paths.dest.images, '**/*'), {
     base: paths.dest.base
   })
   .pipe(rev())

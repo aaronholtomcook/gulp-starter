@@ -29,12 +29,14 @@ const defaults = {
     sass: resolve('./.sass-lint.yml'),
     ts: resolve('./tslint.json')
   },
+  manifests: {
+    revision: temp('rev-manifest.json'),
+  },
   reports: {
     js: reports('js/checkstyle.xml'),
     sass: reports('sass/checkstyle.xml'),
     ts: reports('ts/checkstyle.xml')
   },
-  revisions: temp('rev-manifest.json'),
   server: resolve(__dirname, '../utilities/server.js'),
   src: {
     copy: src('copy/**/*.*'),

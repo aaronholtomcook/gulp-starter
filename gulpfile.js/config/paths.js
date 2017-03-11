@@ -1,13 +1,9 @@
 'use strict';
 
-const {join, resolve} = require('path');
+const {resolve} = require('path');
 const settings = require('./settings');
 const config = require('../utilities/config');
-
-const dist = (path = '') => join(resolve('./dist', path));
-const reports = (path = '') => join(resolve('./reports', path));
-const src = (path = '') => join(resolve('./src', path));
-const temp = (path = '') => join(resolve('./temp', path));
+const {dist, reports, src, temp} = require('../utilities/paths');
 
 const defaults = {
   config: {

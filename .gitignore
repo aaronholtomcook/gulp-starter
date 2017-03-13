@@ -78,3 +78,4 @@ npm-debug.log
 dist/
 src/
 gulp.config.js
+reports/

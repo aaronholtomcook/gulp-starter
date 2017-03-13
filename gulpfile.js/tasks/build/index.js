@@ -2,7 +2,8 @@
 
 const gulp = require('gulp');
 const sequence = require('gulp-sequence');
-const production = require('../../utilities/production');
+const settings = require('../../config/settings');
+const conditional = require('../../utilities/conditional');
 
 // TODO: Make this configurable
 gulp.task('build', (cb) => sequence(
@@ -13,13 +14,27 @@ gulp.task('build', (cb) => sequence(
     'icons',
     'images'
   ],
-  production(
+  conditional(
+    process.env.NODE_ENV,
+    'production',
     [
       'copy:revision',
       'fonts:revision',
       'images:revision'
     ]
   ),
+  [
+    conditional(
+      settings.scripting,
+      'ts',
+      'scripts:tslint'
+    ),
+    conditional(
+      settings.scripting,
+      'js',
+      'scripts:eslint'
+    )
+  ],
   'clean:temp',
   cb
 ));

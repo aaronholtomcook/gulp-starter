@@ -7,8 +7,6 @@ const {dist, reports, src, temp} = require('../utilities/paths');
 
 const defaults = {
   config: {
-    karma: resolve('./karma.conf.js'),
-    protractor: resolve('./protractor.conf.js'),
     webpack: resolve('./webpack.config.js')
   },
   dest: {
@@ -21,9 +19,9 @@ const defaults = {
     js: dist('assets/js')
   },
   lint: {
-    js: resolve('./.eslintrc'),
-    sass: resolve('./.sass-lint.yml'),
-    ts: resolve('./tslint.json')
+    js: resolve(__dirname, '../linting/.eslintrc'),
+    sass: resolve(__dirname, '../linting/.sass-lint.yml'),
+    ts: resolve(__dirname, '../linting/tslint.json')
   },
   manifests: {
     revision: temp('rev-manifest.json')
@@ -51,7 +49,7 @@ const defaults = {
       entry: {
         app: src(`${settings.scripting}/index.${settings.scripting}`)
       },
-      scripts: src(`${settings.scripting}/**/*.${settings.scripting}`),
+      files: src(`${settings.scripting}/**/*.${settings.scripting}`),
       specs: {
         e2e: src(`${settings.scripting}/**/*.e2e-spec.${settings.scripting}`),
         unit: src(`${settings.scripting}/**/*.spec.${settings.scripting}`)

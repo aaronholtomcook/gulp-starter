@@ -1,7 +1,7 @@
 'use strict';
 
-module.exports = (prop, val, task) => {
-  if (prop === val) {
+module.exports = (test, task) => {
+  if (test) {
     return task;
   }
 

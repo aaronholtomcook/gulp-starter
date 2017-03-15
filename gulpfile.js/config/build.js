@@ -5,7 +5,10 @@ const config = require('../utilities/config');
 const conditional = require('../utilities/conditional');
 
 const defaults = [
-  'clean:dist',
+  [
+    'clean:dist',
+    'clean:reports'
+  ],
   [
     'copy',
     'fonts',

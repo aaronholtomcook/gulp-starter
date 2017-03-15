@@ -21,12 +21,10 @@ const defaults = [
     ]
   ),
   [
+    'styles:lint',
     conditional(
       settings.scripting === 'ts',
-      'scripts:tslint'
-    ),
-    conditional(
-      settings.scripting === 'js',
+      'scripts:tslint',
       'scripts:eslint'
     )
   ],

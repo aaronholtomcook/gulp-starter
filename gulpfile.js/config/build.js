@@ -28,6 +28,17 @@ const defaults = [
       'scripts:eslint'
     )
   ],
+  [
+    'styles'
+  ],
+  conditional(
+    process.env.NODE_ENV === 'production',
+    'styles:references'
+  ),
+  conditional(
+    process.env.NODE_ENV === 'production',
+    'styles:revision'
+  ),
   'clean:temp'
 ];
 

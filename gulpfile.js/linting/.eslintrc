@@ -16,6 +16,7 @@
       "error",
       2
     ],
+    "line-comment-position": "off",
     "max-len": [
       "error",
       140
@@ -30,6 +31,7 @@
         "ignoreChainWithDepth": 1
       }
     ],
+    "no-inline-comments": "off",
     "no-process-env": "off",
     "no-prototype-builtins": "off",
     "no-sync": "off",

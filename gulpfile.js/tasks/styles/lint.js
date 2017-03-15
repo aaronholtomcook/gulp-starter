@@ -18,7 +18,7 @@ gulp.task('styles:lint', (cb) => {
       let data = '';
 
       file._write = (chunk, encoding, next) => {
-        data = data + chunk;
+        data += chunk;
 
         next();
       };
@@ -28,9 +28,9 @@ gulp.task('styles:lint', (cb) => {
         .pipe(sasslint(config.sasslint))
         .pipe(sasslint.format(file))
         .on('finish', () => {
-          data = data.replace(/\<\?xml version\=\"\d\.\d\" encoding\=\"utf\-8\"\?\>\<checkstyle version\=\"\d\.\d\"\>/g, '');
-          data = data.replace(/\<\/checkstyle\>/g, '');
-          data = '<?xml version="1.0" encoding="utf-8"?><checkstyle version="4.3">' + data + '</checkstyle>';
+          data = data.replace(/<\?xml version="\d\.\d" encoding="utf-8"\?><checkstyle version="\d\.\d">/g, '');
+          data = data.replace(/<\/checkstyle>/g, '');
+          data = `<?xml version="1.0" encoding="utf-8"?><checkstyle version="4.3">${data}</checkstyle>`;
 
           writeFile(paths.reports.sass, data, () => cb());
         });

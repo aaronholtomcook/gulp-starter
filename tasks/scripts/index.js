@@ -14,9 +14,7 @@ const config = {
 gulp.task('scripts', (cb) => {
   let flag = true;
 
-  return webpackStream({
-    config: config.webpack
-  }, webpack, (err, stats) => {
+  return webpackStream(config.webpack, webpack, (err, stats) => {
     if (err || stats.compilation.errors.length > 0) {
       log('[Webpack: Error]', stats.compilation.errors);
 
@@ -30,11 +28,13 @@ gulp.task('scripts', (cb) => {
       if (flag) {
         flag = false;
 
-        return cb();
+        cb();
       }
     } else {
       log('[Webpack: Build]', stats.toString({
+        chunkModules: false,
         chunkOrigins: false,
+        chunks: false,
         colors: colors.supportsColor
       }));
 
@@ -42,12 +42,11 @@ gulp.task('scripts', (cb) => {
         flag = false;
 
         if (config.webpack.watch) {
-          return cb();
+          cb();
         }
       } else {
         livereload();
       }
     }
-  })
-    .pipe(gulp.dest(config.webpack.output.path));
+  }).pipe(gulp.dest(paths.dest.js));
 });

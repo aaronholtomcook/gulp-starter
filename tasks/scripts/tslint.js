@@ -10,6 +10,6 @@ const config = {
 
 gulp.task('scripts:tslint', () => gulp
   .src(paths.src.scripts.files)
-  .pipe(tslint(paths.lint.ts))
+  .pipe(tslint(config.tslint.config))
   .pipe(tslint.report(config.tslint.report))
   .pipe(reporter(config.tslint.reporter)));

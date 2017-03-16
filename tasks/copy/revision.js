@@ -12,7 +12,12 @@ const config = {
 };
 
 gulp.task('copy:revision', () => gulp
-  .src(join(paths.dest.base, '**/*'), {
+  .src([
+    join(paths.dest.base, '**/*'),
+    `!${join(paths.dest.css, '**/*')}`,
+    `!${join(paths.dest.fonts, '**/*')}`,
+    `!${join(paths.dest.images, '**/*')}`
+  ], {
     base: paths.dest.base
   })
   .pipe(rev())

@@ -35,16 +35,16 @@ const defaults = {
   src: {
     copy: src('copy/**/*.*'),
     favicons: {
-      icon: src('favicons/favicon.{gif|jpg|jpeg|png}'),
+      icon: src('favicons/favicon.{gif,jpg,jpeg,png}'),
       output: src('html/partials/favicons.html')
     },
-    fonts: src('fonts/**/*.{eot|woff2|woff|ttf|svg}'),
+    fonts: src('fonts/**/*.{eot,woff2,woff,ttf,svg}'),
     icons: src('icons/**/*.svg'),
-    images: src('img/**/*.{gif|jpg|jpeg|png|svg}'),
+    images: src('img/**/*.{gif,jpg,jpeg,png,svg}'),
     packages: {
       npm: resolve('./node_modules')
     },
-    sass: src('scss/**/*.{scss|sass}'),
+    sass: src('scss/**/*.{scss,sass}'),
     scripts: {
       entry: {
         app: src(`${settings.scripting}/index.${settings.scripting}`)

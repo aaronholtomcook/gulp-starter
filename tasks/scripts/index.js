@@ -34,6 +34,7 @@ gulp.task('scripts', (cb) => {
       }
     } else {
       log('[Webpack: Build]', stats.toString({
+        chunkOrigins: false,
         colors: colors.supportsColor
       }));
 

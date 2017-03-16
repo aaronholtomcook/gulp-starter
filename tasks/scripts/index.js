@@ -1,7 +1,7 @@
 'use strict';
 
 const gulp = require('gulp');
-const {log} = require('gulp-util');
+const {colors, log} = require('gulp-util');
 const livereload = require('gulp-livereload');
 const webpack = require('webpack');
 const webpackStream = require('webpack-stream');
@@ -19,9 +19,9 @@ gulp.task('scripts', (cb) => {
       log('[Webpack: Error]', stats.compilation.errors);
 
       notify({
-        title: '[Webpack: Error]',
         message: stats.compilation.errors[0].message,
         sound: true,
+        title: '[Webpack: Error]',
         type: 'error'
       });
 
@@ -32,20 +32,20 @@ gulp.task('scripts', (cb) => {
       }
     } else {
       log('[Webpack: Build]', stats.toString({
-        colors: gutil.colors.supportsColor,
-        hash: false,
-        version: false,
-        timings: true,
         assets: false,
-        chunks: false,
-        chunkModules: false,
-        modules: false,
-        children: false,
         cached: false,
+        children: false,
+        chunkModules: false,
+        chunkOrigins: false,
+        chunks: false,
+        colors: colors.supportsColor,
+        errorDetails: false,
+        hash: false,
+        modules: false,
         reasons: false,
         source: false,
-        errorDetails: false,
-        chunkOrigins: false
+        timings: true,
+        version: false
       }));
 
       if (flag) {

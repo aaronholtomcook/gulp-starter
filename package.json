@@ -10,11 +10,9 @@
   "scripts": {
     "lint": "eslint . -c gulpfile.js/linting/.eslintrc"
   },
-  "dependencies": {},
-  "devDependencies": {
+  "dependencies": {
     "connect-livereload": "^0.6.0",
     "del": "^2.2.2",
-    "eslint": "^3.17.1",
     "express": "^4.15.2",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.1",
@@ -43,7 +41,9 @@
     "path": "^0.12.7",
     "require-dir": "^0.3.1",
     "tslint": "^4.5.1",
-    "tslint-microsoft-contrib": "^4.0.0",
-    "typescript": "^2.2.1"
+    "tslint-microsoft-contrib": "^4.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.17.1"
   }
 }

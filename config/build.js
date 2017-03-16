@@ -32,6 +32,7 @@ const defaults = [
     )
   ],
   [
+    'scripts',
     'styles'
   ],
   conditional(

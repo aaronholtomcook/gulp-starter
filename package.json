@@ -8,7 +8,6 @@
     "url": "https://github.com/mogusbi/gulp-starter.git"
   },
   "scripts": {
-    "gulp": "gulp",
     "lint": "eslint . -c gulpfile.js/linting/.eslintrc"
   },
   "dependencies": {},
@@ -38,6 +37,7 @@
     "gulp-tslint": "^7.1.0",
     "gulp-tslint-jenkins-reporter": "^1.0.7",
     "gulp-uncss": "^1.0.6",
+    "gulp-util": "^3.0.8",
     "lodash": "^4.17.4",
     "mkdirp": "^0.5.1",
     "path": "^0.12.7",

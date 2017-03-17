@@ -8,7 +8,7 @@ const paths = require('../../config/paths');
 const errorHandler = require('../../utilities/errorHandler');
 const config = {
   rev: require('../../config/rev'),
-  revNapkin: require('../../config/revNapkin')
+  revNapkin: require('../../config/revnapkin')
 };
 
 gulp.task('fonts:revision', () => gulp

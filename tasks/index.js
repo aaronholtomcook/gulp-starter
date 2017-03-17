@@ -1,5 +1,10 @@
 'use strict';
 
 const gulp = require('gulp');
+const sequence = require('gulp-sequence');
 
-gulp.task('default', ['build']);
+gulp.task('default', (cb) => sequence(
+  'build',
+  'server',
+  cb
+));

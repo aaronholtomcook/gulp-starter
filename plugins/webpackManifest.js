@@ -30,7 +30,7 @@ WebpackManifest.prototype.apply = function (compiler) {
       }
 
       writeFileSync(
-        paths.src.templates.manifest,
+        paths.manifests.revision,
         JSON.stringify(Object.assign(existingData, manifest), null, '\t')
       );
     });

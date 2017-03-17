@@ -12,7 +12,7 @@ WebpackManifest.prototype.apply = function (compiler) {
   const {publicPath} = this.opts;
 
   compiler.plugin('done', (stats) => {
-    readFile(paths.manifests.revisions, 'utf8', (err, data) => {
+    readFile(paths.manifests.revision, 'utf8', (err, data) => {
       if (err) {
         return;
       }

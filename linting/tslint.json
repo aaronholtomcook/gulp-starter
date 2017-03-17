@@ -1,6 +1,6 @@
 {
   "rulesDirectory": [
-    "../../tslint-eslint-rules"
+    "../../../tslint-eslint-rules"
   ],
   "rules": {
     "ter-indent": [

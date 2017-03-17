@@ -23,4 +23,4 @@ gulp.task('templates', () => gulp
   .on('error', errorHandler)
   .pipe(gulpIf(process.env.NODE_ENV === 'production' && settings.htmlmin, htmlmin(config.htmlmin))) // Minify html for production if enabled
   .pipe(gulp.dest(paths.dest.base))
-  .on('end', livereload));
+  .on('end', () => livereload()));

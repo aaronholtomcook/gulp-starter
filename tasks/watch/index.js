@@ -25,7 +25,7 @@ gulp.task('watch', () => {
   });
 
   watch(paths.src.sass, function () {
-    gulp.start('scss');
+    gulp.start('styles');
   });
 
   watch(paths.src.templates.root, function () {

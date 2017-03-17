@@ -43,6 +43,11 @@ const defaults = [
     process.env.NODE_ENV === 'production',
     'styles:revision'
   ),
+  'templates',
+  conditional(
+    process.env.NODE_ENV === 'production',
+    'templates:references'
+  ),
   'clean:temp'
 ];
 

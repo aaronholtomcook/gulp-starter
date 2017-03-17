@@ -2,7 +2,7 @@
 
 const {join} = require('path');
 const paths = require('../config/paths');
-const fs = require('fs');
+const {readFile, writeFileSync} = require('fs');
 
 const WebpackManifest = function (opts) {
   this.opts = opts;
@@ -12,7 +12,7 @@ WebpackManifest.prototype.apply = function (compiler) {
   const {publicPath} = this.opts;
 
   compiler.plugin('done', (stats) => {
-    fs.readFile(paths.src.templates.manifest, 'utf8', (err, data) => {
+    readFile(paths.manifests.revisions, 'utf8', (err, data) => {
       if (err) {
         return;
       }
@@ -29,7 +29,7 @@ WebpackManifest.prototype.apply = function (compiler) {
         }
       }
 
-      fs.writeFileSync(
+      writeFileSync(
         paths.src.templates.manifest,
         JSON.stringify(Object.assign(existingData, manifest), null, '\t')
       );

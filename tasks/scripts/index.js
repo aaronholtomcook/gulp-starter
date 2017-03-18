@@ -40,9 +40,7 @@ gulp.task('scripts', (cb) => {
       if (flag) {
         flag = false;
 
-        if (config.webpack.watch) {
-          cb();
-        }
+        cb();
       } else {
         livereload.reload();
       }

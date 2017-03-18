@@ -40,7 +40,7 @@ const defaults = {
     },
     fonts: src('fonts/**/*.{eot,woff2,woff,ttf,svg}'),
     icons: {
-      stylesheet: src('/scss/components/_icons.scss'),
+      stylesheet: src('scss/components'),
       svg: src('icons/**/*.svg'),
       template: resolve(__dirname, '../templates/_icons.scss')
     },

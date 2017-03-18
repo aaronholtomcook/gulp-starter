@@ -28,11 +28,11 @@
   @include <%= cssClass%>-styles;
 }
 <% _.each(glyphs, function(glyph) { %>
-$<%= glyph.fileName %>: "\<%= glyph.codePoint %>";<% }); %>
+$<%= glyph.name %>: "\<%= glyph.codepoint.toString(16).toUpperCase() %>";<% }); %>
 <% _.each(glyphs, function(glyph) { %>
-.<%= cssClass%>-<%= glyph.fileName %> {
+.<%= cssClass%>-<%= glyph.name %> {
   &::before {
-    content: $<%= glyph.fileName %>;
+    content: $<%= glyph.name %>;
   }
 }
 <% }); %>

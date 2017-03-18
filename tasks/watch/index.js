@@ -12,7 +12,7 @@ gulp.task('watch', () => {
 
   watch(paths.src.fonts, () => gulp.start('fonts'));
 
-  watch(paths.src.icons, () => gulp.start('icons'));
+  watch(paths.src.icons.svg, () => gulp.start('icons'));
 
   watch(paths.src.images, () => gulp.start('images'));
 

@@ -49,17 +49,7 @@ const defaults = {
       npm: resolve('./node_modules')
     },
     sass: src('scss/**/*.{scss,sass}'),
-    scripts: {
-      entry: {
-        app: src(`${settings.scripting}/index.${settings.scripting}`)
-      },
-      files: src(`${settings.scripting}/**/*.${settings.scripting}`),
-      specs: {
-        e2e: src(`${settings.scripting}/**/*.e2e-spec.${settings.scripting}`),
-        unit: src(`${settings.scripting}/**/*.spec.${settings.scripting}`)
-      },
-      watch: src(`${settings.scripting}/**/*`)
-    },
+    scripts: src(`${settings.scripting}/**/*.${settings.scripting}`),
     templates: {
       data: src('html/data/global.json'),
       pages: src('html/pages/**/*.html'),

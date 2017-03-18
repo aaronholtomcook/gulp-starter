@@ -24,6 +24,7 @@ gulp.task('icons', () => gulp
       fontPath: join(paths.dest.fonts.replace(paths.dest.base, ''), '/'),
       cssClass: 'icon'
     }))
+    .on('error', errorHandler)
     .pipe(gulp.dest(paths.src.icons.stylesheet)))
   .on('error', errorHandler)
   .pipe(gulp.dest(paths.dest.fonts)));

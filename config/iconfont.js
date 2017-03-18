@@ -11,7 +11,7 @@ const defaults = {
     'woff2',
     'svg'
   ],
-  prependUnicode: true
+  prependUnicode: false
 };
 
 module.exports = config(defaults, 'iconfont');

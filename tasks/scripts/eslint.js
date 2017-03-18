@@ -9,7 +9,7 @@ const {dirname} = require('path');
 const paths = require('../../config/paths');
 
 gulp.task('scripts:eslint', () => gulp
-  .src(paths.src.scripts.files)
+  .src(paths.src.scripts)
   .pipe(eslint(paths.lint.js))
   .pipe(eslint.format())
   .pipe(eslint.format('checkstyle', (results) => mkdirp(dirname(paths.reports.js), () => writeFileSync(paths.reports.js, results))))

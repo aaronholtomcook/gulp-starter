@@ -13,16 +13,16 @@ const config = {
 gulp.task('icons', () => gulp
   .src(paths.src.icons.svg)
   .pipe(iconfont(config.iconfont))
-  .on('glyphs', (glyphs, options) => gulp
+  .on('glyphs', (glyphs) => gulp
     .src(paths.src.icons.template)
     .pipe(consolidate('lodash', {
+      cssClass: 'icon',
+      fontName: config.iconfont.fontName,
+      fontPath: join(paths.dest.fonts.replace(paths.dest.base, ''), '/'),
       glyphs: glyphs.map((glyph) => ({
         codepoint: glyph.unicode[0].charCodeAt(0),
         name: glyph.name
-      })),
-      fontName: config.iconfont.fontName,
-      fontPath: join(paths.dest.fonts.replace(paths.dest.base, ''), '/'),
-      cssClass: 'icon'
+      }))
     }))
     .on('error', errorHandler)
     .pipe(gulp.dest(paths.src.icons.stylesheet)))

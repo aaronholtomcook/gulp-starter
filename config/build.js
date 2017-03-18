@@ -48,7 +48,8 @@ const defaults = [
     process.env.NODE_ENV === 'production',
     'templates:references'
   ),
-  'clean:temp'
+  'clean:temp',
+  'size-report'
 ];
 
 module.exports = config(defaults, 'build');

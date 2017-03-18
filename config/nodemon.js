@@ -7,9 +7,9 @@ const defaults = {
   env: {
     NODE_ENV: process.env.NODE_ENV
   },
-  script: paths.server,
+  script: paths.server.run,
   watch: [
-    paths.server
+    paths.server.app
   ]
 };
 

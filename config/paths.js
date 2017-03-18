@@ -31,7 +31,10 @@ const defaults = {
     sass: reports('sass/checkstyle.xml'),
     ts: reports('ts/checkstyle.xml')
   },
-  server: resolve(__dirname, '../utilities/server.js'),
+  server: {
+    app: resolve(__dirname, '../utilities/app.js'),
+    run: resolve(__dirname, '../utilities/server.js')
+  },
   src: {
     copy: src('copy/**/*.*'),
     favicons: {

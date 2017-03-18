@@ -9,11 +9,12 @@ const config = {
 gulp.task('server', (cb) => {
   let started = false;
 
-  return nodemon(config.nodemon).on('start', () => {
-    if (!started) {
-      cb();
+  return nodemon(config.nodemon)
+    .on('start', () => {
+      if (!started) {
+        cb();
 
-      started = true;
-    }
-  });
+        started = true;
+      }
+    });
 });

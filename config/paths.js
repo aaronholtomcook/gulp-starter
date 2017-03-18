@@ -39,7 +39,11 @@ const defaults = {
       output: src('html/partials/favicons.html')
     },
     fonts: src('fonts/**/*.{eot,woff2,woff,ttf,svg}'),
-    icons: src('icons/**/*.svg'),
+    icons: {
+      stylesheet: src('/scss/components/_icons.scss'),
+      svg: src('icons/**/*.svg'),
+      template: resolve(__dirname, '../templates/_icons.scss')
+    },
     images: src('img/**/*.{gif,jpg,jpeg,png,svg}'),
     packages: {
       npm: resolve('./node_modules')

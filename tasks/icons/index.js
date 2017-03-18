@@ -1,20 +1,27 @@
 'use strict';
 
 const gulp = require('gulp');
+const consolidate = require('gulp-consolidate');
 const iconfont = require('gulp-iconfont');
-const iconfontcss = require('gulp-iconfont-css');
-const livereload = require('gulp-livereload');
 const paths = require('../../config/paths');
 const errorHandler = require('../../utilities/errorHandler');
 const config = {
-  iconfont: require('../../config/iconfont'),
-  iconfontcss: require('../../config/iconfontcss')
+  iconfont: require('../../config/iconfont')
 };
 
 gulp.task('icons', () => gulp
-  .src(paths.src.icons)
-  .pipe(iconfontcss(config.iconfontcss))
+  .src(paths.src.icons.svg)
   .pipe(iconfont(config.iconfont))
+  .on('glyphs', (glyphs, options) => gulp
+    .src(paths.src.icons.template)
+    .pipe(consolidate('lodash', {
+      codepoints: glyphs.map((glyph) => glyph
+        .codepoint
+        .toString(16)
+        .toUpperCase()),
+      fontName: options.fontName
+    }))
+    .on('error', errorHandler)
+    .pipe(gulp.dest(paths.src.icons.stylesheet)))
   .on('error', errorHandler)
-  .pipe(gulp.dest(paths.dest.fonts))
-  .pipe(livereload()));
+  .pipe(gulp.dest(paths.dest.fonts)));

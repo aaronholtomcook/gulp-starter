@@ -13,6 +13,6 @@ app
   .use(liveReload())
   .use('/', express.static(paths.dest.base))
   .set('port', settings.port)
-  .listen(settings.port, () => console.log(`Started on port ${settings.port}`));
+  .listen(settings.port, () => console.log(`Development server running on port ${settings.port}`));
 
 module.exports = app;

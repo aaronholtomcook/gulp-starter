@@ -1,7 +1,7 @@
 'use strict';
 
 const colour = require('tinycolor2');
-const {MIME_PNG, read} = require('jimp');
+const Jimp = require('jimp');
 const jsonxml = require('jsontoxml');
 const mkdirp = require('mkdirp');
 const toIco = require('to-ico');
@@ -199,7 +199,7 @@ module.exports = (config) => {
     android: {
       'manifest.json': {
         'background_color': config.app.background,
-        display: 'standalone',
+        display: config.appEnabled ? 'standalone' : 'browser',
         icons: [{
           sizes: '36x36',
           src: join(base, 'android-chrome-36x36.png'),
@@ -355,6 +355,16 @@ module.exports = (config) => {
     }]
   };
 
+  // Utilities
+  function setImageBackground (image, background) {
+    const rgba = colour(background).toRgb();
+    const canvas = new Jimp(image.bitmap.width, image.bitmap.height, Jimp.rgbaToInt(rgba.r, rgba.g, rgba.b, rgba.a * 255));
+
+    canvas.composite(image, 0, 0);
+
+    return canvas;
+  }
+
   // Promises store
   const promises = [];
 
@@ -367,7 +377,7 @@ module.exports = (config) => {
           const pngStore = [];
 
           promises.push(
-            read(config.input)
+            Jimp.read(config.input)
               .then(
                 (img) => new Promise(
                   (resolve, reject) => icons[platform][icon].sizes.forEach(
@@ -375,7 +385,7 @@ module.exports = (config) => {
                       .clone()
                       .contain(size.width, size.height)
                       .getBuffer(
-                        MIME_PNG, (err, buffer) => {
+                        Jimp.MIME_PNG, (err, buffer) => {
                           if (err) {
                             reject(err);
                           } else {
@@ -406,22 +416,31 @@ module.exports = (config) => {
           );
           break;
         case '.png':
-          promises.push(
-            read(config.input)
-              .then(
-                (img) => {
-                  if (icons[platform][icon].transparent) {
-                    img
+          switch (icons[platform][icon].transparent) {
+            case true:
+              promises.push(
+                Jimp.read(config.input)
+                  .then(
+                    (img) => img
                       .contain(icons[platform][icon].width, icons[platform][icon].height)
-                      .write(join(config.output.icons, icon));
-                  } else {
-                    const rgba = colour(config.app.background).toRgb();
+                      .write(join(config.output.icons, icon))
+                  )
+              );
+              break;
+            default:
+              promises.push(
+                Jimp.read(config.input)
+                  .then(
+                    (img) => {
+                      img = setImageBackground(img, config.app.background);
 
-                    console.log(rgba);
-                  }
-                }
-              )
-          );
+                      return img
+                        .contain(icons[platform][icon].width, icons[platform][icon].height)
+                        .write(join(config.output.icons, icon));
+                    }
+                  )
+              );
+          }
           break;
         default:
         }

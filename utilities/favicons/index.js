@@ -1,5 +1,6 @@
 'use strict';
 
+const colour = require('tinycolor2');
 const {MIME_PNG, read} = require('jimp');
 const jsonxml = require('jsontoxml');
 const mkdirp = require('mkdirp');
@@ -121,16 +122,23 @@ module.exports = (config) => {
         width: 180
       }
     },
+    coast: {
+      'coast-228x228.png': {
+        height: 228,
+        transparent: false,
+        width: 228
+      }
+    },
     favicons: {
       'favicon-16x16.png': {
-        height: 180,
+        height: 16,
         transparent: true,
-        width: 180
+        width: 16
       },
       'favicon-32x32.png': {
-        height: 180,
+        height: 32,
         transparent: true,
-        width: 180
+        width: 32
       },
       'favicon.ico': {
         sizes: [{
@@ -321,6 +329,10 @@ module.exports = (config) => {
       app: false,
       template: `<link rel="apple-touch-icon" sizes="76x76" href="${join(base, 'apple-touch-icon-76x76.png')}">`
     }],
+    coast: [{
+      app: false,
+      template: `<link rel="icon" type="image/png" sizes="228x228" href="${join(base, 'coast-228x228.png')}">`
+    }],
     favicons: [{
       app: false,
       template: `<link rel="icon" type="image/png" sizes="16x16" href="${join(base, 'favicon-16x16.png')}">`
@@ -394,6 +406,22 @@ module.exports = (config) => {
           );
           break;
         case '.png':
+          promises.push(
+            read(config.input)
+              .then(
+                (img) => {
+                  if (icons[platform][icon].transparent) {
+                    img
+                      .contain(icons[platform][icon].width, icons[platform][icon].height)
+                      .write(join(config.output.icons, icon));
+                  } else {
+                    const rgba = colour(config.app.background).toRgb();
+
+                    console.log(rgba);
+                  }
+                }
+              )
+          );
           break;
         default:
         }

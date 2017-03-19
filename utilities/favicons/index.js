@@ -247,7 +247,7 @@ module.exports = (config) => {
       if (manifests[platform].hasOwnProperty(manifest)) {
         let contents;
 
-        switch (extname(filename)) {
+        switch (extname(manifest)) {
           case '.json':
             contents = JSON.stringify(manifests[platform][manifest], null, '\t');
             break;

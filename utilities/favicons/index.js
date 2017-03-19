@@ -242,18 +242,11 @@ module.exports = (config) => {
     windows: {}
   };
 
-  function createOutputDir () {
-    return new Promise(
-      (resolve, reject) => mkdirp(
-        config.output.icons,
-        (err, made) => err ? reject(err) : resolve(made)
-      )
-    );
-  }
+  // Promises store
+  const promises = [];
 
+  // Create manifest utility
   function createManifests (platform) {
-    const promises = [];
-
     for (const manifest in manifests[platform]) {
       if (manifests[platform].hasOwnProperty(manifest)) {
         let contents;
@@ -274,35 +267,28 @@ module.exports = (config) => {
 
         promises.push(
           new Promise(
-            (resolve, reject) => writeFile(
-              join(config.output.icons, manifest),
-              contents,
-              (err) => err ? reject(err) : resolve(contents)
+            (resolve, reject) => mkdirp(
+              config.output.icons,
+              (err) => err ? reject(err) : writeFile(
+                join(config.output.icons, manifest),
+                contents,
+                (err) => err ? reject(err) : resolve(contents)
+              )
             )
           )
         );
       }
     }
-
-    return Promise.all(promises);
   }
-
-  // Promises
-  const promises = [];
 
   // Create manifests
   for (const platform in manifests) {
     if (manifests.hasOwnProperty(platform) && config.platforms[platform]) {
-      promises.push(
-        createManifests(platform)
-      );
+      createManifests(platform);
     }
   }
 
-  return createOutputDir()
-    .then(
-      () => Promise.all(promises)
-    )
+  return Promise.all(promises)
     .catch(
       (err) => {
         error(err);

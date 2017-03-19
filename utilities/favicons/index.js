@@ -2,6 +2,8 @@
 
 const jimp = require('jimp');
 const jsonxml = require('jsontoxml');
+const mkdirp = require('mkdirp');
+const {error} = require('util');
 const {writeFile} = require('fs');
 const {extname, join} = require('path');
 const paths = require('../../config/paths');
@@ -156,44 +158,44 @@ module.exports = (config) => {
         background_color: config.app.background,
         display: 'standalone',
         icons: [{
-          src: join(base, 'android-chrome-36x36.png'),
           sizes: '36x36',
+          src: join(base, 'android-chrome-36x36.png'),
           type: 'image/png'
         }, {
-          src: join(base, 'android-chrome-48x48.png'),
           sizes: '48x48',
+          src: join(base, 'android-chrome-48x48.png'),
           type: 'image/png'
         }, {
-          src: join(base, 'android-chrome-72x72.png'),
           sizes: '72x72',
+          src: join(base, 'android-chrome-72x72.png'),
           type: 'image/png'
         }, {
-          src: join(base, 'android-chrome-96x96.png'),
           sizes: '96x96',
+          src: join(base, 'android-chrome-96x96.png'),
           type: 'image/png'
         }, {
-          src: join(base, 'android-chrome-144x144.png'),
           sizes: '144x144',
+          src: join(base, 'android-chrome-144x144.png'),
           type: 'image/png'
         }, {
-          src: join(base, 'android-chrome-192x192.png'),
           sizes: '192x192',
+          src: join(base, 'android-chrome-192x192.png'),
           type: 'image/png'
         }, {
-          src: join(base, 'android-chrome-256x256.png'),
           sizes: '256x256',
+          src: join(base, 'android-chrome-256x256.png'),
           type: 'image/png'
         }, {
-          src: join(base, 'android-chrome-384x384.png'),
           sizes: '384x384',
+          src: join(base, 'android-chrome-384x384.png'),
           type: 'image/png'
         }, {
-          src: join(base, 'android-chrome-512x512.png'),
           sizes: '512x512',
+          src: join(base, 'android-chrome-512x512.png'),
           type: 'image/png'
         }],
         name: config.app.name,
-        theme_color: config.app.theme
+        'theme_color': config.app.theme
       }
     },
     windows: {
@@ -240,6 +242,15 @@ module.exports = (config) => {
     windows: {}
   };
 
+  function createOutputDir () {
+    return new Promise(
+      (resolve, reject) => mkdirp(
+        config.output.icons,
+        (err, made) => err ? reject(err) : resolve(made)
+      )
+    );
+  }
+
   function createManifests (platform) {
     const promises = [];
 
@@ -264,13 +275,9 @@ module.exports = (config) => {
         promises.push(
           new Promise(
             (resolve, reject) => writeFile(
-              join(config.output.icons, manifest), contents, (err) => {
-                if (err) {
-                  reject(err);
-                }
-
-                resolve(contents);
-              }
+              join(config.output.icons, manifest),
+              contents,
+              (err) => err ? reject(err) : resolve(contents)
             )
           )
         );
@@ -292,5 +299,15 @@ module.exports = (config) => {
     }
   }
 
-  return Promise.all(promises);
+  return createOutputDir()
+    .then(
+      () => Promise.all(promises)
+    )
+    .catch(
+      (err) => {
+        error(err);
+
+        process.exit(1);
+      }
+    );
 };

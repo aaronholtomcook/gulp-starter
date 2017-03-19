@@ -1,8 +1,9 @@
 'use strict';
 
-const jimp = require('jimp');
+const {MIME_PNG, read} = require('jimp');
 const jsonxml = require('jsontoxml');
 const mkdirp = require('mkdirp');
+const toIco = require('to-ico');
 const {writeFile} = require('fs');
 const {dirname, extname, join} = require('path');
 const paths = require('../../config/paths');
@@ -339,6 +340,54 @@ module.exports = (config) => {
   // Promises store
   const promises = [];
 
+  // Create icons utility
+  function createIcons (platform) {
+    for (const icon in icons[platform]) {
+      if (icons[platform].hasOwnProperty(icon)) {
+        switch (extname(icon)) {
+        case '.ico':
+          const pngStore = [];
+
+          promises.push(
+            read(config.input)
+              .then((img) => icon.sizes.forEach(
+                (size) => {
+                  const filename = join(paths.temp, `favicon-temp-${size.width}x${size.height}.png`);
+
+                  img
+                    .contain(size.width, size.height)
+                    .getBuffer(MIME_PNG, (err, buffer) => {
+                      if (err) {
+                        throw new Error(err);
+                      }
+
+                      pngStore.push(buffer);
+                    });
+                }
+              ))
+              .then(
+                () => toIco(pngStore)
+                  .then(
+                    (contents) => new Promise((resolve, reject) => mkdirp(
+                      config.output.icons,
+                      (mkdirpErr) => mkdirpErr ? reject(mkdirpErr) : writeFile(
+                          join(config.output.icons, icon),
+                          contents,
+                          (writeFileErr) => writeFileErr ? reject(writeFileErr) : resolve(contents)
+                        )
+                    ))
+                  )
+              )
+          );
+          break;
+        case '.png':
+          break;
+        default:
+        }
+      }
+    }
+  }
+
   // Create manifest utility
   function createManifests (platform) {
     for (const manifest in manifests[platform]) {
@@ -403,6 +452,13 @@ module.exports = (config) => {
         )
       )
     );
+  }
+
+  // Create icons
+  for (const platform in icons) {
+    if (icons.hasOwnProperty(platform) && config.platforms[platform]) {
+      createIcons(platform);
+    }
   }
 
   // Create manifests

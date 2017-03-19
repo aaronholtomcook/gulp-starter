@@ -38,7 +38,7 @@ const defaults = {
   src: {
     copy: src('copy/**/*.*'),
     favicons: {
-      icon: src('favicons/favicon.{gif,jpg,jpeg,png}'),
+      icon: src('favicons/favicon.png'),
       output: src('html/partials/favicons.html')
     },
     fonts: src('fonts/**/*.{eot,woff2,woff,ttf,svg}'),

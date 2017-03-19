@@ -9,6 +9,7 @@ const defaults = {
     name: 'Application name',
     theme: '#ffffff'
   },
+  appEnabled: false,
   input: paths.src.favicons.icon,
   output: {
     html: paths.src.favicons.output,

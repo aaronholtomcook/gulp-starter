@@ -5,7 +5,7 @@ const jsonxml = require('jsontoxml');
 const mkdirp = require('mkdirp');
 const {error} = require('util');
 const {writeFile} = require('fs');
-const {extname, join} = require('path');
+const {dirname, extname, join} = require('path');
 const paths = require('../../config/paths');
 
 module.exports = (config) => {
@@ -235,11 +235,77 @@ module.exports = (config) => {
     }
   };
 
-  const meta = {
-    android: {},
-    apple: {},
-    favicons: {},
-    windows: {}
+  const metaData = {
+    android: [{
+      app: false,
+      template: `<meta name="application-name" content="${config.app.name}">`
+    }, {
+      app: true,
+      template: `<meta name="mobile-web-app-capable" content="yes">`
+    }, {
+      app: false,
+      template: `<meta name="theme-color" content="${config.app.theme}">`
+    }, {
+      app: false,
+      template: `<link rel="manifest" href="${join(base, 'manifest.json')}">`
+    }],
+    apple: [{
+      app: true,
+      template: `<meta name="apple-mobile-web-app-capable" content="yes">`
+    }, {
+      app: true,
+      template: `<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">`
+    }, {
+      app: true,
+      template: `<meta name="apple-mobile-web-app-title" content="${config.app.name}">`
+    }, {
+      app: false,
+      template: `<link rel="apple-touch-icon" sizes="114x114" href="${join(base, 'apple-touch-icon-114x114.png')}">`
+    }, {
+      app: false,
+      template: `<link rel="apple-touch-icon" sizes="120x120" href="${join(base, 'apple-touch-icon-120x120.png')}">`
+    }, {
+      app: false,
+      template: `<link rel="apple-touch-icon" sizes="144x144" href="${join(base, 'apple-touch-icon-144x144.png')}">`
+    }, {
+      app: false,
+      template: `<link rel="apple-touch-icon" sizes="152x152" href="${join(base, 'apple-touch-icon-152x152.png')}">`
+    }, {
+      app: false,
+      template: `<link rel="apple-touch-icon" sizes="180x180" href="${join(base, 'apple-touch-icon-180x180.png')}">`
+    }, {
+      app: false,
+      template: `<link rel="apple-touch-icon" sizes="57x57" href="${join(base, 'apple-touch-icon-57x57.png')}">`
+    }, {
+      app: false,
+      template: `<link rel="apple-touch-icon" sizes="60x60" href="${join(base, 'apple-touch-icon-60x60.png')}">`
+    }, {
+      app: false,
+      template: `<link rel="apple-touch-icon" sizes="72x72" href="${join(base, 'apple-touch-icon-72x72.png')}">`
+    }, {
+      app: false,
+      template: `<link rel="apple-touch-icon" sizes="76x76" href="${join(base, 'apple-touch-icon-76x76.png')}">`
+    }],
+    favicons: [{
+      app: false,
+      template: `<link rel="icon" type="image/png" sizes="16x16" href="${join(base, 'favicon-16x16.png')}">`
+    }, {
+      app: false,
+      template: `<link rel="icon" type="image/png" sizes="32x32" href="${join(base, 'favicon-32x32.png')}">`
+    }, {
+      app: false,
+      template: `<link rel="shortcut icon" href="${join(base, 'favicon.ico')}">`
+    }],
+    windows: [{
+      app: false,
+      template: `<meta name="msapplication-TileColor" content="${config.app.theme}">`
+    }, {
+      app: false,
+      template: `<meta name="msapplication-TileImage" content="${join(base, 'mstile-144x144.png')}">`
+    }, {
+      app: false,
+      template: `<meta name="msapplication-config" content="${join(base, 'browserconfig.xml')}">`
+    }]
   };
 
   // Promises store
@@ -258,8 +324,7 @@ module.exports = (config) => {
           case '.xml':
             contents = jsonxml(manifests[platform][manifest], {
               prettyPrint: true,
-              xmlHeader: true,
-              indent: '  '
+              xmlHeader: true
             });
             break;
           default:
@@ -281,12 +346,44 @@ module.exports = (config) => {
     }
   }
 
+  // Create meta data utility
+  function createMetaData () {
+    let output = '';
+
+    for (const platform in metaData) {
+      if (metaData.hasOwnProperty(platform)) {
+        metaData[platform].forEach((tag) => {
+          if ((tag.app && config.appEnabled) || !tag.app) {
+            output += `${tag.template}
+`;
+          }
+        });
+      }
+    }
+
+    promises.push(
+      new Promise(
+        (resolve, reject) => mkdirp(
+          dirname(paths.src.favicons.output),
+          (err) => err ? reject(err) : writeFile(
+              paths.src.favicons.output,
+              output,
+              (err) => err ? reject(err) : resolve(output)
+            )
+        )
+      )
+    );
+  }
+
   // Create manifests
   for (const platform in manifests) {
     if (manifests.hasOwnProperty(platform) && config.platforms[platform]) {
       createManifests(platform);
     }
   }
+
+  // Create meta data
+  createMetaData();
 
   return Promise.all(promises)
     .catch(

@@ -4,9 +4,22 @@ const paths = require('./paths');
 const config = require('../utilities/config');
 
 const defaults = {
-  html: paths.src.favicons.output,
-  path: '/assets/favicons',
-  replace: true
+  app: {
+    background: '#ffffff',
+    name: 'Application name',
+    theme: '#ffffff'
+  },
+  input: paths.src.favicons.icon,
+  output: {
+    html: paths.src.favicons.output,
+    icons: paths.dest.favicons,
+  },
+  platforms: {
+    android: true,
+    apple: true,
+    favicons: true,
+    windows: true
+  }
 };
 
 module.exports = config(defaults, 'favicons');

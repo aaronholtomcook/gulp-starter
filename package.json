@@ -9,7 +9,8 @@
   },
   "license": "MIT",
   "scripts": {
-    "lint": "eslint . -c linting/.eslintrc"
+    "lint": "eslint . -c linting/.eslintrc",
+    "test": "node ./utilities/favicons/test"
   },
   "dependencies": {
     "connect-livereload": "^0.6.0",
@@ -43,6 +44,8 @@
     "gulp-uncss": "^1.0.6",
     "gulp-util": "^3.0.8",
     "gulp-watch": "^4.3.11",
+    "jimp": "^0.2.27",
+    "jsontoxml": "0.0.11",
     "lodash": "^4.17.4",
     "mkdirp": "^0.5.1",
     "node-notifier": "^5.1.2",

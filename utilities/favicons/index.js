@@ -148,6 +148,12 @@ module.exports = (config) => {
         }, {
           height: 64,
           width: 64
+        }, {
+          height: 128,
+          width: 128
+        }, {
+          height: 256,
+          width: 256
         }],
         transparent: true
       }
@@ -350,32 +356,39 @@ module.exports = (config) => {
 
           promises.push(
             read(config.input)
-              .then((img) => icon.sizes.forEach(
-                (size) => {
-                  const filename = join(paths.temp, `favicon-temp-${size.width}x${size.height}.png`);
+              .then(
+                (img) => new Promise(
+                  (resolve, reject) => icons[platform][icon].sizes.forEach(
+                    (size, i) => img
+                      .clone()
+                      .contain(size.width, size.height)
+                      .getBuffer(
+                        MIME_PNG, (err, buffer) => {
+                          if (err) {
+                            reject(err);
+                          } else {
+                            pngStore.push(buffer);
+                          }
 
-                  img
-                    .contain(size.width, size.height)
-                    .getBuffer(MIME_PNG, (err, buffer) => {
-                      if (err) {
-                        throw new Error(err);
-                      }
-
-                      pngStore.push(buffer);
-                    });
-                }
-              ))
+                          if (i === icons[platform][icon].sizes.length - 1) {
+                            resolve(pngStore);
+                          }
+                        }
+                      )
+                  )
+                )
+              )
               .then(
                 () => toIco(pngStore)
                   .then(
-                    (contents) => new Promise((resolve, reject) => mkdirp(
-                      config.output.icons,
-                      (mkdirpErr) => mkdirpErr ? reject(mkdirpErr) : writeFile(
+                    (contents) => new Promise(
+                      (resolve, reject) => mkdirp(config.output.icons, (mkdirpErr) => mkdirpErr ? reject(mkdirpErr) : writeFile(
                           join(config.output.icons, icon),
                           contents,
                           (writeFileErr) => writeFileErr ? reject(writeFileErr) : resolve(contents)
                         )
-                    ))
+                      )
+                    )
                   )
               )
           );

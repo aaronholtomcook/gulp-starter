@@ -31,6 +31,13 @@
         "ignoreChainWithDepth": 1
       }
     ],
+    "no-extra-parens": [
+      "error",
+      "all",
+      {
+        "nestedBinaryExpressions": false
+      }
+    ],
     "no-inline-comments": "off",
     "no-process-env": "off",
     "no-prototype-builtins": "off",

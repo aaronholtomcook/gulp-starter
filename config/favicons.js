@@ -14,10 +14,12 @@ const defaults = {
   output: {
     html: paths.src.favicons.output,
     icons: paths.dest.favicons,
+    publicPath: paths.dest.favicons.replace(paths.dest.base, '')
   },
   platforms: {
     android: true,
     apple: true,
+    coast: true,
     favicons: true,
     windows: true
   }

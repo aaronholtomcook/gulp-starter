@@ -11,6 +11,7 @@ const defaults = [
   ],
   [
     'copy',
+    'favicon',
     'fonts',
     'icons',
     'images'

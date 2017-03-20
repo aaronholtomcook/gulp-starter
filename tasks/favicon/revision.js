@@ -11,14 +11,19 @@ const config = {
   revNapkin: require('../../config/revnapkin')
 };
 
-gulp.task('copy:revision', () => gulp
-  .src([
-    join(paths.dest.base, '**/*'),
-    `!${join(paths.dest.css, '**/*')}`,
-    `!${join(paths.dest.favicons, '**/*')}`,
-    `!${join(paths.dest.fonts, '**/*')}`,
-    `!${join(paths.dest.images, '**/*')}`
-  ], {
+gulp.task('favicon:revision:icons', () => gulp
+  .src(join(paths.dest.favicons, '**/*.{gif,jpg,jpeg,png,svg}'), {
+    base: paths.dest.base
+  })
+  .pipe(rev())
+  .pipe(gulp.dest(paths.dest.base))
+  .pipe(revNapkin(config.revNapkin))
+  .pipe(rev.manifest(paths.manifests.revision, config.rev))
+  .on('error', errorHandler)
+  .pipe(gulp.dest('')));
+
+gulp.task('favicon:revision:manifests', () => gulp
+  .src(join(paths.dest.favicons, '**/*.{json,xml}'), {
     base: paths.dest.base
   })
   .pipe(rev())

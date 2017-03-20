@@ -20,6 +20,7 @@ const defaults = [
     process.env.NODE_ENV === 'production',
     [
       'copy:revision',
+      'favicon:revision:icons',
       'fonts:revision',
       'images:revision'
     ]
@@ -38,10 +39,12 @@ const defaults = [
   ],
   conditional(
     process.env.NODE_ENV === 'production',
+    'favicons:references',
     'styles:references'
   ),
   conditional(
     process.env.NODE_ENV === 'production',
+    'favicon:revision:manifests',
     'styles:revision'
   ),
   'templates',

@@ -25,4 +25,4 @@ const defaults = {
   }
 };
 
-module.exports = config(defaults, 'favicons');
+module.exports = config(defaults, 'favicon');

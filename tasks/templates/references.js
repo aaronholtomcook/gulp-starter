@@ -7,7 +7,7 @@ const errorHandler = require('../../utilities/errorHandler');
 const paths = require('../../config/paths');
 
 gulp.task('templates:references', () => gulp
-  .src(join(paths.dest.base, '/**/*.html'))
+  .src(join(paths.dest.base, '**/*.html'))
   .pipe(revReplace({
     manifest: gulp.src(paths.manifests.revision)
   }))

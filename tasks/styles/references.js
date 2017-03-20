@@ -7,7 +7,7 @@ const errorHandler = require('../../utilities/errorHandler');
 const paths = require('../../config/paths');
 
 gulp.task('styles:references', () => gulp
-  .src(join(paths.dest.css, '/**/*'))
+  .src(join(paths.dest.css, '**/*'))
   .pipe(revReplace({
     manifest: gulp.src(paths.manifests.revision)
   }))

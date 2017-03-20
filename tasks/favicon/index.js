@@ -1,12 +1,13 @@
 'use strict';
 
 const gulp = require('gulp');
-const favicon = require('@mogusbi/favicon');
-const config = {
-  favicon: require('../../config/favicon')
-};
+const imagemin = require('gulp-imagemin');
+const {join} = require('path');
+const paths = require('../../config/paths');
+const errorHandler = require('../../utilities/errorHandler');
 
-gulp.task('favicon', (cb) => favicon(config.favicon)
-  .then(
-    () => cb
-  ));
+gulp.task('favicon', ['favicon:generate'], () => gulp
+  .src(join(paths.dest.favicons, '**/*.{gif,jpg,jpeg,png,svg}'))
+  .pipe(imagemin())
+  .on('error', errorHandler)
+  .pipe(gulp.dest(paths.dest.favicons)));

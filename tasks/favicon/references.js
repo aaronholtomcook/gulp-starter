@@ -7,7 +7,7 @@ const errorHandler = require('../../utilities/errorHandler');
 const paths = require('../../config/paths');
 
 gulp.task('favicons:references', () => gulp
-  .src(join(paths.dest.favicons, '**/*.{json,xml}'))
+  .src(join(paths.dest.favicons, '/**/*.{json,xml}'))
   .pipe(revReplace({
     manifest: gulp.src(paths.manifests.revision)
   }))

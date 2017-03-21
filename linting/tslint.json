@@ -1,13 +1,12 @@
 {
   "extends": "tslint-microsoft-contrib",
   "rules": {
-    "ter-indent": [
+    "export-name": false,
+    "missing-jsdoc": false,
+    "no-relative-imports": false,
+    "object-literal-key-quotes": [
       true,
-      2
-    ],
-    "ter-max-len": [
-      true,
-      140
+      "as-needed"
     ],
     "one-variable-per-declaration": true,
     "quotemark": [
@@ -15,9 +14,13 @@
       "single",
       "avoid-escape"
     ],
-    "object-literal-key-quotes": [
+    "ter-indent": [
       true,
-      "as-needed"
+      2
+    ],
+    "ter-max-len": [
+      true,
+      140
     ]
   },
   "rulesDirectory": [

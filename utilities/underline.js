@@ -5,6 +5,7 @@ function getChars (len, char) {
 }
 
 module.exports = (obj) => {
+  const offset = 3;
   const keys = Object.keys(obj);
 
   let longestName = 0;
@@ -20,5 +21,5 @@ module.exports = (obj) => {
     }
   });
 
-  return getChars(longestName + longestVal, '-');
+  return getChars(longestName + longestVal + offset, '-');
 };

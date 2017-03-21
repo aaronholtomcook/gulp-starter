@@ -1,11 +1,9 @@
 'use strict';
 
-function getChars (len, char) {
-  return new Array(len).join(char);
-}
+const getChars = (len, char) => new Array(len)
+  .join(char);
 
-module.exports = (obj) => {
-  const offset = 3;
+module.exports = (obj, offset) => {
   const keys = Object.keys(obj);
 
   let longestName = 0;
@@ -19,6 +17,8 @@ module.exports = (obj) => {
     if (obj[key].length > longestVal) {
       longestVal = obj[key].length;
     }
+
+    return key;
   });
 
   return getChars(longestName + longestVal + offset, '-');

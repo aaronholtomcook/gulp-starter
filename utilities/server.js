@@ -18,11 +18,11 @@ const colours = new chalk.constructor({
 });
 
 const urls = {
-  'Local': `localhost:${settings.port}`,
-  'External': `${address()}:${settings.port}`
+  External: `${address()}:${settings.port}`,
+  Local: `localhost:${settings.port}`
 };
 
-const line = underline(urls);
+const line = underline(urls, 3);
 
 const server = express();
 
@@ -40,7 +40,7 @@ server
   .listen(settings.port, () => console.log(`
 ${colours.bold.black('Access URLs:')}
 ${colours.gray(line)}
-   Local: ${colours.magenta(urls['Local'])}
-External: ${colours.magenta(urls['External'])}
+   Local: ${colours.magenta(urls.Local)}
+External: ${colours.magenta(urls.External)}
 ${colours.gray(line)}
 `));

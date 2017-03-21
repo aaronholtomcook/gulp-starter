@@ -8,4 +8,4 @@ exports.reports = (path = '') => join(resolve('./reports', path));
 
 exports.src = (path = '') => join(resolve('./src', path));
 
-exports.temp = (path = '') => join(resolve('./temp', path));
+exports.temp = (path = '') => join(resolve('./tmp', path));

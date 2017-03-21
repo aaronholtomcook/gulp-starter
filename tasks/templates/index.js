@@ -21,7 +21,7 @@ gulp.task('templates', () => gulp
   .src(paths.src.templates.pages)
   .pipe(data(JSON.parse(readFileSync(paths.src.templates.data, 'utf8'))))
   .pipe(nunjucks(config.nunjucks))
-  .pipe(inlinesource(config.inlinesource))
+  .pipe(gulpIf(process.env.NODE_ENV === 'development', inlinesource(config.inlinesource)))
   .pipe(gulpIf(process.env.NODE_ENV === 'production' && settings.htmlmin, htmlmin(config.htmlmin))) // Minify html for production if enabled
   .on('error', errorHandler)
   .pipe(gulp.dest(paths.dest.base))

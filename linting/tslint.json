@@ -1,7 +1,5 @@
 {
-  "rulesDirectory": [
-    "../../../tslint-eslint-rules/dist/rules"
-  ],
+  "extends": "tslint-microsoft-contrib",
   "rules": {
     "ter-indent": [
       true,
@@ -21,5 +19,9 @@
       true,
       "as-needed"
     ]
-  }
+  },
+  "rulesDirectory": [
+    "../../../tslint-microsoft-contrib",
+    "../../../tslint-eslint-rules/dist/rules"
+  ]
 }

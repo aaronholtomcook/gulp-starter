@@ -1,15 +1,16 @@
 'use strict';
 
-const gulp = require('gulp');
-const eslint = require('gulp-eslint');
-const gulpIf = require('gulp-if');
-const mkdirp = require('mkdirp');
-const {writeFileSync} = require('fs');
-const {dirname} = require('path');
-const paths = require('../../config/paths');
 const settings = require('../../config/settings');
 
 if (settings.scripting === 'js') {
+  const gulp = require('gulp');
+  const eslint = require('gulp-eslint');
+  const gulpIf = require('gulp-if');
+  const mkdirp = require('mkdirp');
+  const {writeFileSync} = require('fs');
+  const {dirname} = require('path');
+  const paths = require('../../config/paths');
+
   gulp.task('scripts:eslint', () => gulp
     .src(paths.src.scripts)
     .pipe(eslint(paths.lint.js))

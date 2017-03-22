@@ -42,6 +42,7 @@
     "no-eval": true,
     "no-inferrable-types": true,
     "no-shadowed-variable": true,
+    "no-stateless-class": false,
     "no-string-literal": false,
     "no-switch-case-fall-through": true,
     "no-trailing-whitespace": true,

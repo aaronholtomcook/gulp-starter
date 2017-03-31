@@ -2,12 +2,14 @@
   "extends": "tslint-microsoft-contrib",
   "rules": {
     "export-name": false,
+    "max-line-length": false,
     "missing-jsdoc": false,
     "no-backbone-get-set-outside-model": false,
     "no-parameter-properties": false,
     "no-relative-imports": false,
     "no-stateless-class": false,
     "no-suspicious-comment": false,
+    "object-literal-sort-keys": true,
     "object-literal-key-quotes": [
       true,
       "as-needed"
@@ -25,6 +27,13 @@
     "ter-max-len": [
       true,
       140
+    ],
+    "variable-name": [
+      true,
+      "ban-keywords",
+      "check-format",
+      "allow-leading-underscore",
+      "allow-pascal-case"
     ]
   },
   "rulesDirectory": [

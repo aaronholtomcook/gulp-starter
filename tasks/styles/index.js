@@ -20,12 +20,12 @@ const config = {
 
 gulp.task('styles', () => gulp
   .src(paths.src.sass)
+  .pipe(errorHandler())
   .pipe(gulpIf(process.env.NODE_ENV === 'development', sourcemaps.init())) // Output sourcemaps for development
   .pipe(sass(config.sass))
   .pipe(gulpIf(settings.uncss && process.env.NODE_ENV === 'production', uncss(config.uncss))) // If enabled, run uncss to remove redundant CSS
   .pipe(autoprefixer(config.autoprefixer))
   .pipe(gulpIf(process.env.NODE_ENV === 'production', nano(config.nano))) // Minify for production
   .pipe(gulpIf(process.env.NODE_ENV === 'development', sourcemaps.write()))
-  .on('error', errorHandler)
   .pipe(gulp.dest(paths.dest.css))
   .pipe(livereload()));

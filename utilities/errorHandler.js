@@ -3,17 +3,6 @@
 'use strict';
 
 const notify = require('gulp-notify');
+const plumber = require('gulp-plumber');
 
-module.exports = function (errorObject) {
-  notify
-    .onError(
-      errorObject.toString()
-        .split(': ')
-        .join(':\n')
-    )
-    .apply(this, arguments);
-
-  if (typeof this.emit === 'function') {
-    this.emit('end');
-  }
-};
+module.exports = () => plumber((error) => notify.onError(() => error));

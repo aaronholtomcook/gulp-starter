@@ -9,8 +9,8 @@ const errorHandler = require('../../utilities/errorHandler');
 
 gulp.task('images', () => gulp
   .src(paths.src.images)
+  .pipe(errorHandler())
   .pipe(changed(paths.dest.images))
   .pipe(imagemin())
-  .on('error', errorHandler)
   .pipe(gulp.dest(paths.dest.images))
   .pipe(livereload()));

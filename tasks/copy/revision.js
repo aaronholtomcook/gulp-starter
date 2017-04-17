@@ -21,9 +21,9 @@ gulp.task('copy:revision', () => gulp
   ], {
     base: paths.dest.base
   })
+  .pipe(errorHandler())
   .pipe(rev())
   .pipe(gulp.dest(paths.dest.base))
   .pipe(revNapkin(config.revNapkin))
   .pipe(rev.manifest(paths.manifests.revision, config.rev))
-  .on('error', errorHandler)
   .pipe(gulp.dest('')));

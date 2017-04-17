@@ -8,8 +8,8 @@ const paths = require('../../config/paths');
 
 gulp.task('styles:references', () => gulp
   .src(join(paths.dest.css, '**/*'))
+  .pipe(errorHandler())
   .pipe(revReplace({
     manifest: gulp.src(paths.manifests.revision)
   }))
-  .on('error', errorHandler)
   .pipe(gulp.dest(paths.dest.css)));

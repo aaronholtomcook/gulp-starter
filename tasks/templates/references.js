@@ -13,9 +13,9 @@ const config = {
 
 gulp.task('templates:references', () => gulp
   .src(join(paths.dest.base, '**/*.html'))
+  .pipe(errorHandler())
   .pipe(revReplace({
     manifest: gulp.src(paths.manifests.revision)
   }))
   .pipe(gulpIf(process.env.NODE_ENV === 'production', inlinesource(config.inlinesource)))
-  .on('error', errorHandler)
   .pipe(gulp.dest(paths.dest.base)));

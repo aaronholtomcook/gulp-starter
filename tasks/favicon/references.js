@@ -8,6 +8,7 @@ const paths = require('../../config/paths');
 
 gulp.task('favicons:references', () => gulp
   .src(join(paths.dest.favicons, '**/*.{json,xml}'))
+  .pipe(errorHandler())
   .pipe(revReplace({
     manifest: gulp.src(paths.manifests.revision),
     replaceInExtensions: [
@@ -15,5 +16,4 @@ gulp.task('favicons:references', () => gulp
       '.xml'
     ]
   }))
-  .on('error', errorHandler)
   .pipe(gulp.dest(paths.dest.favicons)));

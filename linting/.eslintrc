@@ -39,6 +39,7 @@
       }
     ],
     "no-inline-comments": "off",
+    "no-invalid-this": "off",
     "no-magic-numbers": [
       "error",
       {

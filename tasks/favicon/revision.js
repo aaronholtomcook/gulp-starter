@@ -15,20 +15,20 @@ gulp.task('favicon:revision:icons', () => gulp
   .src(join(paths.dest.favicons, '**/*.{gif,ico,jpg,jpeg,png,svg}'), {
     base: paths.dest.base
   })
+  .pipe(errorHandler())
   .pipe(rev())
   .pipe(gulp.dest(paths.dest.base))
   .pipe(revNapkin(config.revNapkin))
   .pipe(rev.manifest(paths.manifests.revision, config.rev))
-  .on('error', errorHandler)
   .pipe(gulp.dest('')));
 
 gulp.task('favicon:revision:manifests', () => gulp
   .src(join(paths.dest.favicons, '**/*.{json,xml}'), {
     base: paths.dest.base
   })
+  .pipe(errorHandler())
   .pipe(rev())
   .pipe(gulp.dest(paths.dest.base))
   .pipe(revNapkin(config.revNapkin))
   .pipe(rev.manifest(paths.manifests.revision, config.rev))
-  .on('error', errorHandler)
   .pipe(gulp.dest('')));

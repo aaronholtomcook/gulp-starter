@@ -12,9 +12,11 @@ const config = {
 
 gulp.task('icons', () => gulp
   .src(paths.src.icons.svg)
+  .pipe(errorHandler())
   .pipe(iconfont(config.iconfont))
   .on('glyphs', (glyphs) => gulp
     .src(paths.src.icons.template)
+    .pipe(errorHandler())
     .pipe(consolidate('lodash', {
       cssClass: 'icon',
       fontName: config.iconfont.fontName,
@@ -24,7 +26,5 @@ gulp.task('icons', () => gulp
         name: glyph.name
       }))
     }))
-    .on('error', errorHandler)
     .pipe(gulp.dest(paths.src.icons.stylesheet)))
-  .on('error', errorHandler)
   .pipe(gulp.dest(paths.dest.fonts)));

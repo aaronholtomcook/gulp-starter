@@ -6,26 +6,33 @@ if (settings.scripting === 'ts') {
   const gulp = require('gulp');
   const linter = require('gulp-tslint');
   const reporter = require('gulp-tslint-jenkins-reporter');
-  const typescript = require('typescript');
-  const tslint = require('tslint');
+  // const typescript = require('typescript');
+  // const tslint = require('tslint');
   const paths = require('../../config/paths');
   const config = {
     tslint: require('../../config/tslint')
   };
 
-  gulp.task('scripts:tslint', () => {
-    const program = tslint.Linter.createProgram(paths.lint.ts, '.');
+  gulp.task('scripts:tslint', () => gulp
+    .src(paths.src.scripts)
+    .pipe(linter(config.tslint.config))
+    .pipe(linter.report(config.tslint.report))
+    .pipe(reporter(config.tslint.reporter)));
 
-    typescript.getPreEmitDiagnostics(program);
-
-    return gulp
-      .src(paths.src.scripts, {
-        base: '.'
-      })
-      .pipe(linter({
-        program
-      }))
-      .pipe(linter.report(config.tslint.report))
-      .pipe(reporter(config.tslint.reporter));
-  });
+  // TODO: Type checking (panuhorsmalahti/gulp-tslint#105)
+  // gulp.task('scripts:tslint', () => {
+  //   const program = tslint.Linter.createProgram(paths.lint.ts);
+  //
+  //   typescript.getPreEmitDiagnostics(program);
+  //
+  //   return gulp
+  //     .src(paths.src.scripts, {
+  //       base: '.'
+  //     })
+  //     .pipe(linter({
+  //       program
+  //     }))
+  //     .pipe(linter.report(config.tslint.report))
+  //     .pipe(reporter(config.tslint.reporter));
+  // });
 }

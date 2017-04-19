@@ -6,6 +6,7 @@ if (settings.scripting === 'ts') {
   const gulp = require('gulp');
   const linter = require('gulp-tslint');
   const reporter = require('gulp-tslint-jenkins-reporter');
+  const typescript = require('typescript');
   const tslint = require('tslint');
   const paths = require('../../config/paths');
   const config = {
@@ -13,7 +14,9 @@ if (settings.scripting === 'ts') {
   };
 
   gulp.task('scripts:tslint', () => {
-    const program = tslint.Linter.createProgram(paths.lint.ts);
+    const program = tslint.Linter.createProgram(paths.lint.ts, '.');
+
+    typescript.getPreEmitDiagnostics(program);
 
     return gulp
       .src(paths.src.scripts, {

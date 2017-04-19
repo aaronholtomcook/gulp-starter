@@ -61,6 +61,7 @@
     "webpack": "^2.2.1"
   },
   "devDependencies": {
-    "eslint": "^3.17.1"
+    "eslint": "^3.17.1",
+    "typescript": "^2.2.2"
   }
 }

@@ -15,10 +15,10 @@ gulp.task('scripts', (cb) => {
 
   return webpack(config.webpack, (err, stats) => {
     if (err || stats.compilation.errors.length > 0) {
-      stats.compilation.errors.forEach((error) => log('[Webpack: Error]', error.message));
+      stats.compilation.errors.forEach((error) => log('[Webpack: Error]', error.hasOwnProperty('message') ? error.message : error));
 
       notifier.notify({
-        message: stats.compilation.errors[0].message,
+        message: stats.compilation.errors[0].hasOwnProperty('message') ? stats.compilation.errors[0].message : stats.compilation.errors[0],
         sound: true,
         title: '[Webpack: Error]',
         type: 'error'

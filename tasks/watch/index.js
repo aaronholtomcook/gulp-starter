@@ -4,9 +4,12 @@ const gulp = require('gulp');
 const watch = require('gulp-watch');
 const livereload = require('gulp-livereload');
 const paths = require('../../config/paths');
+const config = {
+  livereload: require('../config/livereload')
+};
 
 gulp.task('watch', () => {
-  livereload.listen();
+  livereload.listen(config.livereload);
 
   watch(paths.src.copy, () => gulp.start('copy'));
 

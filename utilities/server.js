@@ -12,6 +12,9 @@ const underline = require('./underline');
 const settings = require('../config/settings');
 const paths = require('../config/paths');
 const app = require(paths.server.app);
+const config = {
+  livereload: require('../config/livereload')
+};
 
 const colours = new chalk.constructor({
   enabled: true
@@ -28,7 +31,7 @@ const server = express();
 
 
 if (process.env.NODE_ENV === 'development') {
-  server.use(livereload());
+  server.use(livereload(config.livereload));
 } else if (process.env.NODE_ENV === 'production') {
   server.use(compression());
 }

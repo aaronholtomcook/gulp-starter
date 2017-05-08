@@ -47,10 +47,11 @@ const defaults = [
   ),
   conditional(
     process.env.NODE_ENV === 'production',
-    [
-      'favicon:revision:manifests',
-      'styles:revision'
-    ]
+    'favicon:revision:manifests'
+  ),
+  conditional(
+    process.env.NODE_ENV === 'production',
+    'styles:revision'
   ),
   'templates',
   conditional(

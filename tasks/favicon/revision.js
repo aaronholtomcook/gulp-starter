@@ -12,7 +12,7 @@ const config = {
 };
 
 gulp.task('favicon:revision:icons', () => gulp
-  .src(join(paths.dest.favicons, '**/*.{gif,ico,jpg,jpeg,json,png,svg,xml}'), {
+  .src(join(paths.dest.favicons, '**/*.{gif,ico,jpg,jpeg,png,svg}'), {
     base: paths.dest.base
   })
   .pipe(errorHandler())

@@ -46,6 +46,10 @@ const defaults = [
   ],
   conditional(
     process.env.NODE_ENV === 'production',
+    'pause'
+  ),
+  conditional(
+    process.env.NODE_ENV === 'production',
     'favicons:references'
   ),
   conditional(

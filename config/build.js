@@ -18,12 +18,19 @@ const defaults = [
   ],
   conditional(
     process.env.NODE_ENV === 'production',
-    [
-      'copy:revision',
-      'favicon:revision:icons',
-      'fonts:revision',
-      'images:revision'
-    ]
+    'copy:revision'
+  ),
+  conditional(
+    process.env.NODE_ENV === 'production',
+    'favicon:revision:icons'
+  ),
+  conditional(
+    process.env.NODE_ENV === 'production',
+    'fonts:revision'
+  ),
+  conditional(
+    process.env.NODE_ENV === 'production',
+    'images:revision'
   ),
   [
     'styles:lint',

@@ -3,7 +3,6 @@
 const gulp = require('gulp');
 const consolidate = require('gulp-consolidate');
 const iconfont = require('gulp-iconfont');
-const {join} = require('path');
 const paths = require('../../config/paths');
 const errorHandler = require('../../utilities/errorHandler');
 const config = {
@@ -20,7 +19,7 @@ gulp.task('icons', () => gulp
     .pipe(consolidate('lodash', {
       cssClass: 'icon',
       fontName: config.iconfont.fontName,
-      fontPath: join(paths.dest.fonts.replace(paths.dest.base, ''), '/'),
+      fontPath: config.iconfont.fontPath,
       glyphs: glyphs.map((glyph) => ({
         codepoint: glyph.unicode[0].charCodeAt(0),
         name: glyph.name

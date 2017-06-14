@@ -2,6 +2,17 @@
   "extends": "tslint-microsoft-contrib",
   "rules": {
     "export-name": false,
+    "function-name": [
+      true,
+      {
+        "method-regex": "^[a-z][\\w\\d]+$",
+        "private-method-regex": "^[a-z][\\w\\d]+$",
+        "protected-method-regex": "^[a-z][\\w\\d]+$",
+        "static-method-regex": "^[A-Z_\\d]+$",
+        "function-regex": "^[A-Za-z][\\w\\d]+$"
+      }
+    ],
+    "max-func-body-length": false,
     "max-line-length": false,
     "missing-jsdoc": false,
     "no-backbone-get-set-outside-model": false,
@@ -19,6 +30,10 @@
       true,
       "single",
       "avoid-escape"
+    ],
+    "space-before-function-paren": [
+      true,
+      "always"
     ],
     "ter-indent": [
       true,

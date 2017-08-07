@@ -16,9 +16,11 @@
     "max-line-length": false,
     "missing-jsdoc": false,
     "no-backbone-get-set-outside-model": false,
+    "no-multiline-string": false,
     "no-parameter-properties": false,
     "no-relative-imports": false,
     "no-stateless-class": false,
+    "no-string-based-set-timeout": false,
     "no-suspicious-comment": false,
     "object-literal-sort-keys": true,
     "object-literal-key-quotes": [

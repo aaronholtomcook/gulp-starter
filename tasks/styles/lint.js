@@ -10,6 +10,7 @@ const paths = require('../../config/paths');
 const config = {
   sasslint: require('../../config/sasslint')
 };
+const highWaterMark = require('../../utilities/highWaterMark');
 
 gulp.task('styles:lint', (cb) => {
   if (process.env.NODE_ENV === 'production') {
@@ -27,6 +28,7 @@ gulp.task('styles:lint', (cb) => {
         .src(paths.src.sass)
         .pipe(sasslint(config.sasslint))
         .pipe(sasslint.format(file))
+        .pipe(highWaterMark())
         .on('finish', () => {
           data = data.replace(/<\?xml version="\d\.\d" encoding="utf-8"\?><checkstyle version="\d\.\d">/g, '');
           data = data.replace(/<\/checkstyle>/g, '');
@@ -40,5 +42,6 @@ gulp.task('styles:lint', (cb) => {
   return gulp
     .src(paths.src.sass)
     .pipe(sasslint(config.sasslint))
-    .pipe(sasslint.format());
+    .pipe(sasslint.format())
+    .pipe(highWaterMark());
 });

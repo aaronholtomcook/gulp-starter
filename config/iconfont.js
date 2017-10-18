@@ -5,6 +5,7 @@ const paths = require('./paths');
 const config = require('../utilities/config');
 
 const defaults = {
+  fontHeight: 1001,
   fontName: 'icons',
   fontPath: join(paths.dest.fonts.replace(paths.dest.base, ''), '/'),
   formats: [
@@ -14,6 +15,7 @@ const defaults = {
     'woff2',
     'svg'
   ],
+  normalize: true,
   prependUnicode: false
 };
 

@@ -3,9 +3,9 @@
 const gulp = require('gulp');
 const {colors, log} = require('gulp-util');
 const livereload = require('gulp-livereload');
-const webpack = require('webpack');
 const notifier = require('node-notifier');
 const paths = require('../../config/paths');
+const webpack = require('../../config/webpack');
 const config = {
   webpack: require(paths.config.webpack)
 };

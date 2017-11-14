@@ -52,7 +52,7 @@ const defaults = {
       npm: resolve('./node_modules')
     },
     sass: src('scss/**/*.{scss,sass}'),
-    scripts: src(`${settings.scripting}/**/*.{${settings.scripting}|${settings.scripting}x}`),
+    scripts: src(`${settings.scripting}/**/*.{${settings.scripting},${settings.scripting}x}`),
     templates: {
       data: src('html/data/global.json'),
       pages: src('html/pages/**/*.html'),

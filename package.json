@@ -1,6 +1,6 @@
 {
   "name": "@mogusbi/gulp-starter",
-  "version": "2.0.0",
+  "version": "2.0.0-rc.1",
   "description": "Does all the hard work setting up your workflow so you don't have to",
   "author": "Mo Gusbi",
   "repository": {

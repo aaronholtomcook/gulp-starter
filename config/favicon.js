@@ -1,5 +1,6 @@
 'use strict';
 
+const {join} = require('path');
 const paths = require('./paths');
 const config = require('../utilities/config');
 
@@ -14,7 +15,7 @@ const defaults = {
   output: {
     html: paths.src.favicons.output,
     icons: paths.dest.favicons,
-    publicPath: paths.dest.favicons.replace(paths.dest.base, process.env.CDN ? '/' : '')
+    publicPath: paths.dest.favicons.replace(join(paths.dest.base, process.env.CDN ? '/' : ''), '')
   },
   platforms: {
     android: true,

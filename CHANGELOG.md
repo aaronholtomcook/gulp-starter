@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.0.0-rc.3] - 2017-11-15
+### Bug fixes
+- Irons out issues with the new CDN feature
+- Conditional tasks are now stripped out before they reach `run-sequence`
+
 ## [2.0.0-rc.2] - 2017-11-15
 ### New features
 - Support for CDN links

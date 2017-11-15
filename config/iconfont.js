@@ -7,7 +7,7 @@ const config = require('../utilities/config');
 const defaults = {
   fontHeight: 1001,
   fontName: 'icons',
-  fontPath: join(paths.dest.fonts.replace(paths.dest.base, ''), '/'),
+  fontPath: join(paths.dest.fonts.replace(join(paths.dest.base, process.env.CDN ? '/' : ''), ''), '/'),
   formats: [
     'ttf',
     'eot',

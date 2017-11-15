@@ -14,7 +14,7 @@ const defaults = {
   output: {
     html: paths.src.favicons.output,
     icons: paths.dest.favicons,
-    publicPath: paths.dest.favicons.replace(paths.dest.base, '')
+    publicPath: paths.dest.favicons.replace(paths.dest.base, process.env.CDN ? '/' : '')
   },
   platforms: {
     android: true,

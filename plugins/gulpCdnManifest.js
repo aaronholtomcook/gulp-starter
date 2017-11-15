@@ -4,7 +4,7 @@ const {obj} = require('through2');
 const join = require('url-join');
 const paths = require('../config/paths');
 
-module.exports = obj((file, enc, cb) => {
+module.exports = () => obj((file, enc, cb) => {
   if (file.isNull()) {
     return cb(null, file);
   }

@@ -6,5 +6,5 @@ const cdnManifest = require('../../plugins/gulpCdnManifest');
 
 gulp.task('manifests:cdn', () => gulp
   .src(paths.manifests.revision)
-  .pipe(cdnManifest)
+  .pipe(cdnManifest())
   .pipe(gulp.dest(paths.temp)));

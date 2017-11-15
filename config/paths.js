@@ -12,6 +12,7 @@ const defaults = {
   dest: {
     assets: dist('assets'),
     base: dist(),
+    cdn: process.env.CDN,
     css: dist('assets/css'),
     favicons: dist('assets/favicons'),
     fonts: dist('assets/fonts'),

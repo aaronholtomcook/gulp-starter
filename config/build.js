@@ -32,6 +32,10 @@ const defaults = [
     process.env.NODE_ENV === 'production',
     'images:revision'
   ),
+  conditional(
+    process.env.CDN,
+    'manifests:cdn'
+  ),
   [
     'styles:lint',
     conditional(
@@ -49,6 +53,10 @@ const defaults = [
     'pause'
   ),
   conditional(
+    process.env.CDN,
+    'manifests:cdn'
+  ),
+  conditional(
     process.env.NODE_ENV === 'production',
     'favicons:references'
   ),
@@ -63,6 +71,10 @@ const defaults = [
   conditional(
     process.env.NODE_ENV === 'production',
     'styles:revision'
+  ),
+  conditional(
+    process.env.CDN,
+    'manifests:cdn'
   ),
   'templates',
   conditional(

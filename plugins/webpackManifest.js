@@ -1,6 +1,6 @@
 'use strict';
 
-const {join} = require('path');
+const join = require('url-join');
 const paths = require('../config/paths');
 const {readFile, writeFileSync} = require('fs');
 
@@ -25,7 +25,11 @@ WebpackManifest.prototype.apply = function (compiler) {
 
       for (const key in chunks) {
         if (chunks.hasOwnProperty(key)) {
-          manifest[join(publicPath, `${key}.js`)] = join(publicPath, chunks[key]);
+          if (process.env.CDN && paths.dest.cdn) {
+            manifest[join(publicPath, `${key}.js`)] = join(paths.dest.cdn, publicPath, chunks[key]);
+          } else {
+            manifest[join(publicPath, `${key}.js`)] = join(publicPath, chunks[key]);
+          }
         }
       }
 

@@ -85,4 +85,4 @@ const defaults = [
   'size-report'
 ];
 
-module.exports = config(defaults, 'build', true);
+module.exports = config(defaults.filter(Boolean), 'build', true);
